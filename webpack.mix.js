@@ -11,4 +11,4 @@ let mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/assets/js/Base.jsx', 'public/js/app.js');
+mix.js('resources/assets/js/Base.jsx', 'public/js/app.js').react();
