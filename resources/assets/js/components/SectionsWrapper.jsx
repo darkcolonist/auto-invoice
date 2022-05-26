@@ -3,29 +3,18 @@ import WelcomeSection from "../sections/WelcomeSection";
 import { Route, Switch } from "react-router";
 import NotFoundSection from "../sections/NotFoundSection";
 import UnderConstructionSection from "../sections/UnderConstructionSection";
-import LeavesSection from "../sections/LeavesSection";
+import MyNav from '../components/Navigation';
 
 export default function SectionsWrapper(){
+  let sections = MyNav.top.map((routeItem, index) => {
+    <Route key={index} path={routeItem.url} exact>
+      {routeItem.section}
+    </Route>
+  });
+
   return (
-    <Switch >
-      <Route path="/" exact>
-        <WelcomeSection />
-      </Route>
-      <Route path="/leaves">
-        <LeavesSection />
-      </Route>
-      <Route path="/hr-config-parser">
-        <UnderConstructionSection />
-      </Route>
-      <Route path="/evaluation">
-        <UnderConstructionSection />
-      </Route>
-      <Route path="/account">
-        <UnderConstructionSection />
-      </Route>
-      <Route path="/logout">
-        <UnderConstructionSection />
-      </Route>
+    <Switch>
+      {sections}
       <Route>
         <NotFoundSection />
       </Route>
