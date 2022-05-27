@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Http\Request;
 use App\Http\Helpers\Util;
+// use App\Http\Controllers\{InvoicesController};
 
 /*
 |--------------------------------------------------------------------------
@@ -16,5 +17,9 @@ use App\Http\Helpers\Util;
 Route::get('/', function(){
   return view("react");
 });
+
+Route::get('/test/invoice', [App\Http\Controllers\InvoicesController::class, 'index']);
+Route::get('/test/invoice/all', [App\Http\Controllers\InvoicesController::class, 'all']);
+Route::get('/test/invoice/purge', [App\Http\Controllers\InvoicesController::class, 'purge']);
 
 Route::post('/getLeavesBySearchKeyword', 'LeavesController@getLeavesBySearchKeyword');
