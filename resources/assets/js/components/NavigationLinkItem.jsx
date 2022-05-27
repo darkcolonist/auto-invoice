@@ -13,7 +13,8 @@ const getURL = (params) => {
     // url = (new URLSearchParams(params.label.toLowerCase())).toString();
     url = "/"+params.label.toLowerCase();
   else
-    url = params.url === "/" ? params.url : "/" + params.url;
+    // url = params.url === "/" ? params.url : "/" + params.url;
+    url = params.url;
   
   return url;
 }

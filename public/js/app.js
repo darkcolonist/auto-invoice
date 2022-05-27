@@ -28051,11 +28051,8 @@ __webpack_require__.r(__webpack_exports__);
   }, {
     label: "Agents",
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_icons_material_Bookmark__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
+    url: "/agents",
     section: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_sections_AgentsListSection__WEBPACK_IMPORTED_MODULE_1__["default"], {})
-  }, {
-    label: "Leaves",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_icons_material_Bookmark__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
-    section: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_sections_LeavesSection__WEBPACK_IMPORTED_MODULE_2__["default"], {})
   }],
   bottom: []
 });
@@ -28098,7 +28095,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var getURL = function getURL(params) {
   var url;
   if (params.url === undefined) // url = (new URLSearchParams(params.label.toLowerCase())).toString();
-    url = "/" + params.label.toLowerCase();else url = params.url === "/" ? params.url : "/" + params.url;
+    url = "/" + params.label.toLowerCase();else // url = params.url === "/" ? params.url : "/" + params.url;
+    url = params.url;
   return url;
 };
 
@@ -28383,13 +28381,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function SectionsWrapper() {
-  var sections = _components_Navigation__WEBPACK_IMPORTED_MODULE_4__["default"].top.map(function (routeItem, index) {
-    /*#__PURE__*/
-    (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  var sections = _components_Navigation__WEBPACK_IMPORTED_MODULE_4__["default"].top.map(function (routeItem, sectionIndex) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
       path: routeItem.url,
       exact: true,
       children: routeItem.section
-    }, index);
+    }, sectionIndex);
   });
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_router__WEBPACK_IMPORTED_MODULE_6__.Switch, {
     children: [sections, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {

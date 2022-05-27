@@ -6,8 +6,8 @@ import UnderConstructionSection from "../sections/UnderConstructionSection";
 import MyNav from '../components/Navigation';
 
 export default function SectionsWrapper(){
-  let sections = MyNav.top.map((routeItem, index) => {
-    <Route key={index} path={routeItem.url} exact>
+  let sections = MyNav.top.map((routeItem, sectionIndex) => {
+    return <Route key={sectionIndex} path={routeItem.url} exact>
       {routeItem.section}
     </Route>
   });

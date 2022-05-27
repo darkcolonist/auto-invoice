@@ -14,12 +14,8 @@ export default {
     {
       label: "Agents",
       icon: <BookmarkIcon />,
+      url: "/agents",
       section: <AgentsListSection />
-    },
-    {
-      label: "Leaves",
-      icon: <BookmarkIcon />,
-      section: <LeavesSection />
     },
   ]
   , bottom: []
