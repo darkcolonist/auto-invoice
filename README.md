@@ -1,12 +1,5 @@
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
-
 ## Versions
 Laravel 5.4.36<br>
 PHP 5.6.40<br>
@@ -25,5 +18,8 @@ PHP 5.6.40<br>
 "react-router-dom": "^5.3.3"
 ```
 
-## About HR Utils
-I created this utility wrapper to simplify hr.nmsapps.com's database
+## About Auto Invoice
+Automatically send invoices given schedules
+
+## Jobs
+_Will fill this up soon_
