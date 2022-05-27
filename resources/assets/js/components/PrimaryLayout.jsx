@@ -112,7 +112,7 @@ export default function PrimaryLayout() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            HRAPP Utils
+            {appConfig.name}
           </Typography>
         </Toolbar>
       </AppBar>

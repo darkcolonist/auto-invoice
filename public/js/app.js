@@ -28328,7 +28328,7 @@ function PrimaryLayout() {
           variant: "h6",
           noWrap: true,
           component: "div",
-          children: "HRAPP Utils"
+          children: appConfig.name
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(Drawer, {
