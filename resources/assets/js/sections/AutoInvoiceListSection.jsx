@@ -149,6 +149,7 @@ export default function AutoInvoiceListSection(){
       onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
       rowsPerPageOptions={[5, 10, 20]}
       pagination
+      autoHeight
       {...data} />
   </React.Fragment>
 }
