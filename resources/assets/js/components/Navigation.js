@@ -2,7 +2,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import WelcomeSection from '../sections/WelcomeSection';
 import AgentsListSection from '../sections/AgentsListSection';
-import LeavesSection from "../sections/LeavesSection";
+import AutoInvoiceListSection from '../sections/AutoInvoiceListSection';
 export default {
   top: [
     {
@@ -12,10 +12,10 @@ export default {
       section: <WelcomeSection />
     },
     {
-      label: "Agents",
+      label: "Automatic Invoices",
       icon: <BookmarkIcon />,
-      url: "/agents",
-      section: <AgentsListSection />
+      url: "/autoinvoice",
+      section: <AutoInvoiceListSection />
     },
   ]
   , bottom: []
