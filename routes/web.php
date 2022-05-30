@@ -18,8 +18,8 @@ Route::get('/', function(){
   return view("react");
 });
 
-Route::get('/test/invoice', [App\Http\Controllers\InvoicesController::class, 'index']);
-Route::get('/test/invoice/all', [App\Http\Controllers\InvoicesController::class, 'all']);
-Route::get('/test/invoice/purge', [App\Http\Controllers\InvoicesController::class, 'purge']);
+Route::get('/test/invoice', [App\Http\Controllers\InvoicesController::class, 'testFetchAll']);
+Route::get('/test/invoice/add', [App\Http\Controllers\InvoicesController::class, 'testAdd']);
+Route::get('/test/invoice/deleteAll', [App\Http\Controllers\InvoicesController::class, 'testDeleteAll']);
 
 Route::post('/getLeavesBySearchKeyword', 'LeavesController@getLeavesBySearchKeyword');

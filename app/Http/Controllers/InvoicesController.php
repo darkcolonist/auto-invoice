@@ -6,10 +6,86 @@ use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
 {
-  public function index(Type $var = null)
+  /**
+  * Display a listing of the resource.
+  *
+  * @return \Illuminate\Http\Response
+  */
+  public function index()
+  {
+    //
+  }
+  
+  /**
+  * Show the form for creating a new resource.
+  *
+  * @return \Illuminate\Http\Response
+  */
+  public function create()
+  {
+    //
+  }
+  
+  /**
+  * Store a newly created resource in storage.
+  *
+  * @param  \Illuminate\Http\Request  $request
+  * @return \Illuminate\Http\Response
+  */
+  public function store(Request $request)
+  {
+    //
+  }
+  
+  /**
+  * Display the specified resource.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function show($id)
+  {
+    //
+  }
+  
+  /**
+  * Show the form for editing the specified resource.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function edit($id)
+  {
+    //
+  }
+  
+  /**
+  * Update the specified resource in storage.
+  *
+  * @param  \Illuminate\Http\Request  $request
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function update(Request $request, $id)
+  {
+    //
+  }
+  
+  /**
+  * Remove the specified resource from storage.
+  *
+  * @param  int  $id
+  * @return \Illuminate\Http\Response
+  */
+  public function destroy($id)
+  {
+    //
+  }
+
+  public function testAdd(Type $var = null)
   {
     $invoice = new \App\Models\Invoice;
-    $invoice->name = "example 1";
+    $invoice->name = "example ".(\App\Models\Invoice::all()->count()+1);
     $invoice->status = "inactive";
     $invoice->save();
     // try {
@@ -29,7 +105,7 @@ class InvoicesController extends Controller
     ];
   }
 
-  public function all(){
+  public function testFetchAll(){
     $found = \App\Models\Invoice::all();
     return [
       "code" => 200,
@@ -37,7 +113,7 @@ class InvoicesController extends Controller
     ];
   }
 
-  public function purge(){
+  public function testDeleteAll(){
     $purged = \App\Models\Invoice::all()->count();
     \App\Models\Invoice::where('id', 'like', '%%')->delete();
     // \DB::table("invoices")->delete();
