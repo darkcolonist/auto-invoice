@@ -39,7 +39,8 @@ class InvoicesController extends Controller
 
   public function purge(){
     $purged = \App\Models\Invoice::all()->count();
-    \App\Models\Invoice::truncate();
+    \App\Models\Invoice::where('id', 'like', '%%')->delete();
+    // \DB::table("invoices")->delete();
     return [
       "code" => 200,
       "message" => "purged",
