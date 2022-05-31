@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 
 class InvoicesController extends Controller
@@ -13,7 +14,13 @@ class InvoicesController extends Controller
   */
   public function index()
   {
-    //
+    $invoices = Invoice::limit(10)
+      ->get();
+
+    return response([
+      "code" => 200,
+      "data" => $invoices
+    ]);
   }
   
   /**
@@ -40,10 +47,10 @@ class InvoicesController extends Controller
   /**
   * Display the specified resource.
   *
-  * @param  int  $id
+  * @param  \App\Models\Invoice  $invoice
   * @return \Illuminate\Http\Response
   */
-  public function show($id)
+  public function show(Invoice $invoice)
   {
     //
   }
@@ -51,10 +58,10 @@ class InvoicesController extends Controller
   /**
   * Show the form for editing the specified resource.
   *
-  * @param  int  $id
+  * @param  \App\Models\Invoice  $invoice
   * @return \Illuminate\Http\Response
   */
-  public function edit($id)
+  public function edit(Invoice $invoice)
   {
     //
   }
@@ -63,10 +70,10 @@ class InvoicesController extends Controller
   * Update the specified resource in storage.
   *
   * @param  \Illuminate\Http\Request  $request
-  * @param  int  $id
+  * @param  \App\Models\Invoice  $invoice
   * @return \Illuminate\Http\Response
   */
-  public function update(Request $request, $id)
+  public function update(Request $request, Invoice $invoice)
   {
     //
   }
@@ -74,19 +81,20 @@ class InvoicesController extends Controller
   /**
   * Remove the specified resource from storage.
   *
-  * @param  int  $id
+  * @param  \App\Models\Invoice  $invoice
   * @return \Illuminate\Http\Response
   */
-  public function destroy($id)
+  public function destroy(Invoice $invoice)
   {
     //
   }
-
+  
+  
   public function testAdd(Type $var = null)
   {
     $user = \App\Models\User::where('email', 'webmaster@newmediastaff.com')
-      ->firstOrFail();
-
+    ->firstOrFail();
+    
     $invoice = new \App\Models\Invoice;
     $invoice->name = "example ".(\App\Models\Invoice::all()->count()+1);
     $invoice->status = "inactive";
@@ -99,7 +107,7 @@ class InvoicesController extends Controller
       "invoice" => $invoice
     ];
   }
-
+  
   public function testFetchAll(){
     $found = \App\Models\Invoice::all();
     return [
@@ -107,7 +115,7 @@ class InvoicesController extends Controller
       "data" => $found
     ];
   }
-
+  
   public function testDeleteAll(){
     $purged = \App\Models\Invoice::all()->count();
     \App\Models\Invoice::where('id', 'like', '%%')->delete();

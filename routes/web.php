@@ -18,6 +18,8 @@ Route::get('/', function(){
   return view("react");
 });
 
+Route::resource('invoice', App\Http\Controllers\InvoicesController::class);
+
 Route::get('/test/invoice', [App\Http\Controllers\InvoicesController::class, 'testFetchAll']);
 Route::get('/test/invoice/add', [App\Http\Controllers\InvoicesController::class, 'testAdd']);
 Route::get('/test/invoice/deleteAll', [App\Http\Controllers\InvoicesController::class, 'testDeleteAll']);
