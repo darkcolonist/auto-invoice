@@ -52,7 +52,10 @@ class InvoicesController extends Controller
   */
   public function show(Invoice $invoice)
   {
-    //
+    return response([
+      "code" => 200,
+      "data" => $invoice
+    ]);
   }
   
   /**

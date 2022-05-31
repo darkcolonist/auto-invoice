@@ -18,7 +18,10 @@ Route::get('/', function(){
   return view("react");
 });
 
-Route::resource('invoice', App\Http\Controllers\InvoicesController::class);
+Route::resource('invoice', App\Http\Controllers\InvoicesController::class)
+  ->parameters([
+    "invoice" => "invoice:hash"
+  ]);
 
 Route::get('/test/invoice', [App\Http\Controllers\InvoicesController::class, 'testFetchAll']);
 Route::get('/test/invoice/add', [App\Http\Controllers\InvoicesController::class, 'testAdd']);
