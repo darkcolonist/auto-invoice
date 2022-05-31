@@ -84,19 +84,14 @@ class InvoicesController extends Controller
 
   public function testAdd(Type $var = null)
   {
+    $user = \App\Models\User::where('email', 'webmaster@newmediastaff.com')
+      ->firstOrFail();
+
     $invoice = new \App\Models\Invoice;
     $invoice->name = "example ".(\App\Models\Invoice::all()->count()+1);
     $invoice->status = "inactive";
+    $invoice->created_by = $user->id;
     $invoice->save();
-    // try {
-      
-    //   // $invoice = \App\Models\Invoice::create([
-    //   //   "name" => "example4",
-    //   //   "status" => "inactive"
-    //   // ]);
-    // } catch (\Throwable $th) {
-    //   return response($th)->header("content-type","text/plain");
-    // }
     
     return [
       "code" => 200,

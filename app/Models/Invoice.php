@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-  use \App\Traits\TraitUuid;
-  protected $keyType = 'string';
-  public $incrementing = false;
+  use \App\Traits\TraitUniqueHash;
+  // protected $keyType = 'string';
+  // public $incrementing = false;
   use HasFactory;
 
   protected $attributes = [

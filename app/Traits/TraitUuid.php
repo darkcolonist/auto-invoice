@@ -21,6 +21,8 @@ trait TraitUuid
         // $model->{$model->getKeyName()} = Str::uuid()->toString();
         $model->{$model->getKeyName()} = Str::random(rand(24,32));
       }
+
+      $model->hash = Str::random(rand(24,32));
     };
     
     static::creating($creationCallback);
