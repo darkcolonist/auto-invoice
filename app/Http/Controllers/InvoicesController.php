@@ -15,7 +15,8 @@ class InvoicesController extends Controller
   public function index()
   {
     $invoices = Invoice::limit(10)
-      ->get();
+      ->get()
+      ->makeHidden(["id", "created_by"]);
 
     return response([
       "code" => 200,

@@ -9,13 +9,15 @@ export default {
       label: "Home",
       icon: <HomeIcon />,
       url: "/",
-      section: <WelcomeSection />
+      section: <WelcomeSection />,
+      exact: true
     },
     {
       label: "Automatic Invoices",
       icon: <BookmarkIcon />,
       url: "/autoinvoice",
-      section: <AutoInvoiceListSection />
+      section: <AutoInvoiceListSection />,
+      exact: false
     },
   ]
   , bottom: []

@@ -8,6 +8,8 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 
 import SearchIcon from '@mui/icons-material/Search';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 import axios from '../components/Axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -20,21 +22,24 @@ import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import MyMoment from "../components/MyMoment";
 import { DataGrid } from "@mui/x-data-grid";
+import IconButton from "@mui/material/IconButton";
+
+import { useHistory } from "react-router-dom";
+
+let onActionButtonClick;
 
 const columns = [
   {
     field: 'action',
     headerName: 'Actions',
     sortable: false,
+    headerAlign: 'center',
+    align: 'center',
     renderCell: (params) => {
-      const onClick = (e) => {
-        e.stopPropagation(); // don't select this row after clicking
-
-        const row = params.row;
-        return alert(JSON.stringify(row, null, 4));
-      };
-
-      return <Button onClick={onClick}>Click</Button>;
+      return <React.Fragment>
+        <IconButton onClick={(e) => {onActionButtonClick(e, params.row.hash, "edit")}}><EditIcon /></IconButton>
+        {/* <IconButton onClick={(e) => {onActionButtonClick(e, params.row.hash, "delete")}}><DeleteIcon /></IconButton> */}
+      </React.Fragment>;
     },
   },
   { field: 'id', headerName: 'ID', width: 70 },
@@ -58,15 +63,15 @@ const columns = [
   }];
 
 const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
+  { hash: "92a8914b-631a-4615-a8f8-ff5c356d8a92", id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+  { hash: "dd752b56-10cb-4cf2-b376-4fb9d463afd6", id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
+  { hash: "33d04706-865d-4a91-9649-941cc872efc0", id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
+  { hash: "aaa6216a-c97b-4142-ab4a-e180d5700e9c", id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
+  { hash: "5c9a0f1e-c256-4509-a7cc-a977972e55c1", id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
+  { hash: "b53155f9-52bf-439b-8449-413abe2ca217", id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+  { hash: "ae25a754-ad23-4d5b-829d-5c5926a28455", id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
+  { hash: "0ae0cdcc-384d-42f4-b0bc-b68f615a9740", id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
+  { hash: "56eb8d1b-5341-44b7-b1da-3862a8f05699", id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
 const SearchForm = (props) => {
@@ -176,6 +181,21 @@ export default function AutoInvoiceListSection(){
   // const myLeavesData = React.useContext(leavesDataContext);
   const [leavesData,setLeavesData] = useState(null);
   const [pageSize, setPageSize] = useState(5);
+  let history = useHistory();
+
+  onActionButtonClick = (e, hash, action) => {
+    e.stopPropagation(); // don't select this row after clicking
+
+    history.push('autoinvoice/' + action + '/' + hash);
+
+    // const row = params.row;
+    // return alert(JSON.stringify(row, null, 4));
+
+    // alert(JSON.stringify({
+    //   action,
+    //   hash
+    // }, null, 2));
+  };
 
   function leavesDataResultsCallbackParent(response){
     setLeavesData(response);
