@@ -4,24 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+
 
 class InvoicesController extends Controller
 {
+  use \App\Traits\TraitMyResourceController;
+
   /**
   * Display a listing of the resource.
   *
   * @return \Illuminate\Http\Response
   */
-  public function index()
+  public function index(Request $request)
   {
-    sleep(1); // for loader testing
-    $invoices = Invoice::limit(10)
+    $validation = $this->validateIndex($request);
+    if($validation["failed"])
+      return response([
+        "code" => 400,
+        "message" => $validation["errors"]
+      ]);
+
+    // sleep(1); // for loader testing
+
+
+    $limit = $request->input("limit", 3);
+    $offset = ($request->input("page", 1)-1)*$limit;
+
+    $invoices = Invoice::limit($limit)
+      ->offset($offset)
       ->get()
       ->makeHidden(["id", "created_by"]);
+    
+    $totalRows = Invoice::count();
 
     return response([
       "code" => 200,
-      "data" => $invoices
+      "data" => $invoices,
+      "totalRows" => $totalRows
     ]);
   }
   

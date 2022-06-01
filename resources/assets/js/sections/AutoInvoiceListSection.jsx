@@ -193,41 +193,51 @@ const LeavesDataResults = (props) => {
 
 function AutoInvoiceDataGrid(props){
   const [pageSize, setPageSize] = useState(appConfig.tableSize);
-
-  let history = useHistory();
+  const [page, setPage] = React.useState(0);
+  
+  var history = useHistory();
+  var rows = [];
+  var totalRows = 0;
 
   onActionButtonClick = (e, hash, action) => {
     e.stopPropagation(); // don't select this row after clicking
 
     history.push('autoinvoice/' + action + '/' + hash);
-
-    // const row = params.row;
-    // return alert(JSON.stringify(row, null, 4));
-
-    // alert(JSON.stringify({
-    //   action,
-    //   hash
-    // }, null, 2));
   };
 
-  const { isLoading, error, data } = useQuery('repoData', () =>
-    fetch('invoice').then(res =>
-      res.json()
-    )
-  )
+  const fetchData =(page = 0) => axios.get('invoice',{
+    params: { 
+      page: page + 1,
+      limit: pageSize
+    }
+  }).then((data) => { return data.data });
 
-  if (isLoading) return 'Loading...'
+  const { 
+    isLoading,
+    isFetching,
+    error, 
+    data } = useQuery(
+      ['autoinvoice-list-data', [page, pageSize] ], 
+      () => fetchData(page));
+  
+  if (!isLoading){
+    rows = data.data;
+    totalRows = data.totalRows;
+  }
 
   if (error) return 'An error has occurred: ' + error.message
-
-  let rows = data.data;
 
   return <DataGrid pageSize={pageSize}
     onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
     rowsPerPageOptions={appConfig.tableSizes}
     pagination
+    disableSelectionOnClick
+    paginationMode="server"
+    rowCount={totalRows}
     autoHeight
     getRowId={(row) => row.hash}
+    loading={isFetching}
+    onPageChange={setPage}
     {...{
       columns,
       rows
