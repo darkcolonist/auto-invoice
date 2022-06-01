@@ -14,6 +14,7 @@ class InvoicesController extends Controller
   */
   public function index()
   {
+    sleep(1); // for loader testing
     $invoices = Invoice::limit(10)
       ->get()
       ->makeHidden(["id", "created_by"]);

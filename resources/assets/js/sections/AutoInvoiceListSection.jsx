@@ -9,7 +9,6 @@ import Divider from "@mui/material/Divider";
 
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
 import axios from '../components/Axios';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,11 +23,57 @@ import MyMoment from "../components/MyMoment";
 import { DataGrid } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
 
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
+
 import { useHistory } from "react-router-dom";
 
-let onActionButtonClick;
+const queryClient = new QueryClient();
+
+var onActionButtonClick;
+
+/**
+ * const columns = [
+ *  { field: 'name', headerName: 'Name', width: 130 },
+ *  {
+ *    field: 'status',
+ *    headerName: 'Status',
+ *    type: 'number',
+ *    width: 90,
+ *  },
+ *  {
+ *    field: 'fullName',
+ *    headerName: 'Full name',
+ *    description: 'This column has a value getter and is not sortable.',
+ *    sortable: false,
+ *    width: 160,
+ *    valueGetter: (params) =>
+ *      `${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''
+ *      }`,
+ *  },
+ *  {
+ *    field: 'action',
+ *    headerName: 'Actions',
+ *    sortable: false,
+ *    headerAlign: 'center',
+ *    align: 'center',
+ *    renderCell: (params) => {
+ *      return <React.Fragment>
+ *        <IconButton onClick={(e) => { onActionButtonClick(e, params.row.hash, "edit") }}><EditIcon /></IconButton>
+ *      </React.Fragment>;
+ *    },
+ *  },
+ * ];
+ */
 
 const columns = [
+  { field: 'name', headerName: 'name', width: 130 },
+  { field: 'status', headerName: 'status', width: 90, },
+  { field: 'schedule_day', headerName: 'day', width: 120, },
+  { field: 'schedule_time', headerName: 'time', width: 80, },
+  { field: 'frequency', headerName: 'frequency', width: 120, },
+  { field: 'invoice_no', headerName: 'invoice no', width: 80, },
+  { field: 'created_at', headerName: 'created', width: 200, },
+  { field: 'updated_at', headerName: 'updated', width: 200, },
   {
     field: 'action',
     headerName: 'Actions',
@@ -37,41 +82,10 @@ const columns = [
     align: 'center',
     renderCell: (params) => {
       return <React.Fragment>
-        <IconButton onClick={(e) => {onActionButtonClick(e, params.row.hash, "edit")}}><EditIcon /></IconButton>
-        {/* <IconButton onClick={(e) => {onActionButtonClick(e, params.row.hash, "delete")}}><DeleteIcon /></IconButton> */}
+        <IconButton onClick={(e) => { onActionButtonClick(e, params.row.hash, "edit") }}><EditIcon /></IconButton>
       </React.Fragment>;
     },
   },
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-    valueGetter: (params) =>
-      `${params.getValue(params.id, 'firstName') || ''} ${params.getValue(params.id, 'lastName') || ''
-      }`,
-  }];
-
-const rows = [
-  { hash: "92a8914b-631a-4615-a8f8-ff5c356d8a92", id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { hash: "dd752b56-10cb-4cf2-b376-4fb9d463afd6", id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { hash: "33d04706-865d-4a91-9649-941cc872efc0", id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { hash: "aaa6216a-c97b-4142-ab4a-e180d5700e9c", id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { hash: "5c9a0f1e-c256-4509-a7cc-a977972e55c1", id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-  { hash: "b53155f9-52bf-439b-8449-413abe2ca217", id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-  { hash: "ae25a754-ad23-4d5b-829d-5c5926a28455", id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { hash: "0ae0cdcc-384d-42f4-b0bc-b68f615a9740", id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { hash: "56eb8d1b-5341-44b7-b1da-3862a8f05699", id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
 
 const SearchForm = (props) => {
@@ -177,10 +191,9 @@ const LeavesDataResults = (props) => {
   return render;
 }
 
-export default function AutoInvoiceListSection(){
-  // const myLeavesData = React.useContext(leavesDataContext);
-  const [leavesData,setLeavesData] = useState(null);
-  const [pageSize, setPageSize] = useState(5);
+function AutoInvoiceDataGrid(props){
+  const [pageSize, setPageSize] = useState(appConfig.tableSize);
+
   let history = useHistory();
 
   onActionButtonClick = (e, hash, action) => {
@@ -197,6 +210,34 @@ export default function AutoInvoiceListSection(){
     // }, null, 2));
   };
 
+  const { isLoading, error, data } = useQuery('repoData', () =>
+    fetch('invoice').then(res =>
+      res.json()
+    )
+  )
+
+  if (isLoading) return 'Loading...'
+
+  if (error) return 'An error has occurred: ' + error.message
+
+  let rows = data.data;
+
+  return <DataGrid pageSize={pageSize}
+    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+    rowsPerPageOptions={appConfig.tableSizes}
+    pagination
+    autoHeight
+    getRowId={(row) => row.hash}
+    {...{
+      columns,
+      rows
+    }} />
+}
+
+export default function AutoInvoiceListSection(){
+  // const myLeavesData = React.useContext(leavesDataContext);
+  const [leavesData,setLeavesData] = useState(null);
+  
   function leavesDataResultsCallbackParent(response){
     setLeavesData(response);
   }
@@ -206,14 +247,8 @@ export default function AutoInvoiceListSection(){
       Automatic Invoices List
     </Typography>
     <Divider />
-    <DataGrid pageSize={pageSize}
-      onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
-      rowsPerPageOptions={[5, 10, 20]}
-      pagination
-      autoHeight
-      {...{
-        columns,
-        rows
-      }} />
+    <QueryClientProvider client={queryClient}>
+      <AutoInvoiceDataGrid />
+    </QueryClientProvider>
   </React.Fragment>
 }
