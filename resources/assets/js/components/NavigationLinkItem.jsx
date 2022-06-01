@@ -32,7 +32,7 @@ const MyLink = styled(Link)({
 export default function NavigationLinkItem(props){
   let match = useRouteMatch({
     path: getURL(props),
-    exact: true
+    exact: props.exact
   });
 
   return (
