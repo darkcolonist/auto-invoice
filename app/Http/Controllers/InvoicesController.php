@@ -12,6 +12,14 @@ class InvoicesController extends Controller
 {
   use \App\Traits\TraitMyResourceController;
 
+  private $hiddenAttributes = ["id", "created_by"];
+
+  private function prepareModelForDisplay($model){
+    $model->makeHidden($this->hiddenAttributes);
+
+    return $model;
+  }
+
   /**
   * Display a listing of the resource.
   *
@@ -34,8 +42,9 @@ class InvoicesController extends Controller
 
     $invoices = Invoice::limit($limit)
       ->offset($offset)
-      ->get()
-      ->makeHidden(["id", "created_by"]);
+      ->get();
+
+    $invoices = $this->prepareModelForDisplay($invoices);
     
     $totalRows = Invoice::count();
 
@@ -77,7 +86,7 @@ class InvoicesController extends Controller
   {
     return response([
       "code" => 200,
-      "data" => $invoice
+      "data" => $this->prepareModelForDisplay($invoice)
     ]);
   }
   
@@ -103,7 +112,7 @@ class InvoicesController extends Controller
   {
     return response([
       "code" => 200,
-      "data" => $invoice,
+      "data" => $this->prepareModelForDisplay($invoice),
       "request" => $request->all()
     ]);
   }

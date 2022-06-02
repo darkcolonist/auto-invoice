@@ -30,6 +30,7 @@ const FormValidationSchema = Yup.object().shape({
 });
 
 const FormInitialValues = {
+  hash: '',
   name: '',
   schedule_time: '09:00',
   status: 'inactive',
@@ -39,18 +40,12 @@ const FormInitialValues = {
 const EditForm = (props) => {
   const [formValues,setFormValues] = React.useState(FormInitialValues);
 
-  const fetchData = (hash = 0) => axios.get('invoice/'+hash)
-    .then((data) => { 
-      // setFormValues(data.data);
-      return data.data });
-
-  const {
-    isLoading,
-    isFetching,
-    error,
-    data } = useQuery(
-      ['autoinvoice-form-data', [formValues, props.hash]],
-      () => fetchData(props.hash));
+  React.useEffect(() => {
+    axios.get('invoice/' + props.hash)
+      .then((data) => {
+        setFormValues(data.data.data);
+      });
+  },[]);
 
   const formik = useFormik({
     initialValues: formValues,
@@ -134,13 +129,13 @@ const EditForm = (props) => {
   </Box>
 }
 
-const queryClient = new QueryClient();
+// const queryClient = new QueryClient();
 export default function AutoInvoiceEditSection(){
   const { hash } = useParams();
   const history = useHistory();
 
-  return <QueryClientProvider client={queryClient}>
+  return <React.Fragment>
     <IconButton title="go back" onClick={() => { history.push('/autoinvoice') }}><ArrowBackIcon /></IconButton>
     <EditForm {...{ hash }} />
-  </QueryClientProvider>
+  </React.Fragment>
 }
