@@ -101,7 +101,11 @@ class InvoicesController extends Controller
   */
   public function update(Request $request, Invoice $invoice)
   {
-    //
+    return response([
+      "code" => 200,
+      "data" => $invoice,
+      "request" => $request->all()
+    ]);
   }
   
   /**

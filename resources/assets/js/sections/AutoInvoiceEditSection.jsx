@@ -15,6 +15,7 @@ import Select from "@mui/material/Select";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import * as Yup from 'yup';
 import CircularProgress from "@mui/material/CircularProgress";
+import axios from '../components/Axios';
 
 const FormValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -28,43 +29,49 @@ const FormValidationSchema = Yup.object().shape({
     .required(),
 });
 
+const FormInitialValues = {
+  name: '',
+  schedule_time: '09:00',
+  status: 'inactive',
+  frequency: 'bi-monthly',
+};
+
 const EditForm = (props) => {
-  const fetchData = (page = 0) => axios.get('invoice/'+props.hash)
-    .then((data) => { return data.data });
+  const [formValues,setFormValues] = React.useState(FormInitialValues);
+
+  const fetchData = (hash = 0) => axios.get('invoice/'+hash)
+    .then((data) => { 
+      // setFormValues(data.data);
+      return data.data });
+
+  const {
+    isLoading,
+    isFetching,
+    error,
+    data } = useQuery(
+      ['autoinvoice-form-data', [formValues, props.hash]],
+      () => fetchData(props.hash));
 
   const formik = useFormik({
-    initialValues: {
-      name: '',
-      schedule_time: '09:00',
-      status: 'inactive',
-      frequency: 'bi-monthly',
-    },
-    // validate: values => {
-    //   const errors = {};
-    //   if (!values.name) {
-    //     errors.name = 'Required';
-    //   } else if (values.name.length < 3) {
-    //     errors.name = 'Must be 3 characters or more';
-    //   }
-
-    //   return errors;
-    // },
+    initialValues: formValues,
     validationSchema: FormValidationSchema,
+    enableReinitialize: true,
     onSubmit: (values, actions) => {
-      console.log(values);
+      // console.log(values);
 
-      setTimeout(() => {
-        actions.setSubmitting(false);
-      }, 2000);
-      // axios.post('getLeavesBySearchKeyword', values)
-      //   .then((response) => {
-      //     if (response.data.code !== 200) return;
-      //     if (typeof props.leavesDataResultsCallback === 'function')
-      //       props.leavesDataResultsCallback(response.data.data);
-      //   })
-      //   .then(() => {
-      //     actions.setSubmitting(false);
-      //   });
+      // setTimeout(() => {
+      //   actions.setSubmitting(false);
+      // }, 2000);
+
+      axios.patch('invoice/'+props.hash, values)
+        .then((response) => {
+          if (response.data.code !== 200) return;
+          if (typeof props.successCallback === 'function')
+            props.successCallback(response.data);
+        })
+        .then(() => {
+          actions.setSubmitting(false);
+        });
     },
   });
 
@@ -75,9 +82,11 @@ const EditForm = (props) => {
     }}
     noValidate
     autoComplete="off"
-    onSubmit={formik.handleSubmit}
-  >
-    <p>showing data for {props.hash}</p>
+    onSubmit={formik.handleSubmit}>
+    <TextField label="Hash" variant="outlined" size="small"
+      disabled
+      value={formik.values.hash} />
+
     <TextField label="Name" variant="outlined" size="small"
       error={formik.errors.name !== undefined}
       helperText={formik.errors.name}
