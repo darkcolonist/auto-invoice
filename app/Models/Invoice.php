@@ -8,8 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Invoice extends Model
 {
   use \App\Traits\TraitUniqueHash;
-  // protected $keyType = 'string';
-  // public $incrementing = false;
+  use \App\Traits\TraitTimestampsFormatting;
   use HasFactory;
 
   protected $attributes = [

@@ -26,6 +26,7 @@ import IconButton from "@mui/material/IconButton";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 
 import { useHistory } from "react-router-dom";
+import Moment from "react-moment";
 
 const queryClient = new QueryClient();
 
@@ -72,8 +73,12 @@ const columns = [
   { field: 'schedule_time', headerName: 'time', width: 80, },
   { field: 'frequency', headerName: 'frequency', width: 120, },
   { field: 'invoice_no', headerName: 'invoice no', width: 80, },
-  { field: 'created_at', headerName: 'created', width: 200, },
-  { field: 'updated_at', headerName: 'updated', width: 200, },
+  { field: 'created_at', headerName: 'created', width: 200, renderCell: (params) => {
+    return <Moment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></Moment>
+  }},
+  { field: 'updated_at', headerName: 'updated', width: 200, renderCell: (params) => {
+    return <Moment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></Moment>
+  }},
   {
     field: 'action',
     headerName: 'Actions',
