@@ -47,6 +47,8 @@ const EditForm = (props) => {
     open: false
   });
 
+  const history = useHistory();
+
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -62,6 +64,9 @@ const EditForm = (props) => {
     axios.get('invoice/' + props.hash)
       .then((data) => {
         setFormValues(data.data.data);
+      })
+      .catch(error => {
+        history.push("/autoinvoice");
       });
   },[]);
 
@@ -94,6 +99,15 @@ const EditForm = (props) => {
             props.successCallback(response.data);
         })
         .then(() => {
+          actions.setSubmitting(false);
+        })
+        .catch(function (error) {
+          setSnackbarOptions({
+            ...snackbarOptions,
+            message: "something went wrong: "+error.message,
+            severity: "error",
+            open: true
+          });
           actions.setSubmitting(false);
         });
     },
