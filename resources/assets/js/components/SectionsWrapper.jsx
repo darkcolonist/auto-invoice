@@ -17,6 +17,7 @@ export default function SectionsWrapper(){
     <Switch>
       {sections}
       <Route path="/autoinvoice/edit/:hash" component={AutoInvoiceEditSection} />
+      <Route path="/autoinvoice/new" component={AutoInvoiceEditSection} />
       <Route>
         <NotFoundSection />
       </Route>

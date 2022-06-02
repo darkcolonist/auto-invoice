@@ -73,7 +73,17 @@ class InvoicesController extends Controller
   */
   public function store(Request $request)
   {
-    //
+    $invoice = new Invoice;
+    $invoice->name = $request->input('name');
+    $invoice->schedule_time = $request->input('schedule_time');
+    $invoice->status = $request->input('status');
+    $invoice->frequency = $request->input('frequency');
+    $invoice->save();
+
+    return response([
+      "code" => 200,
+      "data" => $this->prepareModelForDisplay($invoice)
+    ]);
   }
   
   /**

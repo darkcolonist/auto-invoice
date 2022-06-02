@@ -8,6 +8,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
+import AddIcon from '@mui/icons-material/Add';
 import axios from '../components/Axios';
 import MyMoment from "../components/MyMoment";
 import { DataGrid } from "@mui/x-data-grid";
@@ -128,6 +129,18 @@ const SearchForm = (props) => {
     </Box>
 }
 
+const MyCustomToolbar = (props) => {
+  const history = useHistory();
+
+  return <React.Fragment>
+    <Button onClick={() => {
+      history.push('/autoinvoice/new');
+    }}>
+      <AddIcon /> New Item
+    </Button>
+  </React.Fragment>
+}
+
 function AutoInvoiceDataGrid(props){
   const [pageSize, setPageSize] = useState(appConfig.tableSize);
   const [page, setPage] = React.useState(0);
@@ -165,6 +178,10 @@ function AutoInvoiceDataGrid(props){
   if (error) return 'An error has occurred: ' + error.message
 
   return <DataGrid pageSize={pageSize}
+    components={{
+      Toolbar: MyCustomToolbar
+    }}
+    density={appConfig.tableDensity}
     onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
     rowsPerPageOptions={appConfig.tableSizes}
     pagination

@@ -48,6 +48,7 @@ const EditForm = (props) => {
   });
 
   const history = useHistory();
+  const editMode = props.hash === undefined ? "new" : "edit";
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -61,6 +62,9 @@ const EditForm = (props) => {
   };
 
   React.useEffect(() => {
+    if(editMode === "new")
+      return;
+
     axios.get('invoice/' + props.hash)
       .then((data) => {
         setFormValues(data.data.data);
@@ -75,12 +79,18 @@ const EditForm = (props) => {
     validationSchema: FormValidationSchema,
     enableReinitialize: true,
     onSubmit: (values, actions) => {
-      axios.patch('invoice/'+props.hash, values)
-        .then((response) => {
-          if (response.data.code !== 200){
+      var _axios;
+
+      if(editMode === "new")
+        _axios = axios.post('invoice', values);
+      else if(editMode === "edit")
+        _axios = axios.patch('invoice/' + props.hash, values);
+
+      _axios.then((response) => {
+          if (response.data.code !== 200) {
             setSnackbarOptions({
               ...snackbarOptions,
-              message: "something went wrong - "+response.data.message,
+              message: "something went wrong - " + response.data.message,
               severity: "error",
               open: true
             });
@@ -89,7 +99,7 @@ const EditForm = (props) => {
 
           setSnackbarOptions({
             ...snackbarOptions,
-            message: response.data.data.name+" saved!",
+            message: response.data.data.name + " saved!",
             severity: "success",
             open: true
           });
@@ -121,16 +131,17 @@ const EditForm = (props) => {
     noValidate
     autoComplete="off"
     onSubmit={formik.handleSubmit}>
-    <Snackbar open={snackbarOptions.open} autoHideDuration={appConfig.snackbarDuration}
-      onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-      <Alert onClose={handleSnackbarClose} severity={snackbarOptions.severity} sx={{ width: '100%' }}>
-        {snackbarOptions.message}
-      </Alert>
-    </Snackbar>
     <Stack spacing={2}>
-      <TextField label="Hash" variant="outlined" size="small"
+      <Snackbar open={snackbarOptions.open} autoHideDuration={appConfig.snackbarDuration}
+        onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+        <Alert onClose={handleSnackbarClose} severity={snackbarOptions.severity} sx={{ width: '100%' }}>
+          {snackbarOptions.message}
+        </Alert>
+      </Snackbar>
+
+      {formik.values.hash ? <TextField label="Hash" variant="outlined" size="small"
         disabled
-        value={formik.values.hash} />
+        value={formik.values.hash} /> : ""}
 
       <TextField label="Name" variant="outlined" size="small"
         error={formik.errors.name !== undefined}

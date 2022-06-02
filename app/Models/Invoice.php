@@ -48,6 +48,18 @@ class Invoice extends Model
      * will be padded with 5 zeroes in the invoice. will also
      * increment based on the name
      */
-    'invoice_no' => 1
+    'invoice_no' => 1,
   ];
+
+  public static function boot(){
+    parent::boot();
+    static::bootTraits();
+
+    $creationCallback = function ($model){
+      $model->created_by = \App\Models\User::where('email', 'webmaster@newmediastaff.com')
+        ->firstOrFail()->id;
+    };
+    
+    static::creating($creationCallback);
+  }
 }
