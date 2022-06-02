@@ -126,7 +126,7 @@ const EditForm = (props) => {
         labelId="labelstatus"
         id="status"
         label="Status"
-        onChange={formik.handleChange}
+        onChange={formik.handleChange('status')}
         error={formik.errors.status !== undefined}
         value={formik.values.status}>
         <MenuItem value="active">active</MenuItem>
@@ -141,7 +141,7 @@ const EditForm = (props) => {
         labelId="labelfrequency"
         id="frequency"
         label="frequency"
-        onChange={formik.handleChange}
+        onChange={formik.handleChange('frequency')}
         error={formik.errors.frequency !== undefined}
         value={formik.values.frequency}>
         <MenuItem value="bi-monthly">bi-monthly</MenuItem>
