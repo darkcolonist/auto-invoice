@@ -10,9 +10,10 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
+import Alert from "@mui/material/Alert";
+import Snackbar from "@mui/material/Snackbar";
 import FormHelperText from "@mui/material/FormHelperText";
 import Select from "@mui/material/Select";
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import * as Yup from 'yup';
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from '../components/Axios';
@@ -39,6 +40,22 @@ const FormInitialValues = {
 
 const EditForm = (props) => {
   const [formValues,setFormValues] = React.useState(FormInitialValues);
+  const [snackbarOptions,setSnackbarOptions] = React.useState({
+    severity: "success",
+    message: "message goes here",
+    open: false
+  });
+
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackbarOptions({
+      ...snackbarOptions,
+      open: false
+    });
+  };
 
   React.useEffect(() => {
     axios.get('invoice/' + props.hash)
@@ -52,15 +69,26 @@ const EditForm = (props) => {
     validationSchema: FormValidationSchema,
     enableReinitialize: true,
     onSubmit: (values, actions) => {
-      // console.log(values);
-
-      // setTimeout(() => {
-      //   actions.setSubmitting(false);
-      // }, 2000);
-
       axios.patch('invoice/'+props.hash, values)
         .then((response) => {
-          if (response.data.code !== 200) return;
+          if (response.data.code !== 200){
+            setSnackbarOptions({
+              ...snackbarOptions,
+              message: "something went wrong - "+response.data.message,
+              severity: "error",
+              open: true
+            });
+            return;
+          };
+
+          setSnackbarOptions({
+            ...snackbarOptions,
+            message: response.data.data.name+" saved!",
+            severity: "success",
+            open: true
+          });
+          setFormValues(response.data.data);
+
           if (typeof props.successCallback === 'function')
             props.successCallback(response.data);
         })
@@ -122,6 +150,12 @@ const EditForm = (props) => {
       <FormHelperText>{formik.errors.frequency}</FormHelperText>
     </FormControl>
     <div>
+      <Snackbar open={snackbarOptions.open} autoHideDuration={appConfig.snackbarDuration} 
+        onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center"}}>
+        <Alert onClose={handleSnackbarClose} severity={snackbarOptions.severity} sx={{ width: '100%' }}>
+          {snackbarOptions.message}
+        </Alert>
+      </Snackbar>
       <FormHelperText>following the +0800 timezone</FormHelperText>
       <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} variant="outlined"
         type="submit" size="large" disabled={formik.isSubmitting}>Save</Button>
