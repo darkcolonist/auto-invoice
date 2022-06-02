@@ -207,7 +207,7 @@ function AutoInvoiceDataGrid(props){
   onActionButtonClick = (e, hash, action) => {
     e.stopPropagation(); // don't select this row after clicking
 
-    history.push('autoinvoice/' + action + '/' + hash);
+    history.push('/autoinvoice/' + action + '/' + hash);
   };
 
   const fetchData =(page = 0) => axios.get('invoice',{
