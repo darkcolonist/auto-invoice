@@ -110,10 +110,15 @@ class InvoicesController extends Controller
   */
   public function update(Request $request, Invoice $invoice)
   {
+    $invoice->name = $request->input('name');
+    $invoice->schedule_time = $request->input('schedule_time');
+    $invoice->status = $request->input('status');
+    $invoice->frequency = $request->input('frequency');
+    $invoice->save();
+
     return response([
       "code" => 200,
-      "data" => $this->prepareModelForDisplay($invoice),
-      "request" => $request->all()
+      "data" => $this->prepareModelForDisplay($invoice)
     ]);
   }
   
