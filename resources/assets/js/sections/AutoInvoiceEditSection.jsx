@@ -17,17 +17,18 @@ import Select from "@mui/material/Select";
 import * as Yup from 'yup';
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from '../components/Axios';
+import { Stack } from "@mui/material";
 
 const FormValidationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3)
-    .required(),
+    .required('required'),
   schedule_time: Yup.string()
-    .required(),
+    .required('required'),
   status: Yup.string()
-    .required(),
+    .required('required'),
   frequency: Yup.string()
-    .required(),
+    .required('required'),
 });
 
 const FormInitialValues = {
@@ -106,60 +107,64 @@ const EditForm = (props) => {
     noValidate
     autoComplete="off"
     onSubmit={formik.handleSubmit}>
-    <TextField label="Hash" variant="outlined" size="small"
-      disabled
-      value={formik.values.hash} />
+    <Snackbar open={snackbarOptions.open} autoHideDuration={appConfig.snackbarDuration}
+      onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
+      <Alert onClose={handleSnackbarClose} severity={snackbarOptions.severity} sx={{ width: '100%' }}>
+        {snackbarOptions.message}
+      </Alert>
+    </Snackbar>
+    <Stack spacing={2}>
+      <TextField label="Hash" variant="outlined" size="small"
+        disabled
+        value={formik.values.hash} />
 
-    <TextField label="Name" variant="outlined" size="small"
-      error={formik.errors.name !== undefined}
-      helperText={formik.errors.name}
-      id="name" name="name" onChange={formik.handleChange} value={formik.values.name} />
+      <TextField label="Name" variant="outlined" size="small"
+        error={formik.errors.name !== undefined}
+        helperText={formik.errors.name}
+        id="name" name="name" onChange={formik.handleChange} value={formik.values.name} />
 
-    <TextField label="Schedule Time" variant="outlined" size="small"
-      error={formik.errors.schedule_time !== undefined}
-      helperText={formik.errors.schedule_time}
-      id="schedule_time" name="schedule_time" onChange={formik.handleChange} value={formik.values.schedule_time} />
-    
-    <FormControl fullWidth size="small">
-      <InputLabel id="labelstatus">Status</InputLabel>
-      <Select
-        labelId="labelstatus"
-        id="status"
-        label="Status"
-        onChange={formik.handleChange('status')}
-        error={formik.errors.status !== undefined}
-        value={formik.values.status}>
-        <MenuItem value="active">active</MenuItem>
-        <MenuItem value="inactive">inactive</MenuItem>
-      </Select>
-      <FormHelperText>{formik.errors.status}</FormHelperText>
-    </FormControl>
+      <TextField label="Schedule Time" variant="outlined" size="small"
+        error={formik.errors.schedule_time !== undefined}
+        helperText={formik.errors.schedule_time}
+        type="time"
+        id="schedule_time" name="schedule_time" onChange={formik.handleChange} value={formik.values.schedule_time} />
 
-    <FormControl fullWidth size="small">
-      <InputLabel id="labelfrequency">Frequency</InputLabel>
-      <Select
-        labelId="labelfrequency"
-        id="frequency"
-        label="frequency"
-        onChange={formik.handleChange('frequency')}
-        error={formik.errors.frequency !== undefined}
-        value={formik.values.frequency}>
-        <MenuItem value="bi-monthly">bi-monthly</MenuItem>
-        <MenuItem value="monthly">monthly</MenuItem>
-      </Select>
-      <FormHelperText>{formik.errors.frequency}</FormHelperText>
-    </FormControl>
-    <div>
-      <Snackbar open={snackbarOptions.open} autoHideDuration={appConfig.snackbarDuration} 
-        onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center"}}>
-        <Alert onClose={handleSnackbarClose} severity={snackbarOptions.severity} sx={{ width: '100%' }}>
-          {snackbarOptions.message}
-        </Alert>
-      </Snackbar>
-      <FormHelperText>following the +0800 timezone</FormHelperText>
-      <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} variant="outlined"
-        type="submit" size="large" disabled={formik.isSubmitting}>Save</Button>
-    </div>
+      <FormControl fullWidth size="small">
+        <InputLabel id="labelstatus">Status</InputLabel>
+        <Select
+          labelId="labelstatus"
+          id="status"
+          label="Status"
+          onChange={formik.handleChange('status')}
+          error={formik.errors.status !== undefined}
+          value={formik.values.status}>
+          <MenuItem value="active">active</MenuItem>
+          <MenuItem value="inactive">inactive</MenuItem>
+        </Select>
+        <FormHelperText>{formik.errors.status}</FormHelperText>
+      </FormControl>
+
+      <FormControl fullWidth size="small">
+        <InputLabel id="labelfrequency">Frequency</InputLabel>
+        <Select
+          labelId="labelfrequency"
+          id="frequency"
+          label="frequency"
+          onChange={formik.handleChange('frequency')}
+          error={formik.errors.frequency !== undefined}
+          value={formik.values.frequency}>
+          <MenuItem value="bi-monthly">bi-monthly</MenuItem>
+          <MenuItem value="monthly">monthly</MenuItem>
+        </Select>
+        <FormHelperText>{formik.errors.frequency}</FormHelperText>
+      </FormControl>
+      
+      <Box>
+        <FormHelperText>following the +0800 timezone</FormHelperText>
+        <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} variant="outlined"
+          type="submit" size="large" disabled={formik.isSubmitting}>Save</Button>
+      </Box>
+    </Stack>
   </Box>
 }
 
