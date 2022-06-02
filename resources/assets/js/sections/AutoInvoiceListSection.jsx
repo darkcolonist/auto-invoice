@@ -6,27 +6,14 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
-
 import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
 import axios from '../components/Axios';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Avatar from "@mui/material/Avatar";
-import Chip from "@mui/material/Chip";
 import MyMoment from "../components/MyMoment";
 import { DataGrid } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
-
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-
 import { useHistory } from "react-router-dom";
-import Moment from "react-moment";
 
 const queryClient = new QueryClient();
 
@@ -74,10 +61,10 @@ const columns = [
   { field: 'frequency', headerName: 'frequency', width: 120, },
   { field: 'invoice_no', headerName: 'invoice no', width: 80, },
   { field: 'created_at', headerName: 'created', width: 200, renderCell: (params) => {
-    return <Moment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></Moment>
+    return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></MyMoment>
   }},
   { field: 'updated_at', headerName: 'updated', width: 200, renderCell: (params) => {
-    return <Moment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></Moment>
+    return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></MyMoment>
   }},
   {
     field: 'action',
@@ -141,61 +128,6 @@ const SearchForm = (props) => {
     </Box>
 }
 
-const LeavesDataResults = (props) => {
-
-  const LeaveDataLines = (props) => {
-    return (
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Employee</TableCell>
-              <TableCell align="left">From</TableCell>
-              <TableCell align="left">To</TableCell>
-              <TableCell align="center">Authorized</TableCell>
-              <TableCell align="center">Type</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {props.lines.map((row) => (
-              <TableRow
-                key={row.leave_id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  <Chip
-                    avatar={<Avatar alt={row.username} src={row.url} />}
-                    label={row.email}
-                    variant="outlined"
-                  />
-                </TableCell>
-                <TableCell align="left"><MyMoment format={appConfig.dateFormatFormal}>{row.from_date}</MyMoment></TableCell>
-                <TableCell align="left"><MyMoment format={appConfig.dateFormatFormal}>{row.to_date}</MyMoment></TableCell>
-                <TableCell align="center">{row.authorized}</TableCell>
-                <TableCell align="center">{row.type}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    )
-  }
-
-  let render;
-
-  if(props.leavesData == null)
-    // initial load
-    render = <React.Fragment></React.Fragment>
-  else if(props.leavesData.length > 0)
-    // data available
-    render = <LeaveDataLines lines={props.leavesData}/>
-  else
-    // empty result-set
-    render = <Typography paragraph>no match found for keyword</Typography>
-
-  return render;
-}
-
 function AutoInvoiceDataGrid(props){
   const [pageSize, setPageSize] = useState(appConfig.tableSize);
   const [page, setPage] = React.useState(0);
@@ -250,13 +182,6 @@ function AutoInvoiceDataGrid(props){
 }
 
 export default function AutoInvoiceListSection(){
-  // const myLeavesData = React.useContext(leavesDataContext);
-  const [leavesData,setLeavesData] = useState(null);
-  
-  function leavesDataResultsCallbackParent(response){
-    setLeavesData(response);
-  }
-
   return <React.Fragment>
     <Typography variant="h4">
       Automatic Invoices List
