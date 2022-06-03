@@ -17,4 +17,13 @@ trait TraitMyResourceController
       "errors" => $validator->errors()
     ];
   }
+
+  public function getSortModel(Request $request){
+    $sortModel = $request->input("sortModel", null);
+
+    if($sortModel === null)
+      return false;
+
+    return json_decode($request->input("sortModel")[0],true);
+  }
 }

@@ -6,8 +6,6 @@ use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-
-
 class InvoicesController extends Controller
 {
   use \App\Traits\TraitMyResourceController;
@@ -41,10 +39,19 @@ class InvoicesController extends Controller
     $offset = ($request->input("page", 1)-1)*$limit;
 
     $invoices = Invoice::limit($limit)
-      ->offset($offset)
-      ->get();
+      ->offset($offset);
 
-    $invoices = $this->prepareModelForDisplay($invoices);
+    if($this->getSortModel($request)){
+      $sortModel = $this->getSortModel($request);
+
+      if($sortModel["sort"] == "asc")
+        $invoices->orderBy($sortModel["field"]);
+      else
+        $invoices->orderByDesc($sortModel["field"]);
+
+    }
+
+    $invoices = $this->prepareModelForDisplay($invoices->get());
     
     $totalRows = Invoice::count();
 

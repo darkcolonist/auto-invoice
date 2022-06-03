@@ -61,10 +61,10 @@ const columns = [
   { field: 'schedule_time', headerName: 'time', width: 80, },
   { field: 'frequency', headerName: 'frequency', width: 120, },
   { field: 'invoice_no', headerName: 'invoice no', width: 80, },
-  { field: 'created_at', headerName: 'created', width: 200, renderCell: (params) => {
+  { field: 'created_at', headerName: 'created', width: 120, renderCell: (params) => {
     return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></MyMoment>
   }},
-  { field: 'updated_at', headerName: 'updated', width: 200, renderCell: (params) => {
+  { field: 'updated_at', headerName: 'updated', width: 120, renderCell: (params) => {
     return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></MyMoment>
   }},
   {
@@ -143,7 +143,10 @@ const MyCustomToolbar = (props) => {
 
 function AutoInvoiceDataGrid(props){
   const [pageSize, setPageSize] = useState(appConfig.tableSize);
-  const [page, setPage] = React.useState(0);
+  const [queryOptions, setQueryOptions] = React.useState({
+    page: 0,
+    sortModel: [{ field: 'updated_at', sort: 'desc' }],
+  });
   
   var history = useHistory();
   var rows = [];
@@ -155,10 +158,11 @@ function AutoInvoiceDataGrid(props){
     history.push('/autoinvoice/' + action + '/' + hash);
   };
 
-  const fetchData =(page = 0) => axios.get('invoice',{
+  const fetchData =(queryOptions) => axios.get('invoice',{
     params: { 
-      page: page + 1,
-      limit: pageSize
+      ...queryOptions,
+      page: queryOptions.page + 1,
+      limit: pageSize,
     }
   }).then((data) => { return data.data });
 
@@ -167,8 +171,8 @@ function AutoInvoiceDataGrid(props){
     isFetching,
     error, 
     data } = useQuery(
-      ['autoinvoice-list-data', [page, pageSize] ], 
-      () => fetchData(page));
+      ['autoinvoice-list-data', [queryOptions, pageSize] ], 
+      () => fetchData(queryOptions));
   
   if (!isLoading){
     rows = data.data;
@@ -178,6 +182,11 @@ function AutoInvoiceDataGrid(props){
   if (error) return 'An error has occurred: ' + error.message
 
   return <DataGrid pageSize={pageSize}
+    initialState={{
+      sorting:{
+        sortModel: queryOptions.sortModel,
+      }
+    }}
     components={{
       Toolbar: MyCustomToolbar
     }}
@@ -185,13 +194,16 @@ function AutoInvoiceDataGrid(props){
     onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
     rowsPerPageOptions={appConfig.tableSizes}
     pagination
+    page={queryOptions.page}
     disableSelectionOnClick
     paginationMode="server"
+    sortingMode="server"
     rowCount={totalRows}
     autoHeight
     getRowId={(row) => row.hash}
     loading={isFetching}
-    onPageChange={setPage}
+    onPageChange={(page) => { setQueryOptions({...queryOptions, page}) }}
+    onSortModelChange={(sortModel) => { setQueryOptions({ ...queryOptions, sortModel }) }}
     {...{
       columns,
       rows
