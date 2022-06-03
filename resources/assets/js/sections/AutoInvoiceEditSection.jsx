@@ -107,6 +107,10 @@ const EditForm = (props) => {
 
           if (typeof props.successCallback === 'function')
             props.successCallback(response.data);
+
+          if (editMode === "new") {
+            history.push("/autoinvoice/edit/" + response.data.data.hash);
+          }
         })
         .then(() => {
           actions.setSubmitting(false);

@@ -7,7 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
-  use \App\Traits\TraitUniqueHash;
+  use \App\Traits\TraitUniqueHash {
+    \App\Traits\TraitUniqueHash::boot as traitUniqueHashBoot;
+  }
+
   use \App\Traits\TraitTimestampsFormatting;
   use HasFactory;
 
@@ -53,7 +56,7 @@ class Invoice extends Model
 
   public static function boot(){
     parent::boot();
-    static::bootTraits();
+    self::traitUniqueHashBoot();
 
     $creationCallback = function ($model){
       $model->created_by = \App\Models\User::where('email', 'webmaster@newmediastaff.com')
