@@ -12,6 +12,6 @@ const darkTheme = createTheme({
 export default function App(){
   return <ThemeProvider theme={darkTheme}>
     <CssBaseline />
-    <PrimaryLayout />    
+    <PrimaryLayout />
   </ThemeProvider>
 }

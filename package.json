@@ -30,7 +30,8 @@
     "react-moment": "^1.1.2",
     "react-query": "^3.39.1",
     "react-router-dom": "^5.3.3",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "zustand": "^4.0.0-rc.1"
   },
   "dependencies": {}
 }

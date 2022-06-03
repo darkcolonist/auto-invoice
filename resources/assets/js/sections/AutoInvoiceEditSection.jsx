@@ -1,23 +1,25 @@
-import React from "react";
+import { Stack } from "@mui/material";
 import { useFormik } from 'formik';
 import { useHistory, useParams } from "react-router-dom";
+import * as Yup from 'yup';
+import Alert from "@mui/material/Alert";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import axios from '../components/Axios';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import SaveIcon from '@mui/icons-material/Save';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import CircularProgress from "@mui/material/CircularProgress";
+import DeleteIcon from '@mui/icons-material/Delete';
 import FormControl from "@mui/material/FormControl";
+import FormHelperText from "@mui/material/FormHelperText";
+import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Alert from "@mui/material/Alert";
-import Snackbar from "@mui/material/Snackbar";
-import FormHelperText from "@mui/material/FormHelperText";
+import React from "react";
+import SaveIcon from '@mui/icons-material/Save';
 import Select from "@mui/material/Select";
-import * as Yup from 'yup';
-import CircularProgress from "@mui/material/CircularProgress";
-import axios from '../components/Axios';
-import { Stack } from "@mui/material";
+import Snackbar from "@mui/material/Snackbar";
+import TextField from "@mui/material/TextField";
+import ConfirmDialog, { confirmDialog } from '../components/ConfirmDialog';
 
 const FormValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -190,8 +192,21 @@ const EditForm = (props) => {
       
       <Box>
         <FormHelperText>following the +0800 timezone</FormHelperText>
-        <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} variant="outlined"
-          type="submit" size="large" disabled={formik.isSubmitting}>Save</Button>
+
+        <Stack direction="row" spacing={1}>
+          <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} 
+            variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Save</Button>
+
+          {editMode === "edit"?
+            <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <DeleteIcon />}
+              variant="outlined" color="error" size="large" disabled={formik.isSubmitting}
+              onClick={() => { 
+                confirmDialog('Are you sure you want to delete '+ formik.values.name+'?', () =>
+                  console.log('deleting', formik.values.hash)
+                );
+              }}>Delete</Button>
+          :""}
+        </Stack>
       </Box>
     </Stack>
   </Box>
@@ -205,5 +220,6 @@ export default function AutoInvoiceEditSection(){
   return <React.Fragment>
     <IconButton title="go back" onClick={() => { history.push('/autoinvoice') }}><ArrowBackIcon /></IconButton>
     <EditForm {...{ hash }} />
+    <ConfirmDialog />
   </React.Fragment>
 }
