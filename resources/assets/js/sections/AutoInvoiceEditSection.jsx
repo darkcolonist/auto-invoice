@@ -63,6 +63,23 @@ const EditForm = (props) => {
     });
   };
 
+  const handleDeleteClick = () => {
+    confirmDialog('Are you sure you want to delete ' + formik.values.name + '?', () =>
+      axios.delete('/invoice/'+formik.values.hash)
+        .then((data) => {
+          history.push("/autoinvoice");
+        })
+        .catch((error) => {
+          setSnackbarOptions({
+            ...snackbarOptions,
+            message: "something went wrong: " + error.message,
+            severity: "error",
+            open: true
+          });
+        })
+    );
+  }
+
   React.useEffect(() => {
     if(editMode === "new")
       return;
@@ -200,11 +217,7 @@ const EditForm = (props) => {
           {editMode === "edit"?
             <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <DeleteIcon />}
               variant="outlined" color="error" size="large" disabled={formik.isSubmitting}
-              onClick={() => { 
-                confirmDialog('Are you sure you want to delete '+ formik.values.name+'?', () =>
-                  console.log('deleting', formik.values.hash)
-                );
-              }}>Delete</Button>
+              onClick={handleDeleteClick}>Delete</Button>
           :""}
         </Stack>
       </Box>

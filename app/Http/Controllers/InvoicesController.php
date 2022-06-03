@@ -48,7 +48,6 @@ class InvoicesController extends Controller
         $invoices->orderBy($sortModel["field"]);
       else
         $invoices->orderByDesc($sortModel["field"]);
-
     }
 
     $invoices = $this->prepareModelForDisplay($invoices->get());
@@ -147,7 +146,17 @@ class InvoicesController extends Controller
   */
   public function destroy(Invoice $invoice)
   {
-    //
+    $name = $invoice->name;
+    $hash = $invoice->hash;
+    $invoice->delete();
+
+    return response([
+      "code" => 200,
+      "data" => [
+        "name" => $name,
+        "hash" => $hash,
+      ]
+    ]);
   }
   
   
