@@ -145,14 +145,11 @@ const MyCustomToolbar = (props) => {
 const useAutoinvoiceListStore = create((set) => ({
   page: 0,
   sortModel: [{ field: 'updated_at', sort: 'desc' }],
+  pageSize: appConfig.tableSize
 }));
 
 function AutoInvoiceDataGrid(props){
-  const [pageSize, setPageSize] = useState(appConfig.tableSize);
-  const [queryOptions, setQueryOptions] = React.useState({
-    page: 0,
-    sortModel: [{ field: 'updated_at', sort: 'desc' }],
-  });
+  const {page, sortModel, pageSize} = useAutoinvoiceListStore();
   
   var history = useHistory();
   var rows = [];
@@ -164,11 +161,11 @@ function AutoInvoiceDataGrid(props){
     history.push('/autoinvoice/' + action + '/' + hash);
   };
 
-  const fetchData =(queryOptions) => axios.get('invoice',{
+  const fetchData =(page, sortModel) => axios.get('invoice',{
     params: { 
-      ...queryOptions,
-      page: queryOptions.page + 1,
+      page: page + 1,
       limit: pageSize,
+      sortModel
     }
   }).then((data) => { return data.data });
 
@@ -177,8 +174,8 @@ function AutoInvoiceDataGrid(props){
     isFetching,
     error, 
     data } = useQuery(
-      ['autoinvoice-list-data', [queryOptions, pageSize] ], 
-      () => fetchData(queryOptions));
+      ['autoinvoice-list-data', [page, sortModel, pageSize] ], 
+      () => fetchData(page, sortModel));
   
   if (!isLoading){
     rows = data.data;
@@ -190,17 +187,17 @@ function AutoInvoiceDataGrid(props){
   return <DataGrid pageSize={pageSize}
     initialState={{
       sorting:{
-        sortModel: queryOptions.sortModel,
+        sortModel,
       }
     }}
     components={{
       Toolbar: MyCustomToolbar
     }}
     density={appConfig.tableDensity}
-    onPageSizeChange={(newPageSize) => setPageSize(newPageSize)}
+    onPageSizeChange={(pageSize) => useAutoinvoiceListStore.setState({ pageSize }) }
     rowsPerPageOptions={appConfig.tableSizes}
     pagination
-    page={queryOptions.page}
+    page={page}
     disableSelectionOnClick
     paginationMode="server"
     sortingMode="server"
@@ -208,8 +205,8 @@ function AutoInvoiceDataGrid(props){
     autoHeight
     getRowId={(row) => row.hash}
     loading={isFetching}
-    onPageChange={(page) => { setQueryOptions({...queryOptions, page}) }}
-    onSortModelChange={(sortModel) => { setQueryOptions({ ...queryOptions, sortModel }) }}
+    onPageChange={(page) => useAutoinvoiceListStore.setState({ page }) }
+    onSortModelChange={(sortModel) => useAutoinvoiceListStore.setState({ sortModel }) }
     {...{
       columns,
       rows
