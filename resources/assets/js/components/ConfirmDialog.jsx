@@ -9,6 +9,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from '@mui/material/IconButton';
 import React from 'react';
 import Typography from '@mui/material/Typography';
+import WarningIcon from '@mui/icons-material/Warning';
 
 const useConfirmDialogStore = create((set) => ({
   message: '',
@@ -34,11 +35,11 @@ export default function ConfirmDialog(){
         <Typography>{message}</Typography>
       </DialogContent>
       <DialogActions>
-        <Button color="primary" variant="contained" onClick={close}>
+        <Button color="primary" variant="outlined" onClick={close}>
           Cancel
         </Button>
         <Button
-          color="secondary"
+          color="warning"
           variant="contained"
           onClick={() => {
             if (onSubmit) {
@@ -47,7 +48,7 @@ export default function ConfirmDialog(){
             close();
           }}
         >
-          Confirm
+          <WarningIcon /> Proceed
         </Button>
       </DialogActions>
     </Dialog>
