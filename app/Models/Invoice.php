@@ -59,8 +59,13 @@ class Invoice extends Model
     self::traitUniqueHashBoot();
 
     $creationCallback = function ($model){
-      $model->created_by = \App\Models\User::where('email', 'webmaster@newmediastaff.com')
-        ->firstOrFail()->id;
+      try {
+        $createdBy = \App\Models\User::where('email', 'webmaster@newmediastaff.com')
+          ->firstOrFail();
+        $model->created_by = $createdBy->id;
+      } catch (\Throwable $th) {
+        throw new \Error("WebmasterNotFoundException");
+      }
     };
     
     static::creating($creationCallback);

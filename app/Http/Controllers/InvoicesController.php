@@ -84,7 +84,16 @@ class InvoicesController extends Controller
     $invoice->schedule_time = $request->input('schedule_time');
     $invoice->status = $request->input('status');
     $invoice->frequency = $request->input('frequency');
-    $invoice->save();
+
+    try {
+      $invoice->save();
+    } catch (\Throwable $th) {
+      if($th->getMessage() === "WebmasterNotFoundException");
+        return response([
+          "code" => 500,
+          "message" => "webmaster@newmediastaff.com user not found in records."
+        ]);
+    }
 
     return response([
       "code" => 200,
