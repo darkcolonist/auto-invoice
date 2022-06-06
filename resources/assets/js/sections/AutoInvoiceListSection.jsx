@@ -1,20 +1,21 @@
-import React, { useState } from "react";
-import Typography from '@mui/material/Typography';
+import { DataGrid } from "@mui/x-data-grid";
+import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import { useFormik } from 'formik';
-import TextField from "@mui/material/TextField";
+import { useHistory } from "react-router-dom";
+import AddIcon from '@mui/icons-material/Add';
+import axios from '../components/Axios';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import CircularProgress from "@mui/material/CircularProgress";
+import create from 'zustand';
 import Divider from "@mui/material/Divider";
-import SearchIcon from '@mui/icons-material/Search';
 import EditIcon from '@mui/icons-material/Edit';
-import AddIcon from '@mui/icons-material/Add';
-import axios from '../components/Axios';
-import MyMoment from "../components/MyMoment";
-import { DataGrid } from "@mui/x-data-grid";
 import IconButton from "@mui/material/IconButton";
-import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
-import { useHistory } from "react-router-dom";
+import MyMoment from "../components/MyMoment";
+import React, { useState } from "react";
+import SearchIcon from '@mui/icons-material/Search';
+import TextField from "@mui/material/TextField";
+import Typography from '@mui/material/Typography';
 
 const queryClient = new QueryClient();
 
@@ -140,6 +141,11 @@ const MyCustomToolbar = (props) => {
     </Button>
   </React.Fragment>
 }
+
+const useAutoinvoiceListStore = create((set) => ({
+  page: 0,
+  sortModel: [{ field: 'updated_at', sort: 'desc' }],
+}));
 
 function AutoInvoiceDataGrid(props){
   const [pageSize, setPageSize] = useState(appConfig.tableSize);
