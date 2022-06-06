@@ -2,7 +2,6 @@ import { Stack } from "@mui/material";
 import { useFormik } from 'formik';
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from 'yup';
-import Alert from "@mui/material/Alert";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from '../components/Axios';
 import Box from "@mui/material/Box";
@@ -17,9 +16,9 @@ import MenuItem from "@mui/material/MenuItem";
 import React from "react";
 import SaveIcon from '@mui/icons-material/Save';
 import Select from "@mui/material/Select";
-import Snackbar from "@mui/material/Snackbar";
 import TextField from "@mui/material/TextField";
 import ConfirmDialog, { confirmDialog } from '../components/ConfirmDialog';
+import MySnackbar, { showMySnackbar } from "../components/MySnackbar";
 
 const FormValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -43,25 +42,8 @@ const FormInitialValues = {
 
 const EditForm = (props) => {
   const [formValues,setFormValues] = React.useState(FormInitialValues);
-  const [snackbarOptions,setSnackbarOptions] = React.useState({
-    severity: "success",
-    message: "message goes here",
-    open: false
-  });
-
   const history = useHistory();
   const editMode = props.hash === undefined ? "new" : "edit";
-
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setSnackbarOptions({
-      ...snackbarOptions,
-      open: false
-    });
-  };
 
   const handleDeleteClick = () => {
     confirmDialog('Are you sure you want to delete ' + formik.values.name + '?', () =>
@@ -70,12 +52,8 @@ const EditForm = (props) => {
           history.push("/autoinvoice");
         })
         .catch((error) => {
-          setSnackbarOptions({
-            ...snackbarOptions,
-            message: "something went wrong: " + error.message,
-            severity: "error",
-            open: true
-          });
+          showMySnackbar("something went wrong - " + error.message
+              , "error");
         })
     );
   }
@@ -107,21 +85,12 @@ const EditForm = (props) => {
 
       _axios.then((response) => {
           if (response.data.code !== 200) {
-            setSnackbarOptions({
-              ...snackbarOptions,
-              message: "something went wrong - " + response.data.message,
-              severity: "error",
-              open: true
-            });
+            showMySnackbar("something went wrong - " + response.data.message
+              , "error");
             return;
           };
 
-          setSnackbarOptions({
-            ...snackbarOptions,
-            message: response.data.data.name + " saved!",
-            severity: "success",
-            open: true
-          });
+          showMySnackbar(response.data.data.name + " saved!");
           setFormValues(response.data.data);
 
           if (typeof props.successCallback === 'function')
@@ -135,12 +104,8 @@ const EditForm = (props) => {
           actions.setSubmitting(false);
         })
         .catch(function (error) {
-          setSnackbarOptions({
-            ...snackbarOptions,
-            message: "something went wrong: "+error.message,
-            severity: "error",
-            open: true
-          });
+          showMySnackbar("something went wrong - " + error.message
+            , "error");
           actions.setSubmitting(false);
         });
     },
@@ -155,13 +120,6 @@ const EditForm = (props) => {
     autoComplete="off"
     onSubmit={formik.handleSubmit}>
     <Stack spacing={2}>
-      <Snackbar open={snackbarOptions.open} autoHideDuration={appConfig.snackbarDuration}
-        onClose={handleSnackbarClose} anchorOrigin={{ vertical: "bottom", horizontal: "center" }}>
-        <Alert onClose={handleSnackbarClose} severity={snackbarOptions.severity} sx={{ width: '100%' }}>
-          {snackbarOptions.message}
-        </Alert>
-      </Snackbar>
-
       {formik.values.hash ? <TextField label="Hash" variant="outlined" size="small"
         disabled
         value={formik.values.hash} /> : ""}
@@ -234,5 +192,6 @@ export default function AutoInvoiceEditSection(){
     <IconButton title="go back" onClick={() => { history.push('/autoinvoice') }}><ArrowBackIcon /></IconButton>
     <EditForm {...{ hash }} />
     <ConfirmDialog />
+    <MySnackbar />
   </React.Fragment>
 }
