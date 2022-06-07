@@ -38,8 +38,7 @@ class InvoicesController extends Controller
     $limit = $request->input("limit", 3);
     $offset = ($request->input("page", 1)-1)*$limit;
 
-    $invoices = Invoice::limit($limit)
-      ->offset($offset);
+    $invoices = Invoice::select("*");
 
     if($this->getSortModel($request)){
       $sortModel = $this->getSortModel($request);
@@ -50,9 +49,17 @@ class InvoicesController extends Controller
         $invoices->orderByDesc($sortModel["field"]);
     }
 
+    if($this->getFilterModel($request)){
+      $filterModel = $this->getFilterModel($request);
+
+      $invoices->where("name","like","%".$filterModel."%");
+    }
+
+    $totalRows = $invoices->count();
+    $invoices->limit($limit)
+      ->offset($offset);
+      
     $invoices = $this->prepareModelForDisplay($invoices->get());
-    
-    $totalRows = Invoice::count();
 
     return response([
       "code" => 200,

@@ -24,6 +24,25 @@ trait TraitMyResourceController
     if($sortModel === null)
       return false;
 
-    return json_decode($request->input("sortModel")[0],true);
+    try {
+      $decoded = json_decode($request->input("sortModel")[0],true);
+    } catch (\Throwable $th) {
+      throw new \Error("malformed sort model");
+    }
+    return $decoded;
+  }
+
+  public function getFilterModel(Request $request){
+    $filterModel = $request->input("filterModel", null);
+
+    if($filterModel === null)
+      return false;
+
+    try {
+      $decoded = json_decode($request->input("filterModel"),true)["quickFilterValues"][0];
+    } catch (\Throwable $th) {
+      throw new \Error("malformed filter model");
+    }
+    return $decoded;
   }
 }

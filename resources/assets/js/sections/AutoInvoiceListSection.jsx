@@ -1,8 +1,7 @@
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbarContainer, GridToolbarQuickFilter } from "@mui/x-data-grid";
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query'
 import { useFormik } from 'formik';
 import { useHistory } from "react-router-dom";
-import AddIcon from '@mui/icons-material/Add';
 import axios from '../components/Axios';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,6 +15,8 @@ import React, { useState } from "react";
 import SearchIcon from '@mui/icons-material/Search';
 import TextField from "@mui/material/TextField";
 import Typography from '@mui/material/Typography';
+import Grid from "@mui/material/Grid";
+import MyDataGridToolBar from "../components/MyDataGridToolBar";
 
 const queryClient = new QueryClient();
 
@@ -130,26 +131,15 @@ const SearchForm = (props) => {
     </Box>
 }
 
-const MyCustomToolbar = (props) => {
-  const history = useHistory();
-
-  return <React.Fragment>
-    <Button onClick={() => {
-      history.push('/autoinvoice/new');
-    }}>
-      <AddIcon /> New Item
-    </Button>
-  </React.Fragment>
-}
-
 const useAutoinvoiceListStore = create((set) => ({
   page: 0,
   sortModel: [{ field: 'updated_at', sort: 'desc' }],
-  pageSize: appConfig.tableSize
+  pageSize: appConfig.tableSize,
+  filterModel: { "items": [], "quickFilterValues": [""] }
 }));
 
 function AutoInvoiceDataGrid(props){
-  const {page, sortModel, pageSize} = useAutoinvoiceListStore();
+  const {page, sortModel, pageSize, filterModel} = useAutoinvoiceListStore();
   
   var history = useHistory();
   var rows = [];
@@ -161,11 +151,12 @@ function AutoInvoiceDataGrid(props){
     history.push('/autoinvoice/' + action + '/' + hash);
   };
 
-  const fetchData =(page, sortModel) => axios.get('invoice',{
+  const fetchData =(page, sortModel, filterModel) => axios.get('invoice',{
     params: { 
       page: page + 1,
       limit: pageSize,
-      sortModel
+      sortModel,
+      filterModel
     }
   }).then((data) => { return data.data });
 
@@ -174,8 +165,8 @@ function AutoInvoiceDataGrid(props){
     isFetching,
     error, 
     data } = useQuery(
-      ['autoinvoice-list-data', [page, sortModel, pageSize] ], 
-      () => fetchData(page, sortModel));
+      ['autoinvoice-list-data', [page, sortModel, pageSize, filterModel] ], 
+      () => fetchData(page, sortModel, filterModel));
   
   if (!isLoading){
     rows = data.data;
@@ -191,7 +182,7 @@ function AutoInvoiceDataGrid(props){
       }
     }}
     components={{
-      Toolbar: MyCustomToolbar
+      Toolbar: MyDataGridToolBar
     }}
     density={appConfig.tableDensity}
     onPageSizeChange={(pageSize) => useAutoinvoiceListStore.setState({ pageSize }) }
@@ -201,6 +192,9 @@ function AutoInvoiceDataGrid(props){
     disableSelectionOnClick
     paginationMode="server"
     sortingMode="server"
+    filterMode="server"
+    filterModel={filterModel}
+    onFilterModelChange={(filterModel) => useAutoinvoiceListStore.setState({ filterModel }) }
     rowCount={totalRows}
     autoHeight
     getRowId={(row) => row.hash}
