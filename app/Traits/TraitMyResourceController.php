@@ -40,6 +40,9 @@ trait TraitMyResourceController
 
     try {
       $decoded = json_decode($request->input("filterModel"),true)["quickFilterValues"][0];
+
+      if(trim($decoded) == "")
+        return false;
     } catch (\Throwable $th) {
       throw new \Error("malformed filter model");
     }
