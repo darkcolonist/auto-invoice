@@ -4,11 +4,11 @@
 Laravel 9.8.1<br>
 PHP 8.0.2<br>
 
-## Commands
-generate migrations script - `php artisan migrate:generate --date=2000-01-01`
-
 ## About Auto Invoice
 Automatically send invoices given schedules
 
+## Commands
+_TODO_
+
 ## Jobs
-_Will fill this up soon_
+_TODO_
