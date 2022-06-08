@@ -21,7 +21,8 @@ export default function MyDataGridToolBar(props){
     <Grid item>
       <GridToolbarQuickFilter
         quickFilterParser={(searchInput) =>
-          searchInput.split(',').map((value) => value.trim())
+          // searchInput.split(',').map((value) => value.trim())
+          searchInput.trim()
         }
         debounceMs={200} // time before applying the new quick filter value
       />
