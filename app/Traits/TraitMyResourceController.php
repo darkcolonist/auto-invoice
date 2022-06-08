@@ -32,6 +32,13 @@ trait TraitMyResourceController
     return $decoded;
   }
 
+  public function getSearchKeyword(Request $request){
+    if($request->input("searchKeyword") == null)
+      return false;
+
+    return $request->input("searchKeyword");
+  }
+
   public function getFilterModel(Request $request){
     $filterModel = $request->input("filterModel", null);
 
@@ -39,7 +46,14 @@ trait TraitMyResourceController
       return false;
 
     try {
-      $decoded = json_decode($request->input("filterModel"),true)["quickFilterValues"][0];
+      $decoded = json_decode($request->input("filterModel"),true)["quickFilterValues"];
+
+      if(count($decoded) < 1){ // empty search
+        return false;  
+      }else{
+        $decoded = $decoded[0];
+      }
+
 
       if(trim($decoded) == "")
         return false;

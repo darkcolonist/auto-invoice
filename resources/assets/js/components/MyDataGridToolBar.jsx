@@ -1,8 +1,39 @@
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 import { GridToolbarContainer, GridToolbarQuickFilter } from '@mui/x-data-grid';
 import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from "react-router-dom";
 import React from 'react';
+
+export function CustomSearchBox(props){
+  /**
+   * below is the original
+   */
+  // return <GridToolbarQuickFilter
+  //   quickFilterParser={(searchInput) =>
+  //     // searchInput.split(',').map((value) => value.trim())
+  //     searchInput.trim()
+  //   }
+  //   debounceMs={200} // time before applying the new quick filter value
+  // />
+
+  function keyPress(e){
+    if (e.keyCode == 13) {
+      if(e.target.value.trim() === "")
+        return false;
+
+      var ourNewValue = e.target.value.trim();
+      if(typeof props.onQuickSearch === 'function')
+        props.onQuickSearch(ourNewValue);
+    }
+  }
+
+  return <TextField
+    size='small'
+    placeholder='hit enter to search'
+    value={props.quickSearchValue}
+    onKeyUp={keyPress}
+  ></TextField>
+}
 
 export default function MyDataGridToolBar(props){
   const history = useHistory();
@@ -19,12 +50,9 @@ export default function MyDataGridToolBar(props){
     <Grid style={{ flex: 1 }} />
 
     <Grid item>
-      <GridToolbarQuickFilter
-        quickFilterParser={(searchInput) =>
-          // searchInput.split(',').map((value) => value.trim())
-          searchInput.trim()
-        }
-        debounceMs={200} // time before applying the new quick filter value
+      <CustomSearchBox
+        quickSearchValue={props.quickSearchValue}
+        onQuickSearch={props.onQuickSearch}
       />
     </Grid>
   </GridToolbarContainer>

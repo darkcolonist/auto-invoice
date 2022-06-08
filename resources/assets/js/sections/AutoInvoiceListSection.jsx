@@ -81,7 +81,7 @@ const useAutoinvoiceListStore = create((set) => ({
     page: 0,
     sortModel: [{ field: 'updated_at', sort: 'desc' }],
     pageSize: appConfig.tableSize,
-    filterModel: { "items": [], "quickFilterValues": [""] }
+    searchKeyword: "ohhhhh"
   }
 }));
 
@@ -126,13 +126,16 @@ function AutoInvoiceDataGrid(props){
     initialState={{
       sorting:{
         sortModel: dataGridOptions.sortModel,
-      },
-      filter: {
-        filterModel: dataGridOptions.filterModel
       }
     }}
     components={{
       Toolbar: MyDataGridToolBar
+    }}
+    componentsProps={{
+      toolbar: {
+        quickSearchValue: dataGridOptions.searchKeyword,
+        onQuickSearch: (searchKeyword) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.searchKeyword = searchKeyword })
+      }
     }}
     density={appConfig.tableDensity}
     onPageSizeChange={(pageSize) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.pageSize = pageSize }) }
@@ -142,9 +145,6 @@ function AutoInvoiceDataGrid(props){
     disableSelectionOnClick
     paginationMode="server"
     sortingMode="server"
-    filterMode="server"
-    filterModel={dataGridOptions.filterModel}
-    onFilterModelChange={(filterModel) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.filterModel = filterModel }) }
     rowCount={totalRows}
     autoHeight
     getRowId={(row) => row.hash}

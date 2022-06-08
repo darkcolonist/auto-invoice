@@ -49,10 +49,10 @@ class InvoicesController extends Controller
         $invoices->orderByDesc($sortModel["field"]);
     }
 
-    if($this->getFilterModel($request)){
-      $filterModel = $this->getFilterModel($request);
+    if($this->getSearchKeyword($request)){
+      $searchKeyword = $this->getSearchKeyword($request);
 
-      $invoices->where("name","like","%".$filterModel."%");
+      $invoices->where("name","like","%".$searchKeyword."%");
     }
 
     // $sql = $invoices->toSql();
