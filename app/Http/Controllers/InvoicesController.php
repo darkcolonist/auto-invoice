@@ -55,7 +55,7 @@ class InvoicesController extends Controller
       $invoices->where("name","like","%".$filterModel."%");
     }
 
-    $sql = $invoices->toSql();
+    // $sql = $invoices->toSql();
 
     $totalRows = $invoices->count();
     $invoices->limit($limit)
@@ -67,7 +67,7 @@ class InvoicesController extends Controller
       "code" => 200,
       "data" => $invoices,
       "totalRows" => $totalRows,
-      "debug" => $sql
+      // "debug" => $sql
     ]);
   }
   
