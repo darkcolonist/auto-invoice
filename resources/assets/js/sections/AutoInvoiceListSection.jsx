@@ -79,7 +79,8 @@ const columns = [
 const useAutoinvoiceListStore = create((set) => ({
   dataGridOptions: {
     page: 0,
-    sortModel: [{ field: 'updated_at', sort: 'desc' }],
+    // sortModel: [{ field: 'updated_at', sort: 'desc' }],
+    sortModel: [],
     pageSize: appConfig.tableSize,
     searchKeyword: ""
   }
