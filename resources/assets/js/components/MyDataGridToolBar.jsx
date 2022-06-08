@@ -1,5 +1,6 @@
 import { Button, Grid, TextField } from '@mui/material';
-import { GridToolbarContainer, GridToolbarQuickFilter } from '@mui/x-data-grid';
+import { GridToolbarContainer } from '@mui/x-data-grid';
+import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { useHistory } from "react-router-dom";
 import React from 'react';
@@ -18,8 +19,8 @@ export function CustomSearchBox(props){
 
   function keyPress(e){
     if (e.keyCode == 13) {
-      if(e.target.value.trim() === "")
-        return false;
+      // if(e.target.value.trim() === "")
+      //   return false;
 
       var ourNewValue = e.target.value.trim();
       if(typeof props.onQuickSearch === 'function')
@@ -32,6 +33,9 @@ export function CustomSearchBox(props){
     placeholder='hit enter to search'
     defaultValue={props.quickSearchValue}
     onKeyUp={keyPress}
+    InputProps={{
+      endAdornment: <SearchIcon />
+    }}
   ></TextField>
 }
 

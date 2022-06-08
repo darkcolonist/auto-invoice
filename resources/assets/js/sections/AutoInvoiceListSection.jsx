@@ -81,7 +81,7 @@ const useAutoinvoiceListStore = create((set) => ({
     page: 0,
     sortModel: [{ field: 'updated_at', sort: 'desc' }],
     pageSize: appConfig.tableSize,
-    searchKeyword: "ohhhhh"
+    searchKeyword: ""
   }
 }));
 
