@@ -30,7 +30,7 @@ export function CustomSearchBox(props){
   return <TextField
     size='small'
     placeholder='hit enter to search'
-    value={props.quickSearchValue}
+    defaultValue={props.quickSearchValue}
     onKeyUp={keyPress}
   ></TextField>
 }
