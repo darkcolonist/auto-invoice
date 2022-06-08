@@ -126,6 +126,9 @@ function AutoInvoiceDataGrid(props){
     initialState={{
       sorting:{
         sortModel: dataGridOptions.sortModel,
+      },
+      filter: {
+        filterModel: dataGridOptions.filterModel
       }
     }}
     components={{
@@ -146,6 +149,9 @@ function AutoInvoiceDataGrid(props){
     autoHeight
     getRowId={(row) => row.hash}
     loading={isFetching}
+    disableColumnFilter
+    disableColumnSelector
+    disableDensitySelector
     onPageChange={(page) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.page = page }) }
     onSortModelChange={(sortModel) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.sortModel = sortModel }) }
     {...{
