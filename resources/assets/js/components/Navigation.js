@@ -1,22 +1,29 @@
-import HomeIcon from '@mui/icons-material/Home';
+// import AgentsListSection from '../sections/AgentsListSection';
+// import AutoInvoiceListSection from '../sections/AutoInvoiceListSection';
+// import WelcomeSection from '../sections/WelcomeSection';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
-import WelcomeSection from '../sections/WelcomeSection';
-import AgentsListSection from '../sections/AgentsListSection';
-import AutoInvoiceListSection from '../sections/AutoInvoiceListSection';
+import HomeIcon from '@mui/icons-material/Home';
+import loadable from '@loadable/component';
+import { loadableParams } from './MyLoadable';
+
+const kwa = { something: "fornothing" };
+
 export default {
   top: [
     {
       label: "Home",
       icon: <HomeIcon />,
       url: "/",
-      section: <WelcomeSection />,
+      // section: <WelcomeSection />,
+      section: loadable(() => import("../sections/WelcomeSection"), loadableParams),
       exact: true
     },
     {
       label: "Automatic Invoices",
       icon: <BookmarkIcon />,
       url: "/autoinvoice",
-      section: <AutoInvoiceListSection />,
+      // section: <AutoInvoiceListSection />,
+      section: loadable(() => import("../sections/AutoInvoiceListSection"), loadableParams),
       exact: false
     },
   ]
