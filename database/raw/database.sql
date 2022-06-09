@@ -48,6 +48,9 @@ CREATE TABLE `invoices` (
   `invoice_no` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `contact_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bill_to_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `hash` (`hash`),
   KEY `invoices_created_at_index` (`created_at`),
@@ -57,7 +60,7 @@ CREATE TABLE `invoices` (
   KEY `invoices_invoice_no_index` (`invoice_no`),
   KEY `created_by` (`created_by`),
   CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `jobs` */
 
