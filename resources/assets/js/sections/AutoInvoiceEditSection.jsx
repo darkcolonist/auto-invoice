@@ -38,9 +38,9 @@ const FormInitialValues = {
   hash: '',
   name: '',
   schedule_time: '09:00',
-  status: 'inactive',
-  frequency: 'bi-monthly',
-  schedule_day: 'monday'
+  status: '',
+  frequency: '',
+  schedule_day: ''
 };
 
 const EditForm = (props) => {
@@ -78,6 +78,8 @@ const EditForm = (props) => {
     initialValues: formValues,
     validationSchema: FormValidationSchema,
     enableReinitialize: true,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: (values, actions) => {
       var _axios;
 
@@ -150,7 +152,9 @@ const EditForm = (props) => {
           <MenuItem value="active">active</MenuItem>
           <MenuItem value="inactive">inactive</MenuItem>
         </Select>
-        <FormHelperText>{formik.errors.status}</FormHelperText>
+        <FormHelperText
+          error={formik.errors.status !== undefined}
+        >{formik.errors.status}</FormHelperText>
       </FormControl>
 
       <FormControl fullWidth size="small">
@@ -170,7 +174,9 @@ const EditForm = (props) => {
           <MenuItem value="saturday">saturday</MenuItem>
           <MenuItem value="sunday">sunday</MenuItem>
         </Select>
-        <FormHelperText>{formik.errors.schedule_day}</FormHelperText>
+        <FormHelperText
+          error={formik.errors.schedule_day !== undefined}
+        >{formik.errors.schedule_day}</FormHelperText>
       </FormControl>
 
       <FormControl fullWidth size="small">
@@ -185,7 +191,9 @@ const EditForm = (props) => {
           <MenuItem value="bi-monthly">bi-monthly</MenuItem>
           <MenuItem value="monthly">monthly</MenuItem>
         </Select>
-        <FormHelperText>{formik.errors.frequency}</FormHelperText>
+        <FormHelperText
+          error={formik.errors.frequency !== undefined}
+        >{formik.errors.frequency}</FormHelperText>
       </FormControl>
       
       <Box>

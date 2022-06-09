@@ -76,7 +76,10 @@ const columns = [
         
       return <Chip {...chipParams} />;
     }},
-  { field: 'schedule_day', headerName: 'day', width: 120, },
+  { field: 'schedule_day', headerName: 'day', width: 50, 
+    renderCell: (params) => {
+      return params.value.substring(0,3).toUpperCase();
+    }},
   { field: 'schedule_time', headerName: 'time', width: 80, },
   { field: 'frequency', headerName: 'frequency', width: 120, },
   { field: 'invoice_no', headerName: 'invoice no', width: 80, },

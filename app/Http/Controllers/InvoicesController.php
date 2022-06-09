@@ -92,6 +92,7 @@ class InvoicesController extends Controller
     $invoice = new Invoice;
     $invoice->name = $request->input('name');
     $invoice->schedule_time = $request->input('schedule_time');
+    $invoice->schedule_day = $request->input('schedule_day');
     $invoice->status = $request->input('status');
     $invoice->frequency = $request->input('frequency');
 
@@ -147,6 +148,7 @@ class InvoicesController extends Controller
   {
     $invoice->name = $request->input('name');
     $invoice->schedule_time = $request->input('schedule_time');
+    $invoice->schedule_day = $request->input('schedule_day');
     $invoice->status = $request->input('status');
     $invoice->frequency = $request->input('frequency');
     $invoice->save();
