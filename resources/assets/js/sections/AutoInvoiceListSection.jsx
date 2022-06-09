@@ -10,6 +10,9 @@ import MyMoment from "../components/MyMoment";
 import React, { useState } from "react";
 import Typography from '@mui/material/Typography';
 import MyDataGridToolBar from "../components/MyDataGridToolBar";
+import Chip from "@mui/material/Chip";
+import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 
 const queryClient = new QueryClient();
 
@@ -51,7 +54,28 @@ var onActionButtonClick;
 
 const columns = [
   { field: 'name', headerName: 'name', width: 130 },
-  { field: 'status', headerName: 'status', width: 90, },
+  { field: 'status', headerName: 'status', width: 100, 
+    headerAlign: 'center', /* align: 'center', */
+    renderCell: (params) => {
+      let chipParams = {
+        color: "success",
+        size: "small",
+        variant: "filled",
+        label: params.value,
+        icon: <RadioButtonCheckedIcon />
+      };
+
+      if (params.value !== "active"){
+        chipParams = {
+          ...chipParams,
+          variant: "outlined",
+          icon: <RadioButtonUncheckedIcon />,
+          color: "default"
+        }
+      }
+        
+      return <Chip {...chipParams} />;
+    }},
   { field: 'schedule_day', headerName: 'day', width: 120, },
   { field: 'schedule_time', headerName: 'time', width: 80, },
   { field: 'frequency', headerName: 'frequency', width: 120, },
