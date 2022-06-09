@@ -81,6 +81,22 @@ class InvoicesController extends Controller
     //
   }
   
+  private function generateInvoiceFromRequest(Request $request, $invoice = null){
+    if($invoice == null)
+      $invoice = new Invoice;
+
+    $invoice->name = $request->input('name');
+    $invoice->schedule_time = $request->input('schedule_time');
+    $invoice->schedule_day = $request->input('schedule_day');
+    $invoice->status = $request->input('status');
+    $invoice->frequency = $request->input('frequency');
+    $invoice->contact_details = $request->input('contact_details');
+    $invoice->bill_to_details = $request->input('bill_to_details');
+    $invoice->account_details = $request->input('account_details');
+
+    return $invoice;
+  }
+
   /**
   * Store a newly created resource in storage.
   *
@@ -89,12 +105,7 @@ class InvoicesController extends Controller
   */
   public function store(Request $request)
   {
-    $invoice = new Invoice;
-    $invoice->name = $request->input('name');
-    $invoice->schedule_time = $request->input('schedule_time');
-    $invoice->schedule_day = $request->input('schedule_day');
-    $invoice->status = $request->input('status');
-    $invoice->frequency = $request->input('frequency');
+    $invoice = $this->generateInvoiceFromRequest($request);
 
     try {
       $invoice->save();
@@ -146,11 +157,7 @@ class InvoicesController extends Controller
   */
   public function update(Request $request, Invoice $invoice)
   {
-    $invoice->name = $request->input('name');
-    $invoice->schedule_time = $request->input('schedule_time');
-    $invoice->schedule_day = $request->input('schedule_day');
-    $invoice->status = $request->input('status');
-    $invoice->frequency = $request->input('frequency');
+    $invoice = $this->generateInvoiceFromRequest($request, $invoice);
     $invoice->save();
 
     return response([

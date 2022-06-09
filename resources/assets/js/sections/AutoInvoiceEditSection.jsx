@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Grid, Stack } from "@mui/material";
 import { useFormik } from 'formik';
 import { useHistory, useParams } from "react-router-dom";
 import * as Yup from 'yup';
@@ -40,7 +40,7 @@ const FormInitialValues = {
   schedule_time: '09:00',
   status: '',
   frequency: '',
-  schedule_day: ''
+  schedule_day: '',
 };
 
 const EditForm = (props) => {
@@ -116,7 +116,7 @@ const EditForm = (props) => {
     },
   });
 
-  return <Box
+  return <Grid container spacing={2}
     component="form"
     sx={{
       '& > :not(style)': { m: 1, width: '25ch' },
@@ -124,101 +124,124 @@ const EditForm = (props) => {
     noValidate
     autoComplete="off"
     onSubmit={formik.handleSubmit}>
-    <Stack spacing={2}>
-      {formik.values.hash ? <TextField label="Hash" variant="outlined" size="small"
-        disabled
-        value={formik.values.hash} /> : ""}
+      <Grid item xs={4}>
+        <Stack spacing={2}>
+          {formik.values.hash ? <TextField label="Hash" variant="outlined" size="small"
+            disabled
+            value={formik.values.hash} /> : ""}
 
-      <TextField label="Name" variant="outlined" size="small"
-        error={formik.errors.name !== undefined}
-        helperText={formik.errors.name}
-        id="name" name="name" onChange={formik.handleChange} value={formik.values.name} />
+          <TextField label="Name" variant="outlined" size="small"
+            error={formik.errors.name !== undefined}
+            helperText={formik.errors.name}
+            id="name" name="name" onChange={formik.handleChange} value={formik.values.name} />
 
-      <TextField label="Schedule Time" variant="outlined" size="small"
-        error={formik.errors.schedule_time !== undefined}
-        helperText={formik.errors.schedule_time}
-        type="time"
-        id="schedule_time" name="schedule_time" onChange={formik.handleChange} value={formik.values.schedule_time} />
+          <TextField label="Schedule Time" variant="outlined" size="small"
+            error={formik.errors.schedule_time !== undefined}
+            helperText={formik.errors.schedule_time}
+            type="time"
+            id="schedule_time" name="schedule_time" onChange={formik.handleChange} value={formik.values.schedule_time} />
 
-      <FormControl fullWidth size="small">
-        <InputLabel id="labelstatus">Status</InputLabel>
-        <Select
-          labelId="labelstatus"
-          id="status"
-          label="Status"
-          onChange={formik.handleChange('status')}
-          error={formik.errors.status !== undefined}
-          value={formik.values.status}>
-          <MenuItem value="active">active</MenuItem>
-          <MenuItem value="inactive">inactive</MenuItem>
-        </Select>
-        <FormHelperText
-          error={formik.errors.status !== undefined}
-        >{formik.errors.status}</FormHelperText>
-      </FormControl>
+          <FormControl fullWidth size="small">
+            <InputLabel id="labelstatus">Status</InputLabel>
+            <Select
+              labelId="labelstatus"
+              id="status"
+              label="Status"
+              onChange={formik.handleChange('status')}
+              error={formik.errors.status !== undefined}
+              value={formik.values.status}>
+              <MenuItem value="active">active</MenuItem>
+              <MenuItem value="inactive">inactive</MenuItem>
+            </Select>
+            <FormHelperText
+              error={formik.errors.status !== undefined}
+            >{formik.errors.status}</FormHelperText>
+          </FormControl>
 
-      <FormControl fullWidth size="small">
-        <InputLabel id="labelDay">Day</InputLabel>
-        <Select
-          labelId="labelDay"
-          id="schedule_day"
-          label="schedule_day"
-          onChange={formik.handleChange('schedule_day')}
-          error={formik.errors.schedule_day !== undefined}
-          value={formik.values.schedule_day}>
-          <MenuItem value="monday">monday</MenuItem>
-          <MenuItem value="tuesday">tuesday</MenuItem>
-          <MenuItem value="wednesday">wednesday</MenuItem>
-          <MenuItem value="thursday">thursday</MenuItem>
-          <MenuItem value="friday">friday</MenuItem>
-          <MenuItem value="saturday">saturday</MenuItem>
-          <MenuItem value="sunday">sunday</MenuItem>
-        </Select>
-        <FormHelperText
-          error={formik.errors.schedule_day !== undefined}
-        >{formik.errors.schedule_day}</FormHelperText>
-      </FormControl>
+          <FormControl fullWidth size="small">
+            <InputLabel id="labelDay">Day</InputLabel>
+            <Select
+              labelId="labelDay"
+              id="schedule_day"
+              label="schedule_day"
+              onChange={formik.handleChange('schedule_day')}
+              error={formik.errors.schedule_day !== undefined}
+              value={formik.values.schedule_day}>
+              <MenuItem value="monday">monday</MenuItem>
+              <MenuItem value="tuesday">tuesday</MenuItem>
+              <MenuItem value="wednesday">wednesday</MenuItem>
+              <MenuItem value="thursday">thursday</MenuItem>
+              <MenuItem value="friday">friday</MenuItem>
+              <MenuItem value="saturday">saturday</MenuItem>
+              <MenuItem value="sunday">sunday</MenuItem>
+            </Select>
+            <FormHelperText
+              error={formik.errors.schedule_day !== undefined}
+            >{formik.errors.schedule_day}</FormHelperText>
+          </FormControl>
 
-      <FormControl fullWidth size="small">
-        <InputLabel id="labelfrequency">Frequency</InputLabel>
-        <Select
-          labelId="labelfrequency"
-          id="frequency"
-          label="frequency"
-          onChange={formik.handleChange('frequency')}
-          error={formik.errors.frequency !== undefined}
-          value={formik.values.frequency}>
-          <MenuItem value="bi-monthly">bi-monthly</MenuItem>
-          <MenuItem value="monthly">monthly</MenuItem>
-        </Select>
-        <FormHelperText
-          error={formik.errors.frequency !== undefined}
-        >{formik.errors.frequency}</FormHelperText>
-      </FormControl>
-      
-      <Box>
+          <FormControl fullWidth size="small">
+            <InputLabel id="labelfrequency">Frequency</InputLabel>
+            <Select
+              labelId="labelfrequency"
+              id="frequency"
+              label="frequency"
+              onChange={formik.handleChange('frequency')}
+              error={formik.errors.frequency !== undefined}
+              value={formik.values.frequency}>
+              <MenuItem value="bi-monthly">bi-monthly</MenuItem>
+              <MenuItem value="monthly">monthly</MenuItem>
+            </Select>
+            <FormHelperText
+              error={formik.errors.frequency !== undefined}
+            >{formik.errors.frequency}</FormHelperText>
+          </FormControl>
+        </Stack>
+      </Grid>
+
+      <Grid item xs={4}>
+        <Stack spacing={2}>
+          {[
+            { field: "contact_details", label: "Contact Details" },
+            { field: "bill_to_details", label: "Bill To Details" },
+            { field: "account_details", label: "Account Details" },
+          ].map((v) => (
+            <TextField
+              key={v.field} id={v.field} name={v.field}
+              onChange={formik.handleChange}
+              value={formik.values[v.field] ?? ""}
+              helperText={formik.errors[v.field]}
+              label={v.label}
+              placeholder={v.placeholder ?? "as json format ie., { \"something\": \"something's value\" }"}
+              rows={v.rows ?? 3}
+              multiline
+              size="small"
+            />
+          ))}
+        </Stack>
+      </Grid>
+
+      <Grid item xs={12}>
         <FormHelperText>following the +0800 timezone</FormHelperText>
-
         <Stack direction="row" spacing={1}>
           {editMode === "edit"
             ?
-              <React.Fragment>
-                <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} 
-                  variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Update</Button>
-                <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <DeleteIcon />}
-                  variant="outlined" color="error" size="large" disabled={formik.isSubmitting}
-                  onClick={handleDeleteClick}>Delete</Button>
-              </React.Fragment> 
+            <React.Fragment>
+              <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />}
+                variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Update</Button>
+              <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <DeleteIcon />}
+                variant="outlined" color="error" size="large" disabled={formik.isSubmitting}
+                onClick={handleDeleteClick}>Delete</Button>
+            </React.Fragment>
             :
-              <React.Fragment>
-                <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />}
-                  variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Create</Button>
-              </React.Fragment>
+            <React.Fragment>
+              <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />}
+                variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Create</Button>
+            </React.Fragment>
           }
         </Stack>
-      </Box>
-    </Stack>
-  </Box>
+      </Grid>
+  </Grid>
 }
 
 // const queryClient = new QueryClient();
