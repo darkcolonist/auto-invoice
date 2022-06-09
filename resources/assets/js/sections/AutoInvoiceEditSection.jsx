@@ -28,6 +28,8 @@ const FormValidationSchema = Yup.object().shape({
     .required('required'),
   status: Yup.string()
     .required('required'),
+  schedule_day: Yup.string()
+    .required('required'),
   frequency: Yup.string()
     .required('required'),
 });
@@ -38,6 +40,7 @@ const FormInitialValues = {
   schedule_time: '09:00',
   status: 'inactive',
   frequency: 'bi-monthly',
+  schedule_day: 'monday'
 };
 
 const EditForm = (props) => {
@@ -151,6 +154,26 @@ const EditForm = (props) => {
       </FormControl>
 
       <FormControl fullWidth size="small">
+        <InputLabel id="labelDay">Day</InputLabel>
+        <Select
+          labelId="labelDay"
+          id="schedule_day"
+          label="schedule_day"
+          onChange={formik.handleChange('schedule_day')}
+          error={formik.errors.schedule_day !== undefined}
+          value={formik.values.schedule_day}>
+          <MenuItem value="monday">monday</MenuItem>
+          <MenuItem value="tuesday">tuesday</MenuItem>
+          <MenuItem value="wednesday">wednesday</MenuItem>
+          <MenuItem value="thursday">thursday</MenuItem>
+          <MenuItem value="friday">friday</MenuItem>
+          <MenuItem value="saturday">saturday</MenuItem>
+          <MenuItem value="sunday">sunday</MenuItem>
+        </Select>
+        <FormHelperText>{formik.errors.schedule_day}</FormHelperText>
+      </FormControl>
+
+      <FormControl fullWidth size="small">
         <InputLabel id="labelfrequency">Frequency</InputLabel>
         <Select
           labelId="labelfrequency"
@@ -169,14 +192,21 @@ const EditForm = (props) => {
         <FormHelperText>following the +0800 timezone</FormHelperText>
 
         <Stack direction="row" spacing={1}>
-          <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} 
-            variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Save</Button>
-
-          {editMode === "edit"?
-            <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <DeleteIcon />}
-              variant="outlined" color="error" size="large" disabled={formik.isSubmitting}
-              onClick={handleDeleteClick}>Delete</Button>
-          :""}
+          {editMode === "edit"
+            ?
+              <React.Fragment>
+                <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />} 
+                  variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Update</Button>
+                <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <DeleteIcon />}
+                  variant="outlined" color="error" size="large" disabled={formik.isSubmitting}
+                  onClick={handleDeleteClick}>Delete</Button>
+              </React.Fragment> 
+            :
+              <React.Fragment>
+                <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <SaveIcon />}
+                  variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Create</Button>
+              </React.Fragment>
+          }
         </Stack>
       </Box>
     </Stack>
