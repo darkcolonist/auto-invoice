@@ -46,6 +46,7 @@ CREATE TABLE `invoices` (
   `schedule_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `frequency` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `invoice_no` int(11) NOT NULL,
+  `timezone` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT 'Asia/Manila',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `contact_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -60,7 +61,7 @@ CREATE TABLE `invoices` (
   KEY `invoices_invoice_no_index` (`invoice_no`),
   KEY `created_by` (`created_by`),
   CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `jobs` */
 
