@@ -19,6 +19,9 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import ConfirmDialog, { confirmDialog } from '../components/ConfirmDialog';
 import MySnackbar, { showMySnackbar } from "../components/MySnackbar";
+import { addValidateJSONStringToYup } from "../components/MyHelpers";
+
+addValidateJSONStringToYup(Yup);
 
 const FormValidationSchema = Yup.object().shape({
   name: Yup.string()
@@ -32,6 +35,16 @@ const FormValidationSchema = Yup.object().shape({
     .required('required'),
   frequency: Yup.string()
     .required('required'),
+
+  contact_details: Yup.string()
+    .validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank')
+    .nullable(),
+  bill_to_details: Yup.string()
+    .validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank')
+    .nullable(),
+  account_details: Yup.string()
+    .validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank')
+    .nullable(),
 });
 
 const FormInitialValues = {
@@ -40,7 +53,10 @@ const FormInitialValues = {
   schedule_time: '09:00',
   status: '',
   frequency: '',
-  schedule_day: '',
+  schedule_day: '', 
+  contact_details: null,
+  bill_to_details: null,
+  account_details: null
 };
 
 const EditForm = (props) => {
@@ -211,6 +227,7 @@ const EditForm = (props) => {
               onChange={formik.handleChange}
               value={formik.values[v.field] ?? ""}
               helperText={formik.errors[v.field]}
+              error={formik.errors[v.field] !== undefined}
               label={v.label}
               placeholder={v.placeholder ?? "as json format ie., { \"something\": \"something's value\" }"}
               rows={v.rows ?? 3}

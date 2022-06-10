@@ -13715,6 +13715,43 @@ var confirmDialog = function confirmDialog(message, onSubmit) {
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/MyHelpers.js":
+/*!*****************************************************!*\
+  !*** ./resources/assets/js/components/MyHelpers.js ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "addValidateJSONStringToYup": () => (/* binding */ addValidateJSONStringToYup),
+/* harmony export */   "isJsonString": () => (/* binding */ isJsonString)
+/* harmony export */ });
+function isJsonString(str) {
+  try {
+    JSON.parse(str);
+  } catch (e) {
+    return false;
+  }
+
+  return true;
+}
+function addValidateJSONStringToYup(Yup) {
+  Yup.addMethod(Yup.string, "validateJSONString", function (errorMessage) {
+    return this.test("test-card-type", errorMessage, function (value) {
+      var path = this.path,
+          createError = this.createError;
+      if (value === undefined) return true;
+      return isJsonString(value) || createError({
+        path: path,
+        message: errorMessage
+      });
+    });
+  });
+}
+
+/***/ }),
+
 /***/ "./resources/assets/js/components/MySnackbar.jsx":
 /*!*******************************************************!*\
   !*** ./resources/assets/js/components/MySnackbar.jsx ***!
@@ -13803,29 +13840,30 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ AutoInvoiceEditSection)
 /* harmony export */ });
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Grid/Grid.js");
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Stack/Stack.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Grid/Grid.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Stack/Stack.js");
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
-/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @mui/icons-material/ArrowBack */ "./node_modules/@mui/icons-material/ArrowBack.js");
+/* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @mui/icons-material/ArrowBack */ "./node_modules/@mui/icons-material/ArrowBack.js");
 /* harmony import */ var _components_Axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Axios */ "./resources/assets/js/components/Axios.js");
-/* harmony import */ var _mui_material_Button__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @mui/material/Button */ "./node_modules/@mui/material/Button/Button.js");
-/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @mui/material/CircularProgress */ "./node_modules/@mui/material/CircularProgress/CircularProgress.js");
-/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mui/icons-material/Delete */ "./node_modules/@mui/icons-material/Delete.js");
-/* harmony import */ var _mui_material_FormControl__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mui/material/FormControl */ "./node_modules/@mui/material/FormControl/FormControl.js");
-/* harmony import */ var _mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mui/material/FormHelperText */ "./node_modules/@mui/material/FormHelperText/FormHelperText.js");
-/* harmony import */ var _mui_material_IconButton__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @mui/material/IconButton */ "./node_modules/@mui/material/IconButton/IconButton.js");
-/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @mui/material/InputLabel */ "./node_modules/@mui/material/InputLabel/InputLabel.js");
-/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mui/material/MenuItem */ "./node_modules/@mui/material/MenuItem/MenuItem.js");
+/* harmony import */ var _mui_material_Button__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @mui/material/Button */ "./node_modules/@mui/material/Button/Button.js");
+/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @mui/material/CircularProgress */ "./node_modules/@mui/material/CircularProgress/CircularProgress.js");
+/* harmony import */ var _mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @mui/icons-material/Delete */ "./node_modules/@mui/icons-material/Delete.js");
+/* harmony import */ var _mui_material_FormControl__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @mui/material/FormControl */ "./node_modules/@mui/material/FormControl/FormControl.js");
+/* harmony import */ var _mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @mui/material/FormHelperText */ "./node_modules/@mui/material/FormHelperText/FormHelperText.js");
+/* harmony import */ var _mui_material_IconButton__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @mui/material/IconButton */ "./node_modules/@mui/material/IconButton/IconButton.js");
+/* harmony import */ var _mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mui/material/InputLabel */ "./node_modules/@mui/material/InputLabel/InputLabel.js");
+/* harmony import */ var _mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mui/material/MenuItem */ "./node_modules/@mui/material/MenuItem/MenuItem.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @mui/icons-material/Save */ "./node_modules/@mui/icons-material/Save.js");
-/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mui/material/Select */ "./node_modules/@mui/material/Select/Select.js");
-/* harmony import */ var _mui_material_TextField__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material/TextField */ "./node_modules/@mui/material/TextField/TextField.js");
+/* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mui/icons-material/Save */ "./node_modules/@mui/icons-material/Save.js");
+/* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mui/material/Select */ "./node_modules/@mui/material/Select/Select.js");
+/* harmony import */ var _mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mui/material/TextField */ "./node_modules/@mui/material/TextField/TextField.js");
 /* harmony import */ var _components_ConfirmDialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/ConfirmDialog */ "./resources/assets/js/components/ConfirmDialog.jsx");
 /* harmony import */ var _components_MySnackbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/MySnackbar */ "./resources/assets/js/components/MySnackbar.jsx");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_MyHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/MyHelpers */ "./resources/assets/js/components/MyHelpers.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -13861,12 +13899,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+
+(0,_components_MyHelpers__WEBPACK_IMPORTED_MODULE_6__.addValidateJSONStringToYup)(yup__WEBPACK_IMPORTED_MODULE_1__);
 var FormValidationSchema = yup__WEBPACK_IMPORTED_MODULE_1__.object().shape({
   name: yup__WEBPACK_IMPORTED_MODULE_1__.string().min(3).required('required'),
   schedule_time: yup__WEBPACK_IMPORTED_MODULE_1__.string().required('required'),
   status: yup__WEBPACK_IMPORTED_MODULE_1__.string().required('required'),
   schedule_day: yup__WEBPACK_IMPORTED_MODULE_1__.string().required('required'),
-  frequency: yup__WEBPACK_IMPORTED_MODULE_1__.string().required('required')
+  frequency: yup__WEBPACK_IMPORTED_MODULE_1__.string().required('required'),
+  contact_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable(),
+  bill_to_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable(),
+  account_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable()
 });
 var FormInitialValues = {
   hash: '',
@@ -13874,7 +13917,10 @@ var FormInitialValues = {
   schedule_time: '09:00',
   status: '',
   frequency: '',
-  schedule_day: ''
+  schedule_day: '',
+  contact_details: null,
+  bill_to_details: null,
+  account_details: null
 };
 
 var EditForm = function EditForm(props) {
@@ -13883,7 +13929,7 @@ var EditForm = function EditForm(props) {
       formValues = _React$useState2[0],
       setFormValues = _React$useState2[1];
 
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useHistory)();
   var editMode = props.hash === undefined ? "new" : "edit";
 
   var handleDeleteClick = function handleDeleteClick() {
@@ -13937,7 +13983,7 @@ var EditForm = function EditForm(props) {
       });
     }
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
     container: true,
     spacing: 2,
     component: "form",
@@ -13950,18 +13996,18 @@ var EditForm = function EditForm(props) {
     noValidate: true,
     autoComplete: "off",
     onSubmit: formik.handleSubmit,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
       item: true,
       xs: 4,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
         spacing: 2,
-        children: [formik.values.hash ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        children: [formik.values.hash ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
           label: "Hash",
           variant: "outlined",
           size: "small",
           disabled: true,
           value: formik.values.hash
-        }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
           label: "Name",
           variant: "outlined",
           size: "small",
@@ -13971,7 +14017,7 @@ var EditForm = function EditForm(props) {
           name: "name",
           onChange: formik.handleChange,
           value: formik.values.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_10__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
           label: "Schedule Time",
           variant: "outlined",
           size: "small",
@@ -13982,99 +14028,99 @@ var EditForm = function EditForm(props) {
           name: "schedule_time",
           onChange: formik.handleChange,
           value: formik.values.schedule_time
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_12__["default"], {
           fullWidth: true,
           size: "small",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_13__["default"], {
             id: "labelstatus",
             children: "Status"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_13__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_14__["default"], {
             labelId: "labelstatus",
             id: "status",
             label: "Status",
             onChange: formik.handleChange('status'),
             error: formik.errors.status !== undefined,
             value: formik.values.status,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "active",
               children: "active"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "inactive",
               children: "inactive"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_16__["default"], {
             error: formik.errors.status !== undefined,
             children: formik.errors.status
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_12__["default"], {
           fullWidth: true,
           size: "small",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_13__["default"], {
             id: "labelDay",
             children: "Day"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_13__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_14__["default"], {
             labelId: "labelDay",
             id: "schedule_day",
             label: "schedule_day",
             onChange: formik.handleChange('schedule_day'),
             error: formik.errors.schedule_day !== undefined,
             value: formik.values.schedule_day,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "monday",
               children: "monday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "tuesday",
               children: "tuesday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "wednesday",
               children: "wednesday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "thursday",
               children: "thursday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "friday",
               children: "friday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "saturday",
               children: "saturday"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "sunday",
               children: "sunday"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_16__["default"], {
             error: formik.errors.schedule_day !== undefined,
             children: formik.errors.schedule_day
           })]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material_FormControl__WEBPACK_IMPORTED_MODULE_12__["default"], {
           fullWidth: true,
           size: "small",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_12__["default"], {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_InputLabel__WEBPACK_IMPORTED_MODULE_13__["default"], {
             id: "labelfrequency",
             children: "Frequency"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_13__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material_Select__WEBPACK_IMPORTED_MODULE_14__["default"], {
             labelId: "labelfrequency",
             id: "frequency",
             label: "frequency",
             onChange: formik.handleChange('frequency'),
             error: formik.errors.frequency !== undefined,
             value: formik.values.frequency,
-            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "bi-monthly",
               children: "bi-monthly"
-            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_14__["default"], {
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_MenuItem__WEBPACK_IMPORTED_MODULE_15__["default"], {
               value: "monthly",
               children: "monthly"
             })]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_15__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_16__["default"], {
             error: formik.errors.frequency !== undefined,
             children: formik.errors.frequency
           })]
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
       item: true,
       xs: 4,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
         spacing: 2,
         children: [{
           field: "contact_details",
@@ -14088,12 +14134,13 @@ var EditForm = function EditForm(props) {
         }].map(function (v) {
           var _formik$values$v$fiel, _v$placeholder, _v$rows;
 
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_10__["default"], {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
             id: v.field,
             name: v.field,
             onChange: formik.handleChange,
             value: (_formik$values$v$fiel = formik.values[v.field]) !== null && _formik$values$v$fiel !== void 0 ? _formik$values$v$fiel : "",
             helperText: formik.errors[v.field],
+            error: formik.errors[v.field] !== undefined,
             label: v.label,
             placeholder: (_v$placeholder = v.placeholder) !== null && _v$placeholder !== void 0 ? _v$placeholder : "as json format ie., { \"something\": \"something's value\" }",
             rows: (_v$rows = v.rows) !== null && _v$rows !== void 0 ? _v$rows : 3,
@@ -14102,28 +14149,28 @@ var EditForm = function EditForm(props) {
           }, v.field);
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
       item: true,
       xs: 12,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_15__["default"], {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_16__["default"], {
         children: "following the +0800 timezone"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
         direction: "row",
         spacing: 1,
-        children: editMode === "edit" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_Button__WEBPACK_IMPORTED_MODULE_16__["default"], {
-            startIcon: formik.isSubmitting ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__["default"], {
+        children: editMode === "edit" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_Button__WEBPACK_IMPORTED_MODULE_17__["default"], {
+            startIcon: formik.isSubmitting ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_18__["default"], {
               size: 16
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_18__["default"], {}),
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_19__["default"], {}),
             variant: "outlined",
             type: "submit",
             size: "large",
             disabled: formik.isSubmitting,
             children: "Update"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_Button__WEBPACK_IMPORTED_MODULE_16__["default"], {
-            startIcon: formik.isSubmitting ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__["default"], {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_Button__WEBPACK_IMPORTED_MODULE_17__["default"], {
+            startIcon: formik.isSubmitting ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_18__["default"], {
               size: 16
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_19__["default"], {}),
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_icons_material_Delete__WEBPACK_IMPORTED_MODULE_20__["default"], {}),
             variant: "outlined",
             color: "error",
             size: "large",
@@ -14131,11 +14178,11 @@ var EditForm = function EditForm(props) {
             onClick: handleDeleteClick,
             children: "Delete"
           })]
-        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_Button__WEBPACK_IMPORTED_MODULE_16__["default"], {
-            startIcon: formik.isSubmitting ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__["default"], {
+        }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_Button__WEBPACK_IMPORTED_MODULE_17__["default"], {
+            startIcon: formik.isSubmitting ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_18__["default"], {
               size: 16
-            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_18__["default"], {}),
+            }) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_19__["default"], {}),
             variant: "outlined",
             type: "submit",
             size: "large",
@@ -14150,20 +14197,20 @@ var EditForm = function EditForm(props) {
 
 
 function AutoInvoiceEditSection() {
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useParams)(),
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useParams)(),
       hash = _useParams.hash;
 
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_7__.useHistory)();
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_material_IconButton__WEBPACK_IMPORTED_MODULE_20__["default"], {
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useHistory)();
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_IconButton__WEBPACK_IMPORTED_MODULE_21__["default"], {
       title: "go back",
       onClick: function onClick() {
         history.push('/autoinvoice');
       },
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_21__["default"], {})
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(EditForm, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_22__["default"], {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(EditForm, {
       hash: hash
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_ConfirmDialog__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_components_MySnackbar__WEBPACK_IMPORTED_MODULE_5__["default"], {})]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_ConfirmDialog__WEBPACK_IMPORTED_MODULE_4__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_components_MySnackbar__WEBPACK_IMPORTED_MODULE_5__["default"], {})]
   });
 }
 
