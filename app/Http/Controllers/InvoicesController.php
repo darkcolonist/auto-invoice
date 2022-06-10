@@ -224,4 +224,14 @@ class InvoicesController extends Controller
       "count" => $purged
     ];
   }
+
+  public function testSchedule(Request $request, Invoice $invoice){
+    $invoice = $this->prepareModelForDisplay($invoice);
+
+    return [
+      "code" => 200,
+      "invoice" => $invoice,
+      "next_schedule" => $invoice->getNextSchedule()
+    ];
+  }
 }

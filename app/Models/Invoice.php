@@ -5,6 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Carbon\Carbon;
+use Carbon\CarbonTimeZone;
+
 class Invoice extends Model
 {
   use \App\Traits\TraitUniqueHash {
@@ -69,5 +72,53 @@ class Invoice extends Model
     };
     
     static::creating($creationCallback);
+  }
+
+  public function getNextSchedule()
+  {
+    $debug = [];
+
+    $tz = new CarbonTimeZone($this->timezone);
+    // $now = Carbon::parse("now"); // default
+    $now = Carbon::parse("june 16");
+    $closest;
+    
+    $debug[] = "current time is ". $now->format("r");
+    $debug[] = "applying timezone ". $this->timezone;
+    $debug[] = "current time is ". $now->setTimezone($tz)->format("r");
+    $debug[] = "--- if frequency is MONTHLY ---";
+    $debug[] = "last day of month is ". $now->endOfMonth()->format("l d");
+    $debug[] = "found preferred day ". $this->schedule_day;
+
+    if(strcasecmp($now->format("l"), $this->schedule_day) !== 0){
+      $closest = $now->previous($this->schedule_day);
+    }else{
+      $closest = $now;
+    }
+
+    $debug[] = "closest to preferred day from end of month ". $closest->format("l d");
+    $debug[] = "--- if frequency is BI-MONTHLY ---";
+    $debug[] = "mid of month is ". $now->set("day", 15)->format("l d");
+
+    if(strcasecmp($now->format("l"), $this->schedule_day) !== 0){
+      $closest = $now->previous($this->schedule_day);
+    }else{
+      $closest = $now;
+    }
+
+    $debug[] = "closest to preferred day from mid of month ". $closest->format("l d");
+    $debug[] = "------------------------------";
+    $debug[] = "------------------------------";
+    $debug[] = "------------------------------";
+    $debug[] = "------------------------------";
+    $debug[] = "------------------------------";
+
+    if(strcasecmp($this->frequency,"bi-monthly") === 0){
+      // 15th or 30th (depending on the last day of month)
+    }else if(strcasecmp($this->frequency,"bi-monthly") === 0){
+      // 30th (depending on the last day of month)
+    }
+      
+    return $debug;
   }
 }
