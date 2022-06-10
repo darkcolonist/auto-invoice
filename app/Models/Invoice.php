@@ -86,32 +86,52 @@ class Invoice extends Model
     $debug[] = "current time is ". $now->format("r");
     $debug[] = "applying timezone ". $this->timezone;
     $debug[] = "current time is ". $now->setTimezone($tz)->format("r");
-    $debug[] = "--- if frequency is MONTHLY ---";
-    $debug[] = "last day of month is ". $now->endOfMonth()->format("l d");
+    $debug[] = "------------------------------";
+    $debug[] = "- if frequency is MONTHLY -";
+    $debug[] = "------------------------------";
+
+    $endOfMonth = (clone $now)->endOfMonth();
+
+    $debug[] = "last day of month is ". $endOfMonth->format("l d");
     $debug[] = "found preferred day ". $this->schedule_day;
 
-    if(strcasecmp($now->format("l"), $this->schedule_day) !== 0){
-      $closest = $now->previous($this->schedule_day);
-    }else{
-      $closest = $now;
+    $closest = clone $endOfMonth;
+    if(strcasecmp($closest->format("l"), $this->schedule_day) !== 0){
+      $closest = $closest->previous($this->schedule_day);
     }
-
+    
+    $fifteenth = (clone $now)->set("day", 15);
     $debug[] = "closest to preferred day from end of month ". $closest->format("l d");
-    $debug[] = "--- if frequency is BI-MONTHLY ---";
-    $debug[] = "mid of month is ". $now->set("day", 15)->format("l d");
+    $debug[] = "------------------------------";
+    $debug[] = "- if frequency is BI-MONTHLY -";
+    $debug[] = "------------------------------";
+    $debug[] = "mid of month is ". $fifteenth->format("l d");
 
-    if(strcasecmp($now->format("l"), $this->schedule_day) !== 0){
-      $closest = $now->previous($this->schedule_day);
-    }else{
-      $closest = $now;
+    $closest = clone $now;
+    if(strcasecmp($closest->format("l"), $this->schedule_day) !== 0){
+      $closest = $closest->previous($this->schedule_day);
     }
 
     $debug[] = "closest to preferred day from mid of month ". $closest->format("l d");
     $debug[] = "------------------------------";
+    $debug[] = "- actual use case -";
     $debug[] = "------------------------------";
-    $debug[] = "------------------------------";
-    $debug[] = "------------------------------";
-    $debug[] = "------------------------------";
+
+    $debug[] = "given date now " . $now->format("r");
+
+    /**
+     * if today is the 15th or the last day of the month then the
+     * schedule may run today. base it as well to the preferred time
+     * 
+     * for example if preferred time is 5PM and the invoice was 
+     * updated at around 9am today at june 15. the invoice is following
+     * the bi-monthly frequency then the next schedule is june 15 5pm
+     * which is later today.
+     * 
+     * but if the preferred time is 5PM and the invoice was updated at
+     * around 5:10PM, the next schedule is last preferred day of june
+     * at 5PM
+     */
 
     if(strcasecmp($this->frequency,"bi-monthly") === 0){
       // 15th or 30th (depending on the last day of month)
