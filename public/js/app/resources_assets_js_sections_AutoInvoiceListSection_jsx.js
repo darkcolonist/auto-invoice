@@ -45253,11 +45253,12 @@ function CustomSearchBox(props) {
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_2__["default"], {
     size: "small",
-    placeholder: "hit enter to search",
+    placeholder: "enter to search",
+    variant: "standard",
     defaultValue: props.quickSearchValue,
     onKeyUp: keyPress,
     InputProps: {
-      endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_mui_icons_material_Search__WEBPACK_IMPORTED_MODULE_3__["default"], {})
+      startAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(_mui_icons_material_Search__WEBPACK_IMPORTED_MODULE_3__["default"], {})
     }
   });
 }

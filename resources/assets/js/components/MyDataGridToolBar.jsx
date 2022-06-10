@@ -30,11 +30,12 @@ export function CustomSearchBox(props){
 
   return <TextField
     size='small'
-    placeholder='hit enter to search'
+    placeholder='enter to search'
+    variant='standard'
     defaultValue={props.quickSearchValue}
     onKeyUp={keyPress}
     InputProps={{
-      endAdornment: <SearchIcon />
+      startAdornment: <SearchIcon />
     }}
   ></TextField>
 }
