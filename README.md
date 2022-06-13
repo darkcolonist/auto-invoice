@@ -11,4 +11,4 @@ Automatically send invoices given schedules
 _TODO_
 
 ## Jobs
-_TODO_
+`php artisan queue:work database --queue=send-invoices-queue`

@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Log;
 
 class SendInvoice implements ShouldQueue, ShouldBeUnique
 {
@@ -46,6 +47,6 @@ class SendInvoice implements ShouldQueue, ShouldBeUnique
   */
   public function handle()
   {
-    //
+    Log::channel("mydebug")->info($this->invoice->hash . " processed!");
   }
 }
