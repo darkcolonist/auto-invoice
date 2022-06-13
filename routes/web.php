@@ -28,5 +28,6 @@ Route::resource('invoice', App\Http\Controllers\InvoicesController::class)
 // Route::get('/test/invoice/deleteAll', [App\Http\Controllers\InvoicesController::class, 'testDeleteAll']);
 
 Route::get('/test/invoice/schedule/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testSchedule']);
+Route::get('/test/invoice/schedulejob/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testScheduleSendInvoiceJob']);
 
 Route::post('/getLeavesBySearchKeyword', 'LeavesController@getLeavesBySearchKeyword');

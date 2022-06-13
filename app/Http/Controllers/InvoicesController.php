@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class InvoicesController extends Controller
 {
@@ -227,6 +228,18 @@ class InvoicesController extends Controller
 
   public function testSchedule(Request $request, Invoice $invoice){
     $invoice = $this->prepareModelForDisplay($invoice);
+
+    return [
+      "code" => 200,
+      "invoice" => $invoice,
+      "next_schedule" => $invoice->getNextSchedule($request->input("date"))
+    ];
+  }
+
+  public function testScheduleSendInvoiceJob(Request $request, Invoice $invoice){
+    $invoice = $this->prepareModelForDisplay($invoice);
+
+    Log::channel("mydebug")->info($invoice->hash . " is scheduled on ". $invoice->getNextSchedule());
 
     return [
       "code" => 200,
