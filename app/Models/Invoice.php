@@ -74,71 +74,70 @@ class Invoice extends Model
     static::creating($creationCallback);
   }
 
-  public function getNextSchedule()
-  {
-    $debug = [];
+  public function getNextScheduleDates(Carbon $now, $frequency){
+    $dates = [];
 
-    $tz = new CarbonTimeZone($this->timezone);
-    // $now = Carbon::parse("now"); // default
-    $now = Carbon::parse("june 16");
-    $closest;
+    $dates[0] = $now;
+
+    // get closest to mid-month date with preferred day and time
+    $midmonth = (clone $now)->set("day", 15);
+    if(strcasecmp($midmonth->format("l"), $this->schedule_day) !== 0){
+      $midmonth = $midmonth->previous($this->schedule_day);
+    }
+    $dates[15] = $midmonth;
     
-    $debug[] = "current time is ". $now->format("r");
-    $debug[] = "applying timezone ". $this->timezone;
-    $debug[] = "current time is ". $now->setTimezone($tz)->format("r");
-    $debug[] = "------------------------------";
-    $debug[] = "- if frequency is MONTHLY -";
-    $debug[] = "------------------------------";
-
+    // get the closest to end-month date with preferred day and time
     $endOfMonth = (clone $now)->endOfMonth();
-
-    $debug[] = "last day of month is ". $endOfMonth->format("l d");
-    $debug[] = "found preferred day ". $this->schedule_day;
-
-    $closest = clone $endOfMonth;
-    if(strcasecmp($closest->format("l"), $this->schedule_day) !== 0){
-      $closest = $closest->previous($this->schedule_day);
-    }
-    
-    $fifteenth = (clone $now)->set("day", 15);
-    $debug[] = "closest to preferred day from end of month ". $closest->format("l d");
-    $debug[] = "------------------------------";
-    $debug[] = "- if frequency is BI-MONTHLY -";
-    $debug[] = "------------------------------";
-    $debug[] = "mid of month is ". $fifteenth->format("l d");
-
-    $closest = clone $now;
-    if(strcasecmp($closest->format("l"), $this->schedule_day) !== 0){
-      $closest = $closest->previous($this->schedule_day);
+    if(strcasecmp($endOfMonth->format("l"), $this->schedule_day) !== 0){
+      $endOfMonth = $endOfMonth->previous($this->schedule_day);
     }
 
-    $debug[] = "closest to preferred day from mid of month ". $closest->format("l d");
-    $debug[] = "------------------------------";
-    $debug[] = "- actual use case -";
-    $debug[] = "------------------------------";
+    $dates[30] = $endOfMonth;
 
-    $debug[] = "given date now " . $now->format("r");
+    if($dates[15]->gte($now) && strcasecmp($frequency, "bi-monthly") === 0)
+      return $dates[15];
+    else if($dates[30]->gte($now))
+      return $dates[30];
+    else
+      // if 15th and 30th are earlier days than now then we need to 
+      // move 1 week forward.
+      return $this->getNextScheduleDates((clone $now)->addWeek());
 
-    /**
-     * if today is the 15th or the last day of the month then the
-     * schedule may run today. base it as well to the preferred time
-     * 
-     * for example if preferred time is 5PM and the invoice was 
-     * updated at around 9am today at june 15. the invoice is following
-     * the bi-monthly frequency then the next schedule is june 15 5pm
-     * which is later today.
-     * 
-     * but if the preferred time is 5PM and the invoice was updated at
-     * around 5:10PM, the next schedule is last preferred day of june
-     * at 5PM
-     */
+    return $dates;
+  }
 
-    if(strcasecmp($this->frequency,"bi-monthly") === 0){
-      // 15th or 30th (depending on the last day of month)
-    }else if(strcasecmp($this->frequency,"bi-monthly") === 0){
-      // 30th (depending on the last day of month)
-    }
-      
-    return $debug;
+  /**
+   * if today is the 15th or the last day of the month then the
+   * schedule may run today. base it as well to the preferred time
+   * 
+   * for example if preferred time is 5PM and the invoice was 
+   * updated at around 9am today at june 15. the invoice is following
+   * the bi-monthly frequency then the next schedule is june 15 5pm
+   * which is later today.
+   * 
+   * but if the preferred time is 5PM and the invoice was updated at
+   * around 5:10PM, the next schedule is last preferred day of june
+   * at 5PM
+   */
+  public function getNextSchedule($dateNow = null)
+  {
+    $tz = new CarbonTimeZone($this->timezone);
+
+    // convert to preferred timezone
+    $now = Carbon::parse($dateNow)->setTimezone($tz);
+
+    $date = $this->getNextScheduleDates($now, $this->frequency);
+
+    // set the hour and minute
+    $hourmin = explode(":", $this->schedule_time);
+    $date->startOfDay();
+    $date->hour($hourmin[0]);
+    $date->minute($hourmin[1]);
+
+    // convert to default app timezone
+    $date->setTimezone(config("app.timezone"));
+
+    // return $date->format("r e"); // for debug
+    return $date;
   }
 }

@@ -231,7 +231,7 @@ class InvoicesController extends Controller
     return [
       "code" => 200,
       "invoice" => $invoice,
-      "next_schedule" => $invoice->getNextSchedule()
+      "next_schedule" => $invoice->getNextSchedule($request->input("date"))
     ];
   }
 }
