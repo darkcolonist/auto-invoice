@@ -4,9 +4,12 @@ namespace App\Models;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
+
+use App\Jobs\SendInvoice;
 
 class Invoice extends Model
 {
@@ -15,6 +18,7 @@ class Invoice extends Model
   }
 
   use \App\Traits\TraitTimestampsFormatting;
+  use \Illuminate\Foundation\Bus\DispatchesJobs;
   use HasFactory;
 
   protected $attributes = [
@@ -139,5 +143,50 @@ class Invoice extends Model
 
     // return $date->format("r e"); // for debug
     return $date;
+  }
+
+  /**
+   * triggers on
+   * - invoice updated from inactive to active
+   * - last autoinvice has been sent
+   */
+  public function scheduleNextAutoInvoice(){
+    $this->timestamps = false;
+    /**
+     * if there is a previously scheduled job for this invoice, remove
+     * it
+     */
+    if($this->current_job){
+      DB::table('jobs')
+        ->where('id', $this->current_job)
+        ->delete();
+
+      $this->current_job = null;
+    }
+
+    $scheduleDate = $this->getNextSchedule();
+
+    $jobID = $this->dispatch((new SendInvoice($this))->delay($scheduleDate));
+
+    $this->current_job = $jobID;
+    $this->save();
+
+    return $jobID;
+  }
+
+  /**
+   * triggers
+   * - invoice updated from active to inactive
+   */
+  public function cancelAutoInvoice(){
+    $this->timestamps = false;
+    if($this->current_job){
+      DB::table('jobs')
+        ->where('id', $this->current_job)
+        ->delete();
+
+      $this->current_job = null;
+      $this->save();
+    }
   }
 }
