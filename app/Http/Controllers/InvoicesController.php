@@ -229,9 +229,12 @@ class InvoicesController extends Controller
   public function testSchedule(Request $request, Invoice $invoice){
     $invoice = $this->prepareModelForDisplay($invoice);
 
+    $invoice->job; // load the job
+
     return [
       "code" => 200,
       "invoice" => $invoice,
+      // "job" => $invoice->job,
       "input" => $request->input("date"),
       "next_schedule" => $invoice->getNextSchedule($request->input("date"))
     ];

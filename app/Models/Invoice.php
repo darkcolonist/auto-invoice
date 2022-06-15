@@ -1,7 +1,6 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -78,6 +77,10 @@ class Invoice extends Model
     static::creating($creationCallback);
   }
 
+  public function job(){
+    return $this->hasOne(Job::class, "id", "current_job");
+  }
+
   public function getNextScheduleDates(Carbon $now, $frequency, $scheduleTime){
     $dates = [];
 
@@ -137,7 +140,6 @@ class Invoice extends Model
   public function getNextSchedule($dateNow = null, $setTimezones = true)
   {
     $now = Carbon::parse($dateNow);
-    
     
     if($setTimezones){
       // convert to preferred timezone
