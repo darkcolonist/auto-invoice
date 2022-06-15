@@ -4,6 +4,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
@@ -164,6 +165,7 @@ class Invoice extends Model
    * - last autoinvice has been sent
    */
   public function scheduleNextAutoInvoice(){
+    // do not update updated_at
     $this->timestamps = false;
     /**
      * if there is a previously scheduled job for this invoice, remove
@@ -177,7 +179,11 @@ class Invoice extends Model
       $this->current_job = null;
     }
 
-    $scheduleDate = $this->getNextSchedule();
+    // we advance now by 5 minutes so that we won't create a new 
+    // schedule that collides with the time now.
+    $now = Carbon::parse("+5 minutes");
+    $scheduleDate = $this->getNextSchedule($now);
+    // Log::channel("mydebug")->info("scheduling " . $this->hash . " on ". $scheduleDate . " now is ". $now);
 
     $jobID = $this->dispatch((new SendInvoice($this))->delay($scheduleDate));
 
@@ -192,14 +198,17 @@ class Invoice extends Model
    * - invoice updated from active to inactive
    */
   public function cancelAutoInvoice(){
+    // do not update updated_at
     $this->timestamps = false;
-    if($this->current_job){
-      DB::table('jobs')
-        ->where('id', $this->current_job)
-        ->delete();
-
-      $this->current_job = null;
-      $this->save();
-    }
+    // if($this->current_job){
+    //   DB::table('jobs')
+    //     ->where('id', $this->current_job)
+    //     ->delete();
+    
+    //   $this->current_job = null;
+    //   $this->save();
+    // }
+    // shortcut of above
+    $this->job->delete();
   }
 }
