@@ -6,15 +6,23 @@ use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use \Barryvdh\Debugbar\Facades\Debugbar;
 
 class InvoicesController extends Controller
 {
   use \App\Traits\TraitMyResourceController;
 
-  private $hiddenAttributes = ["id", "created_by"];
+  private $hiddenAttributes = ["id", "created_by", "current_job", "job.id"];
 
   private function prepareModelForDisplay($model){
     $model->makeHidden($this->hiddenAttributes);
+
+    // eager load the job
+    // $model->load("job")->makeHidden(["id"]);
+    // $model->job->makeHidden(["id"]);
+
+    Debugbar::info('going once');
+    Debugbar::info($model->toArray());
 
     return $model;
   }
@@ -39,7 +47,7 @@ class InvoicesController extends Controller
     $limit = $request->input("limit", 3);
     $offset = ($request->input("page", 1)-1)*$limit;
 
-    $invoices = Invoice::select();
+    $invoices = Invoice::with(["job"]);
 
     if($this->getSortModel($request)){
       $sortModel = $this->getSortModel($request);

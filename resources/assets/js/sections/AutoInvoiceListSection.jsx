@@ -84,10 +84,19 @@ const columns = [
   { field: 'frequency', headerName: 'frequency', width: 120, },
   { field: 'invoice_no', headerName: 'invoice no', width: 80, },
   { field: 'created_at', headerName: 'created', width: 120, renderCell: (params) => {
-    return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></MyMoment>
+    return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormalLong} withTitle></MyMoment>
   }},
   { field: 'updated_at', headerName: 'updated', width: 120, renderCell: (params) => {
-    return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormal} withTitle></MyMoment>
+    return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormalLong} withTitle></MyMoment>
+  }},
+  {
+    field: 'next_invoice', headerName: 'next invoice', width: 120, renderCell: (params) => {
+      let render;
+
+      if(params.row.job)
+        render = <MyMoment date={params.row.job.available_at} fromNow titleFormat={appConfig.dateFormatFormalLong} withTitle></MyMoment>
+
+      return render;
   }},
   {
     field: 'action',
