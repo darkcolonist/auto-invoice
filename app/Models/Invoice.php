@@ -25,13 +25,13 @@ class Invoice extends Model
     /**
      * if set to active for the first time, a next schedule will be
      * created.
-     * 
+     *
      * if set to inactive, the upcoming schedule will be cancelled
      */
     'status' => 'inactive',
 
     /**
-     * will find the closest day on or before the scheduled date. for 
+     * will find the closest day on or before the scheduled date. for
      * example, the frequency is bi-monthly, meaning, the target
      * schedule days are on 15th and [28, 30, 31] depending on the
      * month. let's say the 15th day lands on a friday but the
@@ -48,8 +48,8 @@ class Invoice extends Model
     /**
      * monthly = every 28th, 30th or 31st of the month, depending on
      * which month
-     * 
-     * bi-monthly = one on the 15th, another on the 28th, 30th or 31st 
+     *
+     * bi-monthly = one on the 15th, another on the 28th, 30th or 31st
      * of the month
      */
     'frequency' => 'bi-monthly',
@@ -74,8 +74,34 @@ class Invoice extends Model
         throw new \Error("WebmasterNotFoundException");
       }
     };
-    
+
+    $saveCallback = function ($model){
+      if($model->status != $model->getOriginal('status')){
+        // Log::channel("mydebug")->info($model->hash." save callback {$model->status} != {$model->getOriginal('status')}");
+        // Log::channel("mydebug")->info($model->hash." changed to ".$model->status." from ".$model->getOriginal('status'));
+        if($model->status == "active")
+          $model->setToActive();
+        else if($model->status == "inactive")
+          $model->setToInactive();
+      }
+    };
+
     static::creating($creationCallback);
+    static::updated($saveCallback);
+    static::created($saveCallback);
+  }
+
+  public function setToInactive(){
+    $this->refresh();
+    if($this->job)
+      $this->job->delete();
+    // Log::channel("mydebug")->info($this->hash." deactivated");
+  }
+
+  public function setToActive(){
+    $this->refresh();
+    $this->scheduleNextAutoInvoice();
+    // Log::channel("mydebug")->info($this->hash." activated");
   }
 
   public function job(){
@@ -89,7 +115,7 @@ class Invoice extends Model
 
     // set the hour and minute
     $hourmin = explode(":", $scheduleTime);
-    
+
     // get closest to mid-month date with preferred day and time
     $midmonth = (clone $now)->set("day", 15);
     if(strcasecmp($midmonth->format("l"), $this->schedule_day) !== 0){
@@ -99,7 +125,7 @@ class Invoice extends Model
     $midmonth->hour($hourmin[0]);
     $midmonth->minute($hourmin[1]);
     $dates[15] = $midmonth;
-    
+
     // get the closest to end-month date with preferred day and time
     $endOfMonth = (clone $now)->endOfMonth();
     if(strcasecmp($endOfMonth->format("l"), $this->schedule_day) !== 0){
@@ -118,7 +144,7 @@ class Invoice extends Model
     else if($dates[30]->gte($now))
       return $dates[30];
     else
-      // if 15th and 30th are earlier days than now then we need to 
+      // if 15th and 30th are earlier days than now then we need to
       // move 1 week forward.
       return $this->getNextScheduleDates((clone $now)->addWeek(), $frequency, $scheduleTime);
 
@@ -128,12 +154,12 @@ class Invoice extends Model
   /**
    * if today is the 15th or the last day of the month then the
    * schedule may run today. base it as well to the preferred time
-   * 
-   * for example if preferred time is 5PM and the invoice was 
+   *
+   * for example if preferred time is 5PM and the invoice was
    * updated at around 9am today at june 15. the invoice is following
    * the bi-monthly frequency then the next schedule is june 15 5pm
    * which is later today.
-   * 
+   *
    * but if the preferred time is 5PM and the invoice was updated at
    * around 5:10PM, the next schedule is last preferred day of june
    * at 5PM
@@ -141,13 +167,13 @@ class Invoice extends Model
   public function getNextSchedule($dateNow = null, $setTimezones = true)
   {
     $now = Carbon::parse($dateNow);
-    
+
     if($setTimezones){
       // convert to preferred timezone
       $tz = new CarbonTimeZone($this->timezone);
       $now->setTimezone($tz);
     }
-    
+
     $date = $this->getNextScheduleDates($now, $this->frequency, $this->schedule_time);
 
     // convert to default app timezone to save to database
@@ -171,15 +197,13 @@ class Invoice extends Model
      * if there is a previously scheduled job for this invoice, remove
      * it
      */
-    if($this->current_job){
-      DB::table('jobs')
-        ->where('id', $this->current_job)
-        ->delete();
-
-      $this->current_job = null;
+    if($this->job){
+      $this->job->delete();
     }
 
-    // we advance now by 5 minutes so that we won't create a new 
+    $this->invoice_no += 1;
+
+    // we advance now by 5 minutes so that we won't create a new
     // schedule that collides with the time now.
     $now = Carbon::parse("+5 minutes");
     $scheduleDate = $this->getNextSchedule($now);
@@ -204,7 +228,7 @@ class Invoice extends Model
     //   DB::table('jobs')
     //     ->where('id', $this->current_job)
     //     ->delete();
-    
+
     //   $this->current_job = null;
     //   $this->save();
     // }

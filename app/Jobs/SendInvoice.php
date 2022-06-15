@@ -48,5 +48,6 @@ class SendInvoice implements ShouldQueue, ShouldBeUnique
   public function handle()
   {
     Log::channel("mydebug")->info($this->invoice->hash." processed!");
+    $this->invoice->scheduleNextAutoInvoice();
   }
 }
