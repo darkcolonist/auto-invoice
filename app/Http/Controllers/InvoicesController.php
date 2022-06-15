@@ -258,4 +258,8 @@ class InvoicesController extends Controller
       "next_schedule" => $schedule
     ];
   }
+
+  public function testPdf(Request $request, Invoice $invoice){
+    return view('invoice-pdf');
+  }
 }
