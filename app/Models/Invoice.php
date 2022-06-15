@@ -78,16 +78,22 @@ class Invoice extends Model
     static::creating($creationCallback);
   }
 
-  public function getNextScheduleDates(Carbon $now, $frequency){
+  public function getNextScheduleDates(Carbon $now, $frequency, $scheduleTime){
     $dates = [];
 
     $dates[0] = $now;
 
+    // set the hour and minute
+    $hourmin = explode(":", $scheduleTime);
+    
     // get closest to mid-month date with preferred day and time
     $midmonth = (clone $now)->set("day", 15);
     if(strcasecmp($midmonth->format("l"), $this->schedule_day) !== 0){
       $midmonth = $midmonth->previous($this->schedule_day);
     }
+    $midmonth->startOfDay();
+    $midmonth->hour($hourmin[0]);
+    $midmonth->minute($hourmin[1]);
     $dates[15] = $midmonth;
     
     // get the closest to end-month date with preferred day and time
@@ -95,8 +101,13 @@ class Invoice extends Model
     if(strcasecmp($endOfMonth->format("l"), $this->schedule_day) !== 0){
       $endOfMonth = $endOfMonth->previous($this->schedule_day);
     }
+    $endOfMonth->startOfDay();
+    $endOfMonth->hour($hourmin[0]);
+    $endOfMonth->minute($hourmin[1]);
 
     $dates[30] = $endOfMonth;
+
+    // return $dates; // for debugging only
 
     if($dates[15]->gte($now) && strcasecmp($frequency, "bi-monthly") === 0)
       return $dates[15];
@@ -105,7 +116,7 @@ class Invoice extends Model
     else
       // if 15th and 30th are earlier days than now then we need to 
       // move 1 week forward.
-      return $this->getNextScheduleDates((clone $now)->addWeek());
+      return $this->getNextScheduleDates((clone $now)->addWeek(), $frequency, $scheduleTime);
 
     return $dates;
   }
@@ -123,25 +134,25 @@ class Invoice extends Model
    * around 5:10PM, the next schedule is last preferred day of june
    * at 5PM
    */
-  public function getNextSchedule($dateNow = null)
+  public function getNextSchedule($dateNow = null, $setTimezones = true)
   {
-    $tz = new CarbonTimeZone($this->timezone);
+    $now = Carbon::parse($dateNow);
+    
+    
+    if($setTimezones){
+      // convert to preferred timezone
+      $tz = new CarbonTimeZone($this->timezone);
+      $now->setTimezone($tz);
+    }
+    
+    $date = $this->getNextScheduleDates($now, $this->frequency, $this->schedule_time);
 
-    // convert to preferred timezone
-    $now = Carbon::parse($dateNow)->setTimezone($tz);
+    // convert to default app timezone to save to database
+    // this is usually GMT0
+    if($setTimezones)
+      $date->setTimezone(config("app.timezone"));
 
-    $date = $this->getNextScheduleDates($now, $this->frequency);
-
-    // set the hour and minute
-    $hourmin = explode(":", $this->schedule_time);
-    $date->startOfDay();
-    $date->hour($hourmin[0]);
-    $date->minute($hourmin[1]);
-
-    // convert to default app timezone
-    $date->setTimezone(config("app.timezone"));
-
-    // return $date->format("r e"); // for debug
+    // return $date->format("r e \T\E\S\T"); // for debug
     return $date;
   }
 
