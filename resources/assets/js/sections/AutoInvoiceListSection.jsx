@@ -90,7 +90,8 @@ const columns = [
     return <MyMoment date={params.value} fromNow titleFormat={appConfig.dateFormatFormalLong} withTitle></MyMoment>
   }},
   {
-    field: 'next_invoice', headerName: 'next invoice', width: 120, renderCell: (params) => {
+    field: 'next_invoice', headerName: 'next invoice', width: 120, sortable: false,
+    renderCell: (params) => {
       let render;
 
       if(params.row.job)
@@ -189,6 +190,7 @@ function AutoInvoiceDataGrid(props){
     disableColumnFilter
     disableColumnSelector
     disableDensitySelector
+    disableColumnMenu 
     onPageChange={(page) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.page = page }) }
     onSortModelChange={(sortModel) => useAutoinvoiceListStore.setState(state => { state.dataGridOptions.sortModel = sortModel }) }
     {...{

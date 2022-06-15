@@ -45491,6 +45491,7 @@ var columns = [{
   field: 'next_invoice',
   headerName: 'next invoice',
   width: 120,
+  sortable: false,
   renderCell: function renderCell(params) {
     var render;
     if (params.row.job) render = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_components_MyMoment__WEBPACK_IMPORTED_MODULE_2__["default"], {
@@ -45610,6 +45611,7 @@ function AutoInvoiceDataGrid(props) {
     disableColumnFilter: true,
     disableColumnSelector: true,
     disableDensitySelector: true,
+    disableColumnMenu: true,
     onPageChange: function onPageChange(page) {
       return useAutoinvoiceListStore.setState(function (state) {
         state.dataGridOptions.page = page;
