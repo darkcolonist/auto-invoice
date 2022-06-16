@@ -357,6 +357,9 @@ class Invoice extends Model
     $thePath = config('app.generated_invoice_path')."/".$filename;
     PDF::loadHTML($view)->save($thePath);
 
-    return $view;
+    return [
+      "file" => $thePath,
+      "view" => $view,
+    ];
   }
 }
