@@ -47,12 +47,14 @@ CREATE TABLE `invoices` (
   `schedule_time` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `frequency` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `invoice_no` int(11) NOT NULL,
-  `timezone` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT 'Asia/Manila',
+  `timezone` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Asia/Manila',
+  `currency` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'PHP',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `contact_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bill_to_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `account_details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `invoice_lines` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `hash` (`hash`),
   UNIQUE KEY `current_job` (`current_job`),
@@ -64,7 +66,7 @@ CREATE TABLE `invoices` (
   KEY `invoices_ibfk_1` (`created_by`),
   CONSTRAINT `invoices_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `invoices_ibfk_2` FOREIGN KEY (`current_job`) REFERENCES `jobs` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `jobs` */
 
@@ -80,7 +82,7 @@ CREATE TABLE `jobs` (
   `created_at` int(10) unsigned NOT NULL,
   PRIMARY KEY (`id`),
   KEY `jobs_queue_index` (`queue`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 /*Table structure for table `migrations` */
 

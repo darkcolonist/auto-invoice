@@ -13840,10 +13840,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ AutoInvoiceEditSection)
 /* harmony export */ });
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Grid/Grid.js");
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Stack/Stack.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Grid/Grid.js");
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mui/material */ "./node_modules/@mui/material/Stack/Stack.js");
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! yup */ "./node_modules/yup/es/index.js");
 /* harmony import */ var _mui_icons_material_ArrowBack__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @mui/icons-material/ArrowBack */ "./node_modules/@mui/icons-material/ArrowBack.js");
 /* harmony import */ var _components_Axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Axios */ "./resources/assets/js/components/Axios.js");
@@ -13859,7 +13859,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _mui_icons_material_Save__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @mui/icons-material/Save */ "./node_modules/@mui/icons-material/Save.js");
 /* harmony import */ var _mui_material_Select__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @mui/material/Select */ "./node_modules/@mui/material/Select/Select.js");
-/* harmony import */ var _mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @mui/material/TextField */ "./node_modules/@mui/material/TextField/TextField.js");
+/* harmony import */ var _mui_material_TextField__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @mui/material/TextField */ "./node_modules/@mui/material/TextField/TextField.js");
 /* harmony import */ var _components_ConfirmDialog__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/ConfirmDialog */ "./resources/assets/js/components/ConfirmDialog.jsx");
 /* harmony import */ var _components_MySnackbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/MySnackbar */ "./resources/assets/js/components/MySnackbar.jsx");
 /* harmony import */ var _components_MyHelpers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/MyHelpers */ "./resources/assets/js/components/MyHelpers.js");
@@ -13875,6 +13875,12 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
@@ -13909,7 +13915,8 @@ var FormValidationSchema = yup__WEBPACK_IMPORTED_MODULE_1__.object().shape({
   frequency: yup__WEBPACK_IMPORTED_MODULE_1__.string().required('required'),
   contact_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable(),
   bill_to_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable(),
-  account_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable()
+  account_details: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable(),
+  invoice_lines: yup__WEBPACK_IMPORTED_MODULE_1__.string().validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank').nullable()
 });
 var FormInitialValues = {
   hash: '',
@@ -13923,13 +13930,33 @@ var FormInitialValues = {
   account_details: null
 };
 
+var JSONTextField = function JSONTextField(props) {
+  var _formik$values$v$fiel, _v$placeholder, _v$rows;
+
+  var v = props.v,
+      formik = props.formik;
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_8__["default"], _objectSpread(_objectSpread({}, props), {}, {
+    id: v.field,
+    name: v.field,
+    onChange: formik.handleChange,
+    value: (_formik$values$v$fiel = formik.values[v.field]) !== null && _formik$values$v$fiel !== void 0 ? _formik$values$v$fiel : "",
+    helperText: formik.errors[v.field],
+    error: formik.errors[v.field] !== undefined,
+    label: v.label,
+    placeholder: (_v$placeholder = v.placeholder) !== null && _v$placeholder !== void 0 ? _v$placeholder : "as json format ie., { \"something\": \"something's value\" }",
+    rows: (_v$rows = v.rows) !== null && _v$rows !== void 0 ? _v$rows : 3,
+    multiline: true,
+    size: "small"
+  }));
+};
+
 var EditForm = function EditForm(props) {
   var _React$useState = react__WEBPACK_IMPORTED_MODULE_3___default().useState(FormInitialValues),
       _React$useState2 = _slicedToArray(_React$useState, 2),
       formValues = _React$useState2[0],
       setFormValues = _React$useState2[1];
 
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useHistory)();
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useHistory)();
   var editMode = props.hash === undefined ? "new" : "edit";
 
   var handleDeleteClick = function handleDeleteClick() {
@@ -13983,7 +14010,7 @@ var EditForm = function EditForm(props) {
       });
     }
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
     container: true,
     spacing: 2,
     component: "form",
@@ -13996,18 +14023,18 @@ var EditForm = function EditForm(props) {
     noValidate: true,
     autoComplete: "off",
     onSubmit: formik.handleSubmit,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
       item: true,
-      xs: 4,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      xs: 3,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__["default"], {
         spacing: 2,
-        children: [formik.values.hash ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        children: [formik.values.hash ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_8__["default"], {
           label: "Hash",
           variant: "outlined",
           size: "small",
           disabled: true,
           value: formik.values.hash
-        }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }) : "", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_8__["default"], {
           label: "Name",
           variant: "outlined",
           size: "small",
@@ -14017,7 +14044,7 @@ var EditForm = function EditForm(props) {
           name: "name",
           onChange: formik.handleChange,
           value: formik.values.name
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_8__["default"], {
           label: "Schedule Time",
           variant: "outlined",
           size: "small",
@@ -14117,10 +14144,10 @@ var EditForm = function EditForm(props) {
           })]
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
       item: true,
       xs: 4,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__["default"], {
         spacing: 2,
         children: [{
           field: "contact_details",
@@ -14132,29 +14159,34 @@ var EditForm = function EditForm(props) {
           field: "account_details",
           label: "Account Details"
         }].map(function (v) {
-          var _formik$values$v$fiel, _v$placeholder, _v$rows;
-
-          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_TextField__WEBPACK_IMPORTED_MODULE_11__["default"], {
-            id: v.field,
-            name: v.field,
-            onChange: formik.handleChange,
-            value: (_formik$values$v$fiel = formik.values[v.field]) !== null && _formik$values$v$fiel !== void 0 ? _formik$values$v$fiel : "",
-            helperText: formik.errors[v.field],
-            error: formik.errors[v.field] !== undefined,
-            label: v.label,
-            placeholder: (_v$placeholder = v.placeholder) !== null && _v$placeholder !== void 0 ? _v$placeholder : "as json format ie., { \"something\": \"something's value\" }",
-            rows: (_v$rows = v.rows) !== null && _v$rows !== void 0 ? _v$rows : 3,
-            multiline: true,
-            size: "small"
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(JSONTextField, {
+            v: v,
+            formik: formik
           }, v.field);
         })
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      item: true,
+      xs: 4,
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__["default"], {
+        spacing: 2,
+        children: [{
+          field: "invoice_lines",
+          label: "Invoice Lines",
+          rows: 9
+        }].map(function (v) {
+          return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(JSONTextField, {
+            v: v,
+            formik: formik
+          }, v.field);
+        })
+      })
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
       item: true,
       xs: 12,
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_FormHelperText__WEBPACK_IMPORTED_MODULE_16__["default"], {
         children: "following the +0800 timezone"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_10__["default"], {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__["default"], {
         direction: "row",
         spacing: 1,
         children: editMode === "edit" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
@@ -14197,10 +14229,10 @@ var EditForm = function EditForm(props) {
 
 
 function AutoInvoiceEditSection() {
-  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useParams)(),
+  var _useParams = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useParams)(),
       hash = _useParams.hash;
 
-  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_8__.useHistory)();
+  var history = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_9__.useHistory)();
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsxs)((react__WEBPACK_IMPORTED_MODULE_3___default().Fragment), {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_mui_material_IconButton__WEBPACK_IMPORTED_MODULE_21__["default"], {
       title: "go back",

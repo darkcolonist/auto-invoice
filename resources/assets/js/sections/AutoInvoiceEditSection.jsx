@@ -45,6 +45,9 @@ const FormValidationSchema = Yup.object().shape({
   account_details: Yup.string()
     .validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank')
     .nullable(),
+  invoice_lines: Yup.string()
+    .validateJSONString('valid JSON string [ https://jsonformatter.curiousconcept.com ] or leave blank')
+    .nullable(),
 });
 
 const FormInitialValues = {
@@ -58,6 +61,23 @@ const FormInitialValues = {
   bill_to_details: null,
   account_details: null
 };
+
+const JSONTextField = (props) => {
+  const { v, formik } = props;
+  return <TextField
+    {...props}
+    id={v.field} name={v.field}
+    onChange={formik.handleChange}
+    value={formik.values[v.field] ?? ""}
+    helperText={formik.errors[v.field]}
+    error={formik.errors[v.field] !== undefined}
+    label={v.label}
+    placeholder={v.placeholder ?? "as json format ie., { \"something\": \"something's value\" }"}
+    rows={v.rows ?? 3}
+    multiline
+    size="small"
+  />
+}
 
 const EditForm = (props) => {
   const [formValues,setFormValues] = React.useState(FormInitialValues);
@@ -140,7 +160,7 @@ const EditForm = (props) => {
     noValidate
     autoComplete="off"
     onSubmit={formik.handleSubmit}>
-      <Grid item xs={4}>
+      <Grid item xs={3}>
         <Stack spacing={2}>
           {formik.values.hash ? <TextField label="Hash" variant="outlined" size="small"
             disabled
@@ -222,18 +242,23 @@ const EditForm = (props) => {
             { field: "bill_to_details", label: "Bill To Details" },
             { field: "account_details", label: "Account Details" },
           ].map((v) => (
-            <TextField
-              key={v.field} id={v.field} name={v.field}
-              onChange={formik.handleChange}
-              value={formik.values[v.field] ?? ""}
-              helperText={formik.errors[v.field]}
-              error={formik.errors[v.field] !== undefined}
-              label={v.label}
-              placeholder={v.placeholder ?? "as json format ie., { \"something\": \"something's value\" }"}
-              rows={v.rows ?? 3}
-              multiline
-              size="small"
-            />
+            <JSONTextField
+              key={v.field}
+              v={v}
+              formik={formik} />
+          ))}
+        </Stack>
+      </Grid>
+
+      <Grid item xs={4}>
+        <Stack spacing={2}>
+          {[
+            { field: "invoice_lines", label: "Invoice Lines", rows: 9 },
+          ].map((v) => (
+            <JSONTextField
+              key={v.field}
+              v={v}
+              formik={formik} />
           ))}
         </Stack>
       </Grid>

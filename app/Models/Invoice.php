@@ -243,33 +243,118 @@ class Invoice extends Model
 
     if(count($fieldSections) < 2)
       return $valueIfNull;
-      
+
     if(!isset($this[$fieldSections[0]]))
       return $valueIfNull;
 
     $json = json_decode($this[$fieldSections[0]], true);
-    
+
     if(!isset($json[$fieldSections[1]]))
       return $valueIfNull;
 
     return $json[$fieldSections[1]];
   }
 
+  public function getRange($date, $iterations = 0){
+    $now = Carbon::parse($date);
+    // $now = Carbon::now();
+    $now->startOfDay();
+
+    $start = clone $now;
+    $start->day = 1;
+    $end = clone $now;
+    $end->endOfMonth();
+
+    if($now->between(
+      // (clone $start)->addSeconds(1),
+      // (clone $end)->addSeconds(1)
+      $start, $end
+    ) && $iterations < 1){
+      // \Barryvdh\Debugbar\Facades\Debugbar::info(
+      //   [$now->toDayDateTimeString(), "is between", $start->toDayDateTimeString(), $end->toDayDateTimeString()]);
+      if($this->frequency == "bi-monthly"){
+        $now->subDays(15);
+      }else if($this->frequency == "monthly"){
+        // $now->subDays($now->daysInMonth); // dangerous
+        $now->subMonth(1);
+      }
+      return $this->getRange($now, $iterations + 1);
+    }
+
+    // declare range
+    $range;
+
+    if($this->frequency == "bi-monthly"){
+      if($now->day > 15){
+        $start->day = 15;
+        $end->day = $end->daysInMonth;
+      }else{
+        $end->day = 15;
+      }
+    }
+
+    $range = $start->format("F j") . "-" . $end->format("j, Y");
+
+    return $range;
+  }
+
+  public function getInvoiceLines($date){
+    if(trim($this->invoice_lines) == null)
+      return [];
+
+    $json = json_decode($this->invoice_lines, true);
+
+    // apply string replacement strategy
+    foreach ($json as $jKey => $jValue) {
+      if(isset($jValue["description"])){
+        $json[$jKey]["description"] = strtr($jValue["description"],
+          [
+            ":range" => $this->getRange($date)
+          ]);
+      }
+    }
+
+    // \Barryvdh\Debugbar\Facades\Debugbar::info($json);
+    return $json;
+  }
+
   public function getInvoiceNo(){
     return str_pad($this->invoice_no, 5, "0", STR_PAD_LEFT);
   }
 
-  public function generatePDF(){
-    $now = Carbon::now();
+  public function formatAmount($amount){
+    return $this->currency ." ". number_format($amount,2);
+  }
+
+  public function getTotalAmount($invoiceLines){
+    $total = 0;
+    foreach ($invoiceLines as $key => $value) {
+      $total += floatval($value["amount"]);
+    }
+
+    return $total;
+  }
+
+  public function generatePDF($date = null){
+    $now = Carbon::parse($date);
     $tz = new CarbonTimeZone($this->timezone);
     $now->setTimezone($tz);
+    $range = $this->getRange($now);
+    $filename = \Illuminate\Support\Str::slug(
+      $this->hash."-".$this->getInvoiceNo()."-".$range)
+      .".pdf";
+
+    $invoiceLines = $this->getInvoiceLines($now);
 
     $view = view('invoice-pdf',[
       "invoice" => $this,
-      "date"=> $now->format(config('app.generated_invoice_date_format')),
+      "date" => $now->format(config('app.generated_invoice_date_format')),
+      "invoiceLines" => $this->getInvoiceLines($now),
+      "totalAmount" => $this->getTotalAmount($invoiceLines),
+      "range" => $range,
     ]);
-    
-    $thePath = config('app.generated_invoice_path')."/".$this->hash."-".$this->getInvoiceNo().".pdf";
+
+    $thePath = config('app.generated_invoice_path')."/".$filename;
     PDF::loadHTML($view)->save($thePath);
 
     return $view;

@@ -102,6 +102,7 @@ class InvoicesController extends Controller
     $invoice->contact_details = $request->input('contact_details');
     $invoice->bill_to_details = $request->input('bill_to_details');
     $invoice->account_details = $request->input('account_details');
+    $invoice->invoice_lines = $request->input('invoice_lines');
 
     return $invoice;
   }
@@ -260,6 +261,6 @@ class InvoicesController extends Controller
   }
 
   public function testPdf(Request $request, Invoice $invoice){
-    return $invoice->generatePDF();
+    return $invoice->generatePDF($request->input("date"));
   }
 }

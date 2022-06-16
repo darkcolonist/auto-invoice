@@ -4,7 +4,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>INVOICE</title>
+  <title>{{$invoice->name}} - {{$range}} - invoicePDF</title>
   <style type="text/css">
     <!--
     .excel1 {
@@ -690,26 +690,28 @@
       <td colspan="5" class="excel48" style="height:14.5pt;">DESCRIPTION</td>
       <td colspan="2" class="excel10" style="border-right:1.0pt solid black;border-left:none;">AMOUNT</td>
     </tr>
-    <tr style="height:14.5pt;">
-      <td colspan="5" class="excel50" style="border-right:.5pt solid black;height:14.5pt;">Professional Fees  for June
-        1-15, 2000</td>
-      <td colspan="2" class="excel11" style="border-right:1.0pt solid black;border-left:none;">PHP 500.00 </td>
-    </tr>
-    <tr style="height:14.5pt;">
-      <td colspan="5" class="excel50" style="border-right:.5pt solid black;height:14.5pt;">&nbsp;</td>
-      <td colspan="2" class="excel11" style="border-right:1.0pt solid black;border-left:none;">&nbsp;</td>
-    </tr>
-    <tr style="height:14.5pt;">
-      <td colspan="5" class="excel50" style="border-right:.5pt solid black;height:14.5pt;">&nbsp;</td>
-      <td colspan="2" class="excel6" style="border-right:1.0pt solid black;border-left:none;">&nbsp;</td>
-    </tr>
+
+    @if($invoiceLines)
+      @foreach ($invoiceLines as $invoice_line)
+        <tr style="height:14.5pt;">
+          <td colspan="5" class="excel50" style="border-right:.5pt solid black;height:14.5pt;">{{$invoice_line['description']}}</td>
+          <td colspan="2" class="excel11" style="border-right:1.0pt solid black;border-left:none;">{{$invoice->formatAmount($invoice_line['amount'])}}</td>
+        </tr>
+      @endforeach
+    @else
+      <tr style="height:14.5pt;">
+        <td colspan="5" class="excel50" style="border-right:.5pt solid black;height:14.5pt;">no items</td>
+        <td colspan="2" class="excel11" style="border-right:1.0pt solid black;border-left:none;"></td>
+      </tr>
+    @endif
+
     <tr style="height:14.5pt;">
       <td colspan="5" class="excel50" style="border-right:.5pt solid black;height:14.5pt;">&nbsp;</td>
       <td colspan="2" class="excel6" style="border-right:1.0pt solid black;border-left:none;">&nbsp;</td>
     </tr>
     <tr style="height:15.5pt;">
       <td colspan="5" class="excel53" style="height:15.5pt;">TOTAL</td>
-      <td colspan="2" class="excel8" style="border-right:1.0pt solid black;">PHP 500.00 </td>
+      <td colspan="2" class="excel8" style="border-right:1.0pt solid black;">{{$invoice->formatAmount($totalAmount)}}</td>
     </tr>
     <tr style="height:14.5pt;">
       <td class="excel55" style="height:14.5pt;">&nbsp;</td>
