@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 use \Barryvdh\Debugbar\Facades\Debugbar;
-use Carbon\Carbon;
-use Carbon\CarbonTimeZone;
 
 class InvoicesController extends Controller
 {
@@ -23,8 +21,8 @@ class InvoicesController extends Controller
     // $model->load("job")->makeHidden(["id"]);
     // $model->job->makeHidden(["id"]);
 
-    Debugbar::info('going once');
-    Debugbar::info($model->toArray());
+    // Debugbar::info('going once');
+    // Debugbar::info($model->toArray());
 
     return $model;
   }
@@ -262,13 +260,6 @@ class InvoicesController extends Controller
   }
 
   public function testPdf(Request $request, Invoice $invoice){
-    $now = Carbon::now();
-    $tz = new CarbonTimeZone($invoice->timezone);
-    $now->setTimezone($tz);
-
-    return view('invoice-pdf',[
-      "invoice" => $invoice,
-      "date"=> $now->format(config('app.generated_invoice_date_format')),
-    ]);
+    return $invoice->generatePDF();
   }
 }

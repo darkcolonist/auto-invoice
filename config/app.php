@@ -196,4 +196,5 @@ return [
 
 
   'generated_invoice_date_format' => "F d, Y",
+  'generated_invoice_path' => storage_path('pdf'),
 ];

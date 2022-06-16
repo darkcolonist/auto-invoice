@@ -5,10 +5,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
 use Carbon\Carbon;
 use Carbon\CarbonTimeZone;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Jobs\SendInvoice;
 
 class Invoice extends Model
@@ -258,5 +257,21 @@ class Invoice extends Model
 
   public function getInvoiceNo(){
     return str_pad($this->invoice_no, 5, "0", STR_PAD_LEFT);
+  }
+
+  public function generatePDF(){
+    $now = Carbon::now();
+    $tz = new CarbonTimeZone($this->timezone);
+    $now->setTimezone($tz);
+
+    $view = view('invoice-pdf',[
+      "invoice" => $this,
+      "date"=> $now->format(config('app.generated_invoice_date_format')),
+    ]);
+    
+    $thePath = config('app.generated_invoice_path')."/".$this->hash."-".$this->getInvoiceNo().".pdf";
+    PDF::loadHTML($view)->save($thePath);
+
+    return $view;
   }
 }
