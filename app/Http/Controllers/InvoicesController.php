@@ -267,20 +267,23 @@ class InvoicesController extends Controller
     
     public function testEmail(Request $request, Invoice $invoice){
       $to = config("app.email_to");
-      $generatedPdf = $invoice->generatePDF();
-      $data = [
-        "recipientName" => "Recipient",
-        "messageLines" => [
-          "Attached to this email is my invoice.",
-          "Please reply to this email if there are any concerns",
-        ]
-      ];
+      // $generatedPdf = $invoice->generatePDF();
+      // $data = [
+      //   "recipientName" => "Recipient",
+      //   "messageLines" => [
+      //     "Attached to this email is my invoice.",
+      //     "Please reply to this email if there are any concerns",
+      //   ]
+      // ];
 
-      \Mail::send('mail-template', $data, function($message) use($to, $generatedPdf) {
-        $message->to($to, 'Someone')->subject('Autoinvoice Mailer');
-        $message->attach($generatedPdf["file"]);
-        // $message->from('someone@gmail.com','The Great Anon');
-      });
+      // \Mail::send('mail-template', $data, function($message) use($to, $generatedPdf) {
+      //   $message->to($to, 'Someone')->subject('Autoinvoice Mailer');
+      //   $message->attach($generatedPdf["file"]);
+      //   // $message->from('someone@gmail.com','The Great Anon');
+      // });
+
+      \Mail::to($to, 'Someone')
+        ->send(new \App\Mail\SendInvoiceMail($invoice));
       
       return [
         "code" => 200,
