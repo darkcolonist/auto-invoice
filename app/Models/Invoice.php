@@ -235,4 +235,28 @@ class Invoice extends Model
     // shortcut of above
     $this->job->delete();
   }
+
+  /**
+   * usage: field will appear like contact_details.name
+   */
+  public function getDetails($field, $valueIfNull = "NA"){
+    $fieldSections = explode(".", $field);
+
+    if(count($fieldSections) < 2)
+      return $valueIfNull;
+      
+    if(!isset($this[$fieldSections[0]]))
+      return $valueIfNull;
+
+    $json = json_decode($this[$fieldSections[0]], true);
+    
+    if(!isset($json[$fieldSections[1]]))
+      return $valueIfNull;
+
+    return $json[$fieldSections[1]];
+  }
+
+  public function getInvoiceNo(){
+    return str_pad($this->invoice_no, 5, "0", STR_PAD_LEFT);
+  }
 }

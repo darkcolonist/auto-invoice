@@ -194,4 +194,6 @@ return [
         // 'ExampleClass' => App\Example\ExampleClass::class,
     ])->toArray(),
 
+
+  'generated_invoice_date_format' => "F d, Y",
 ];
