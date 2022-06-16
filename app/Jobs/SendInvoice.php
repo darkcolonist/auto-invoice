@@ -48,6 +48,10 @@ class SendInvoice implements ShouldQueue, ShouldBeUnique
   public function handle()
   {
     Log::channel("mydebug")->info("TODO implement handle for SendInvoice, meantime handling ".$this->invoice->hash);
+    $this->invoice->generatePDF();
+
+    // TODO send PDF to email
+
     $this->invoice->scheduleNextAutoInvoice();
   }
 }
