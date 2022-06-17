@@ -31,6 +31,6 @@ Route::resource('invoice', App\Http\Controllers\InvoicesController::class)
 // Route::get('/test/invoice/schedulejob/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testScheduleSendInvoiceJob']);
 // Route::get('/test/invoice/pdf/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testPdf']);
 
-Route::get('/test/invoice/email/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testEmail']);
+// Route::get('/test/invoice/email/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testEmail']);
 
 Route::post('/getLeavesBySearchKeyword', 'LeavesController@getLeavesBySearchKeyword');

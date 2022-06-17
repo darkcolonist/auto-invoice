@@ -266,30 +266,21 @@ class InvoicesController extends Controller
     }
     
     public function testEmail(Request $request, Invoice $invoice){
-      $to = config("app.email_to");
-      // $generatedPdf = $invoice->generatePDF();
-      // $data = [
-      //   "recipientName" => "Recipient",
-      //   "messageLines" => [
-      //     "Attached to this email is my invoice.",
-      //     "Please reply to this email if there are any concerns",
-      //   ]
-      // ];
-
-      // \Mail::send('mail-template', $data, function($message) use($to, $generatedPdf) {
-      //   $message->to($to, 'Someone')->subject('Autoinvoice Mailer');
-      //   $message->attach($generatedPdf["file"]);
-      //   // $message->from('someone@gmail.com','The Great Anon');
-      // });
-
-      \Mail::to($to, 'Someone')
-        ->send(new \App\Mail\SendInvoiceMail($invoice));
-      
-      return [
-        "code" => 200,
-        "to" => $to,
-        "message" => "Basic Email Sent. Check your inbox."
-      ];
+      if($request->input("send", false)){
+        $to = config("app.email_to");
+        \Mail::to($to, 'Someone')
+          ->send((new \App\Mail\SendInvoiceMail($invoice, true))
+            // ->subject("a new invoice has been created") // does not work if you already set a subject in the mailer routine
+          );
+        
+        return [
+          "code" => 200,
+          "to" => $to,
+          "message" => "Basic Email Sent. Check your inbox."
+        ];
+      }else{
+        return \App\Mail\SendInvoiceMail::getTemplate($invoice);
+      }
     }
   }
   
