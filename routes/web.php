@@ -66,5 +66,3 @@ Route::get('/logout', function(){
   Auth::logout();
   return redirect("/");
 });
-
-Route::post('/getLeavesBySearchKeyword', 'LeavesController@getLeavesBySearchKeyword');
