@@ -37,17 +37,30 @@ Route::resource('invoice', App\Http\Controllers\InvoicesController::class)
     "invoice" => "invoice:hash"
   ]);
 
-// Route::get('/test/invoice', [App\Http\Controllers\InvoicesController::class, 'testFetchAll']);
-// Route::get('/test/invoice/add', [App\Http\Controllers\InvoicesController::class, 'testAdd']);
-// Route::get('/test/invoice/deleteAll', [App\Http\Controllers\InvoicesController::class, 'testDeleteAll']);
-
-// Route::get('/test/invoice/schedule/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testSchedule']);
-// Route::get('/test/invoice/schedulejob/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testScheduleSendInvoiceJob']);
-// Route::get('/test/invoice/pdf/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testPdf']);
-
-// Route::get('/test/invoice/email/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testEmail']);
-
-Route::get('/test/user/login/{user:email}', [App\Http\Controllers\UsersController::class, 'testForceLogin']);
+Route::prefix('test')
+  ->middleware(['test.only'])
+  ->group(function(){
+    /**
+     * WARNING
+     * some of these routes do major changes to the database like 
+     * bulk delete, flushing and the like. whenever you engage test
+     * mode, ensure that you know what you are doing!
+     */
+    Route::get('invoice', [App\Http\Controllers\InvoicesController::class, 'testFetchAll']);
+    Route::get('invoice/add', [App\Http\Controllers\InvoicesController::class, 'testAdd']);
+    Route::get('invoice/deleteAll', [App\Http\Controllers\InvoicesController::class, 'testDeleteAll']);
+    Route::get('invoice/schedule/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testSchedule']);
+    Route::get('invoice/schedulejob/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testScheduleSendInvoiceJob']);
+    Route::get('invoice/pdf/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testPdf']);    
+    Route::get('invoice/email/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testEmail']);
+    
+    Route::get('user/login/{user:email}', [App\Http\Controllers\UsersController::class, 'testForceLogin']);
+    
+    Route::get('hello', function(){
+      return response("you are in test mode")
+        ->header("content-type", "text/plain");
+    });
+  });
 
 Route::get('/logout', function(){
   Auth::logout();
