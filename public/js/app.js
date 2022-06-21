@@ -17273,11 +17273,11 @@ function PrimaryLayout() {
             display: 'none'
           }),
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_13__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_14__["default"], {
           variant: "h6",
           noWrap: true,
           component: "div",
-          children: [appConfig.name, " - ", appToken]
+          children: appConfig.name
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(Drawer, {
