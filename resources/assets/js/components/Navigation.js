@@ -4,6 +4,7 @@
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import HomeIcon from '@mui/icons-material/Home';
 import loadable from '@loadable/component';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { loadableParams } from './MyLoadable';
 
 const kwa = { something: "fornothing" };
@@ -14,7 +15,6 @@ export default {
       label: "Home",
       icon: <HomeIcon />,
       url: "/",
-      // section: <WelcomeSection />,
       section: loadable(() => import("../sections/WelcomeSection"), loadableParams),
       exact: true
     },
@@ -22,10 +22,18 @@ export default {
       label: "Automatic Invoices",
       icon: <BookmarkIcon />,
       url: "/autoinvoice",
-      // section: <AutoInvoiceListSection />,
       section: loadable(() => import("../sections/AutoInvoiceListSection"), loadableParams),
       exact: false
     },
   ]
-  , bottom: []
+  , 
+  bottom: [
+    {
+      label: "Logout",
+      icon: <LogoutIcon />,
+      url: "/logout",
+      section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
+      exact: false
+    },
+  ]
 };

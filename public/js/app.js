@@ -3938,34 +3938,6 @@ function isHostComponent(element) {
 
 /***/ }),
 
-/***/ "./node_modules/@mui/icons-material/AccountCircle.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/@mui/icons-material/AccountCircle.js ***!
-  \***********************************************************/
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-
-
-var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
-
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = void 0;
-
-var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@mui/icons-material/utils/createSvgIcon.js"));
-
-var _jsxRuntime = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-
-var _default = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
-  d: "M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"
-}), 'AccountCircle');
-
-exports["default"] = _default;
-
-/***/ }),
-
 /***/ "./node_modules/@mui/icons-material/Bookmark.js":
 /*!******************************************************!*\
   !*** ./node_modules/@mui/icons-material/Bookmark.js ***!
@@ -16784,22 +16756,20 @@ function App() {
 
 /***/ }),
 
-/***/ "./resources/assets/js/components/LeftBottomNavigation.jsx":
-/*!*****************************************************************!*\
-  !*** ./resources/assets/js/components/LeftBottomNavigation.jsx ***!
-  \*****************************************************************/
+/***/ "./resources/assets/js/components/LeftNavigation.jsx":
+/*!***********************************************************!*\
+  !*** ./resources/assets/js/components/LeftNavigation.jsx ***!
+  \***********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LeftBottomNavigation)
+/* harmony export */   "default": () => (/* binding */ LeftNavigation)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/material/List */ "./node_modules/@mui/material/List/List.js");
-/* harmony import */ var _mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/icons-material/Logout */ "./node_modules/@mui/icons-material/Logout.js");
-/* harmony import */ var _mui_icons_material_AccountCircle__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/icons-material/AccountCircle */ "./node_modules/@mui/icons-material/AccountCircle.js");
 /* harmony import */ var _NavigationLinkItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavigationLinkItem */ "./resources/assets/js/components/NavigationLinkItem.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
@@ -16812,56 +16782,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
-
-function LeftBottomNavigation() {
+function LeftNavigation(props) {
+  var nav = props.nav;
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_material_List__WEBPACK_IMPORTED_MODULE_3__["default"], {
-    children: [{
-      "label": "Account",
-      "icon": /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_AccountCircle__WEBPACK_IMPORTED_MODULE_4__["default"], {})
-    }, {
-      "label": "Logout",
-      "icon": /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_5__["default"], {})
-    }].map(function (menuItem, index) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_NavigationLinkItem__WEBPACK_IMPORTED_MODULE_1__["default"], _objectSpread({}, menuItem), "left-bottom-" + index);
-    })
-  });
-}
-
-/***/ }),
-
-/***/ "./resources/assets/js/components/LeftTopNavigation.jsx":
-/*!**************************************************************!*\
-  !*** ./resources/assets/js/components/LeftTopNavigation.jsx ***!
-  \**************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ LeftTopNavigation)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _mui_material_List__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/material/List */ "./node_modules/@mui/material/List/List.js");
-/* harmony import */ var _NavigationLinkItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NavigationLinkItem */ "./resources/assets/js/components/NavigationLinkItem.jsx");
-/* harmony import */ var _components_Navigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Navigation */ "./resources/assets/js/components/Navigation.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-
-
-
-
-
-function LeftTopNavigation() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_mui_material_List__WEBPACK_IMPORTED_MODULE_4__["default"], {
-    children: _components_Navigation__WEBPACK_IMPORTED_MODULE_2__["default"].top.map(function (menuItem, index) {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_NavigationLinkItem__WEBPACK_IMPORTED_MODULE_1__["default"], _objectSpread({}, menuItem), "left-top-" + index);
+    children: nav.map(function (menuItem, index) {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_NavigationLinkItem__WEBPACK_IMPORTED_MODULE_1__["default"], _objectSpread({}, menuItem), "left-nev-" + index);
     })
   });
 }
@@ -16961,11 +16886,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Bookmark__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/icons-material/Bookmark */ "./node_modules/@mui/icons-material/Bookmark.js");
 /* harmony import */ var _mui_icons_material_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/icons-material/Home */ "./node_modules/@mui/icons-material/Home.js");
 /* harmony import */ var _loadable_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @loadable/component */ "./node_modules/@loadable/component/dist/loadable.esm.js");
+/* harmony import */ var _mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/icons-material/Logout */ "./node_modules/@mui/icons-material/Logout.js");
 /* harmony import */ var _MyLoadable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyLoadable */ "./resources/assets/js/components/MyLoadable.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 // import AgentsListSection from '../sections/AgentsListSection';
 // import AutoInvoiceListSection from '../sections/AutoInvoiceListSection';
 // import WelcomeSection from '../sections/WelcomeSection';
+
 
 
 
@@ -16979,7 +16906,6 @@ var kwa = {
     label: "Home",
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Home__WEBPACK_IMPORTED_MODULE_3__["default"], {}),
     url: "/",
-    // section: <WelcomeSection />,
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
       return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_WelcomeSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/WelcomeSection */ "./resources/assets/js/sections/WelcomeSection.jsx"));
     }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
@@ -16988,13 +16914,20 @@ var kwa = {
     label: "Automatic Invoices",
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Bookmark__WEBPACK_IMPORTED_MODULE_4__["default"], {}),
     url: "/autoinvoice",
-    // section: <AutoInvoiceListSection />,
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
       return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_AutoInvoiceListSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/AutoInvoiceListSection */ "./resources/assets/js/sections/AutoInvoiceListSection.jsx"));
     }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
     exact: false
   }],
-  bottom: []
+  bottom: [{
+    label: "Logout",
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
+    url: "/logout",
+    section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
+      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
+    }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
+    exact: false
+  }]
 });
 
 /***/ }),
@@ -17114,9 +17047,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @mui/icons-material/Menu */ "./node_modules/@mui/icons-material/Menu.js");
 /* harmony import */ var _mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @mui/icons-material/ChevronLeft */ "./node_modules/@mui/icons-material/ChevronLeft.js");
 /* harmony import */ var _mui_icons_material_ChevronRight__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @mui/icons-material/ChevronRight */ "./node_modules/@mui/icons-material/ChevronRight.js");
-/* harmony import */ var _LeftTopNavigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./LeftTopNavigation */ "./resources/assets/js/components/LeftTopNavigation.jsx");
-/* harmony import */ var _LeftBottomNavigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LeftBottomNavigation */ "./resources/assets/js/components/LeftBottomNavigation.jsx");
-/* harmony import */ var _SectionsWrapper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./SectionsWrapper */ "./resources/assets/js/components/SectionsWrapper.jsx");
+/* harmony import */ var _SectionsWrapper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SectionsWrapper */ "./resources/assets/js/components/SectionsWrapper.jsx");
+/* harmony import */ var _components_Navigation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/Navigation */ "./resources/assets/js/components/Navigation.js");
+/* harmony import */ var _LeftNavigation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LeftNavigation */ "./resources/assets/js/components/LeftNavigation.jsx");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -17279,14 +17212,18 @@ function PrimaryLayout() {
           onClick: handleDrawerClose,
           children: theme.direction === 'rtl' ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_icons_material_ChevronRight__WEBPACK_IMPORTED_MODULE_15__["default"], {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_icons_material_ChevronLeft__WEBPACK_IMPORTED_MODULE_16__["default"], {})
         })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_LeftTopNavigation__WEBPACK_IMPORTED_MODULE_1__["default"], {})]
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_LeftNavigation__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        nav: _components_Navigation__WEBPACK_IMPORTED_MODULE_2__["default"].top
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Divider__WEBPACK_IMPORTED_MODULE_17__["default"], {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_LeftNavigation__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        nav: _components_Navigation__WEBPACK_IMPORTED_MODULE_2__["default"].bottom
+      })]
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_9__["default"], {
       component: "main",
       sx: {
         flexGrow: 1,
         p: 3
       },
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(DrawerHeader, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_SectionsWrapper__WEBPACK_IMPORTED_MODULE_3__["default"], {})]
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(DrawerHeader, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_SectionsWrapper__WEBPACK_IMPORTED_MODULE_1__["default"], {})]
     })]
   });
 }
@@ -17312,9 +17249,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _MyLoadable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MyLoadable */ "./resources/assets/js/components/MyLoadable.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-// import AutoInvoiceEditSection from "../sections/AutoInvoiceEditSection";
-// import UnderConstructionSection from "../sections/UnderConstructionSection";
-// import WelcomeSection from "../sections/WelcomeSection";
 
 
 
@@ -17324,15 +17258,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function SectionsWrapper() {
-  var sections = _components_Navigation__WEBPACK_IMPORTED_MODULE_1__["default"].top.map(function (routeItem, sectionIndex) {
+  var myMapper = function myMapper(routeItem, sectionIndex) {
     return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
       path: routeItem.url,
       exact: true,
       component: routeItem.section
     }, sectionIndex);
-  });
+  };
+
+  var topSections = _components_Navigation__WEBPACK_IMPORTED_MODULE_1__["default"].top.map(myMapper);
+  var bottomSections = _components_Navigation__WEBPACK_IMPORTED_MODULE_1__["default"].bottom.map(myMapper);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_router__WEBPACK_IMPORTED_MODULE_6__.Switch, {
-    children: [sections, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    children: [topSections, bottomSections, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
       path: "/autoinvoice/edit/:hash",
       component: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
         return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_AutoInvoiceEditSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/AutoInvoiceEditSection */ "./resources/assets/js/sections/AutoInvoiceEditSection.jsx"));
@@ -58549,7 +58486,7 @@ function combine (array, callback) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_assets_js_sections_WelcomeSection_jsx":1,"resources_assets_js_sections_AutoInvoiceListSection_jsx":1,"resources_assets_js_sections_AutoInvoiceEditSection_jsx":1}[chunkId]) return "js/app/" + chunkId + ".js";
+/******/ 			if ({"resources_assets_js_sections_AutoInvoiceEditSection_jsx":1,"resources_assets_js_sections_WelcomeSection_jsx":1,"resources_assets_js_sections_AutoInvoiceListSection_jsx":1,"resources_assets_js_sections_UnderConstructionSection_jsx":1}[chunkId]) return "js/app/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

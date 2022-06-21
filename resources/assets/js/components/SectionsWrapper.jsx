@@ -1,6 +1,3 @@
-// import AutoInvoiceEditSection from "../sections/AutoInvoiceEditSection";
-// import UnderConstructionSection from "../sections/UnderConstructionSection";
-// import WelcomeSection from "../sections/WelcomeSection";
 import { Route, Switch } from "react-router";
 import loadable from '@loadable/component'
 import MyNav from '../components/Navigation';
@@ -9,14 +6,19 @@ import React from "react";
 import { loadableParams } from "./MyLoadable";
 
 export default function SectionsWrapper(){
-  let sections = MyNav.top.map((routeItem, sectionIndex) => {
+
+  const myMapper = (routeItem, sectionIndex) => {
     return <Route key={sectionIndex} path={routeItem.url} exact
       component={routeItem.section} />
-  });
+  };
+
+  let topSections = MyNav.top.map(myMapper);
+  let bottomSections = MyNav.bottom.map(myMapper);
 
   return (
     <Switch>
-      {sections}
+      {topSections}
+      {bottomSections}
       <Route path="/autoinvoice/edit/:hash" component={loadable(() => import("../sections/AutoInvoiceEditSection"), loadableParams)} />
       <Route path="/autoinvoice/new" component={loadable(() => import("../sections/AutoInvoiceEditSection"), loadableParams)} />
       <Route>

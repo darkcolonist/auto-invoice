@@ -11,9 +11,9 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import LeftTopNavigation from './LeftTopNavigation';
-import LeftBottomNavigation from './LeftBottomNavigation';
 import SectionsWrapper from './SectionsWrapper';
+import MyNav from '../components/Navigation';
+import LeftNavigation from './LeftNavigation';
 
 const drawerWidth = 240;
 
@@ -123,9 +123,13 @@ export default function PrimaryLayout() {
           </IconButton>
         </DrawerHeader>
         <Divider />
-        <LeftTopNavigation />
-        {/* <Divider />
-        <LeftBottomNavigation /> */}
+        <LeftNavigation 
+          nav={MyNav.top}
+        />
+        <Divider />
+        <LeftNavigation
+          nav={MyNav.bottom}
+        />
       </Drawer>
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
         <DrawerHeader/>
