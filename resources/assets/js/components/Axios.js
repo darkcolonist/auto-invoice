@@ -2,10 +2,13 @@ import axios from 'axios';
 axios.defaults.headers.common['X-CSRF-TOKEN'] = appToken;
 const instance = axios.create({ baseURL: appBaseURL });
 
-const fallbackAndReload = (message) => {
+const fallbackAndReload = (message, location) => {
   console.log(message+" detected, reloading page in 2 seconds.");
 
-  setTimeout(() => {window.location.reload()}, 2000);
+  if(location === undefined)
+    setTimeout(() => {window.location.reload()}, 2000);
+  else
+    setTimeout(() => { window.location = location }, 2000);
 }
 
 /**
@@ -27,6 +30,9 @@ instance.interceptors.response.use(
       fallbackAndReload(error.statusText);
     }
 
+    if (error.response && 401 === error.response.status) {
+      fallbackAndReload(error.statusText, appBaseURL);
+    }
   }
 )
 

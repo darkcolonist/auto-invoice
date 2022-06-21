@@ -30,12 +30,13 @@ Route::middleware(['auth'])->group(function () {
     return response("you are logged in")
       ->header("Content-type","text/plain");
   });
+  
+  Route::resource('invoice', App\Http\Controllers\InvoicesController::class)
+    ->parameters([
+      "invoice" => "invoice:hash"
+    ]);
 });
 
-Route::resource('invoice', App\Http\Controllers\InvoicesController::class)
-  ->parameters([
-    "invoice" => "invoice:hash"
-  ]);
 
 Route::prefix('test')
   ->middleware(['test.only'])

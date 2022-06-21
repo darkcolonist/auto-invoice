@@ -45174,10 +45174,12 @@ var instance = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
   baseURL: appBaseURL
 });
 
-var fallbackAndReload = function fallbackAndReload(message) {
+var fallbackAndReload = function fallbackAndReload(message, location) {
   console.log(message + " detected, reloading page in 2 seconds.");
-  setTimeout(function () {
+  if (location === undefined) setTimeout(function () {
     window.location.reload();
+  }, 2000);else setTimeout(function () {
+    window.location = location;
   }, 2000);
 };
 /**
@@ -45195,6 +45197,10 @@ instance.interceptors.response.use(function (response) {
 }, function (error) {
   if (error.response && 419 === error.response.status) {
     fallbackAndReload(error.statusText);
+  }
+
+  if (error.response && 401 === error.response.status) {
+    fallbackAndReload(error.statusText, appBaseURL);
   }
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (instance);
