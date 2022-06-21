@@ -4134,6 +4134,34 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@mui/icons-material/Settings.js":
+/*!******************************************************!*\
+  !*** ./node_modules/@mui/icons-material/Settings.js ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@mui/icons-material/utils/createSvgIcon.js"));
+
+var _jsxRuntime = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"
+}), 'Settings');
+
+exports["default"] = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@mui/icons-material/utils/createSvgIcon.js":
 /*!*****************************************************************!*\
   !*** ./node_modules/@mui/icons-material/utils/createSvgIcon.js ***!
@@ -16914,13 +16942,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Bookmark__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/icons-material/Bookmark */ "./node_modules/@mui/icons-material/Bookmark.js");
 /* harmony import */ var _mui_icons_material_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/icons-material/Home */ "./node_modules/@mui/icons-material/Home.js");
 /* harmony import */ var _loadable_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @loadable/component */ "./node_modules/@loadable/component/dist/loadable.esm.js");
-/* harmony import */ var _mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/icons-material/Logout */ "./node_modules/@mui/icons-material/Logout.js");
-/* harmony import */ var _mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/icons-material/Login */ "./node_modules/@mui/icons-material/Login.js");
+/* harmony import */ var _mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mui/icons-material/Logout */ "./node_modules/@mui/icons-material/Logout.js");
+/* harmony import */ var _mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/icons-material/Login */ "./node_modules/@mui/icons-material/Login.js");
+/* harmony import */ var _mui_icons_material_Settings__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/icons-material/Settings */ "./node_modules/@mui/icons-material/Settings.js");
 /* harmony import */ var _MyLoadable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyLoadable */ "./resources/assets/js/components/MyLoadable.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 // import AgentsListSection from '../sections/AgentsListSection';
 // import AutoInvoiceListSection from '../sections/AutoInvoiceListSection';
 // import WelcomeSection from '../sections/WelcomeSection';
+
 
 
 
@@ -16950,8 +16980,16 @@ var kwa = {
     exact: false
   }],
   bottom: [{
+    label: "Settings",
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Settings__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
+    url: "/settings",
+    section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
+      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
+    }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
+    exact: false
+  }, {
     label: "Login",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_6__["default"], {}),
     url: "/login",
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
       return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
@@ -16959,7 +16997,7 @@ var kwa = {
     exact: false
   }, {
     label: "Logout",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_6__["default"], {}),
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_7__["default"], {}),
     url: "/logout",
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
       return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
@@ -17235,11 +17273,11 @@ function PrimaryLayout() {
             display: 'none'
           }),
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_icons_material_Menu__WEBPACK_IMPORTED_MODULE_13__["default"], {})
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_14__["default"], {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_14__["default"], {
           variant: "h6",
           noWrap: true,
           component: "div",
-          children: appConfig.name
+          children: [appConfig.name, " - ", appToken]
         })]
       })
     }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(Drawer, {

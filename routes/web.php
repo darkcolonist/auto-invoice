@@ -54,7 +54,9 @@ Route::prefix('test')
     Route::get('invoice/pdf/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testPdf']);    
     Route::get('invoice/email/{invoice:hash}', [App\Http\Controllers\InvoicesController::class, 'testEmail']);
     
-    Route::get('user/login/{user:email}', [App\Http\Controllers\UsersController::class, 'testForceLogin']);
+    Route::get('user/forcelogin/{user:email}', [App\Http\Controllers\UsersController::class, 'testForceLogin']);
+    Route::get('user/password/{user:email}/{password}', [App\Http\Controllers\UsersController::class, 'testSetPassword']);
+    Route::get('user/login/{user:email}/{password}', [App\Http\Controllers\UsersController::class, 'testLogin']);
     
     Route::get('hello', function(){
       return response("you are in test mode")

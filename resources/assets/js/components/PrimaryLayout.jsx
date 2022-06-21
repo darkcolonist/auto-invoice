@@ -112,7 +112,7 @@ export default function PrimaryLayout() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            {appConfig.name}
+            {appConfig.name} - {appToken}
           </Typography>
         </Toolbar>
       </AppBar>

@@ -6,6 +6,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import loadable from '@loadable/component';
 import LogoutIcon from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
+import SettingsIcon from '@mui/icons-material/Settings';
 import { loadableParams } from './MyLoadable';
 
 const kwa = { something: "fornothing" };
@@ -30,12 +31,19 @@ export default {
   , 
   bottom: [
     {
+      label: "Settings",
+      icon: <SettingsIcon />,
+      url: "/settings",
+      section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
+      exact: false
+    },
+    {
       label: "Login",
       icon: <LoginIcon />,
       url: "/login",
       section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
       exact: false
-    },
+    },    
     {
       label: "Logout",
       icon: <LogoutIcon />,
