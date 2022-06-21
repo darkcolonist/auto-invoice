@@ -4050,6 +4050,34 @@ exports["default"] = _default;
 
 /***/ }),
 
+/***/ "./node_modules/@mui/icons-material/Login.js":
+/*!***************************************************!*\
+  !*** ./node_modules/@mui/icons-material/Login.js ***!
+  \***************************************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__(/*! @babel/runtime/helpers/interopRequireDefault */ "./node_modules/@babel/runtime/helpers/interopRequireDefault.js");
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = void 0;
+
+var _createSvgIcon = _interopRequireDefault(__webpack_require__(/*! ./utils/createSvgIcon */ "./node_modules/@mui/icons-material/utils/createSvgIcon.js"));
+
+var _jsxRuntime = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+var _default = (0, _createSvgIcon.default)( /*#__PURE__*/(0, _jsxRuntime.jsx)("path", {
+  d: "M11 7 9.6 8.4l2.6 2.6H2v2h10.2l-2.6 2.6L11 17l5-5-5-5zm9 12h-8v2h8c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-8v2h8v14z"
+}), 'Login');
+
+exports["default"] = _default;
+
+/***/ }),
+
 /***/ "./node_modules/@mui/icons-material/Logout.js":
 /*!****************************************************!*\
   !*** ./node_modules/@mui/icons-material/Logout.js ***!
@@ -16886,12 +16914,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mui_icons_material_Bookmark__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @mui/icons-material/Bookmark */ "./node_modules/@mui/icons-material/Bookmark.js");
 /* harmony import */ var _mui_icons_material_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @mui/icons-material/Home */ "./node_modules/@mui/icons-material/Home.js");
 /* harmony import */ var _loadable_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @loadable/component */ "./node_modules/@loadable/component/dist/loadable.esm.js");
-/* harmony import */ var _mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/icons-material/Logout */ "./node_modules/@mui/icons-material/Logout.js");
+/* harmony import */ var _mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @mui/icons-material/Logout */ "./node_modules/@mui/icons-material/Logout.js");
+/* harmony import */ var _mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @mui/icons-material/Login */ "./node_modules/@mui/icons-material/Login.js");
 /* harmony import */ var _MyLoadable__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MyLoadable */ "./resources/assets/js/components/MyLoadable.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 // import AgentsListSection from '../sections/AgentsListSection';
 // import AutoInvoiceListSection from '../sections/AutoInvoiceListSection';
 // import WelcomeSection from '../sections/WelcomeSection';
+
 
 
 
@@ -16920,8 +16950,16 @@ var kwa = {
     exact: false
   }],
   bottom: [{
+    label: "Login",
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
+    url: "/login",
+    section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
+      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
+    }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
+    exact: false
+  }, {
     label: "Logout",
-    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_5__["default"], {}),
+    icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_6__["default"], {}),
     url: "/logout",
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
       return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));

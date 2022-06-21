@@ -5,6 +5,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import HomeIcon from '@mui/icons-material/Home';
 import loadable from '@loadable/component';
 import LogoutIcon from '@mui/icons-material/Logout';
+import LoginIcon from '@mui/icons-material/Login';
 import { loadableParams } from './MyLoadable';
 
 const kwa = { something: "fornothing" };
@@ -28,6 +29,13 @@ export default {
   ]
   , 
   bottom: [
+    {
+      label: "Login",
+      icon: <LoginIcon />,
+      url: "/login",
+      section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
+      exact: false
+    },
     {
       label: "Logout",
       icon: <LogoutIcon />,
