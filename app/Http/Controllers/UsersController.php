@@ -9,6 +9,29 @@ use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
+  public function login(Request $request){
+    // return $request->all();
+    $response = [
+      "code" => 200,
+      "message" => "login success!"
+    ];
+
+    $credentials = $request->validate([
+      'email' => ['required','email'],
+      'password' => ['required']
+    ]);
+
+
+    if(!Auth::attempt($credentials)){
+      $response = [
+        "code" => 400,
+        "message" => "login failed."
+      ];
+    }
+
+    return $response;
+  }
+  
   public function testForceLogin(Request $request, User $user)
   {
     Auth::login($user);

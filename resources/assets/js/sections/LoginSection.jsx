@@ -1,13 +1,16 @@
 import React from "react";
 import Typography from '@mui/material/Typography';
-import { Button, Grid, Stack, TextField } from "@mui/material";
+import { Button, CircularProgress, Grid, Stack, TextField } from "@mui/material";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import MySnackbar, { showMySnackbar } from "../components/MySnackbar";
+import LoginIcon from '@mui/icons-material/Login';
+import axios from '../components/Axios';
 
 import { useAuthStore } from "../components/MyZustandStateStore";
 
 const FormValidationSchema = Yup.object().shape({
-  username: Yup.string()
+  email: Yup.string()
     .min(3)
     .required('required'),
   password: Yup.string()
@@ -16,13 +19,14 @@ const FormValidationSchema = Yup.object().shape({
 });
 
 const FormInitialValues = {
-  username: '',
+  email: '',
   password: '',
 };
 
 export default function LoginSection(){
   const [ formValues, setFormValues ] = React.useState(FormInitialValues);
-  const { loggedIn, email } = useAuthStore();
+  const [submitting,setSubmitting] = React.useState(false);
+  // const { loggedIn, email } = useAuthStore();
 
   // console.log("loggedIn", loggedIn);
 
@@ -33,43 +37,29 @@ export default function LoginSection(){
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: (values, actions) => {
-      var _axios;
-
-      if (editMode === "new")
-        _axios = axios.post('invoice', values);
-      else if (editMode === "edit")
-        _axios = axios.patch('invoice/' + props.hash, values);
-
-      _axios.then((response) => {
+      axios.post('login', values)
+        .then((response) => {
         if (response.data.code !== 200) {
           showMySnackbar("something went wrong - " + response.data.message
             , "error");
           return;
         };
 
-        showMySnackbar(response.data.data.name + " saved!");
-        setFormValues(response.data.data);
-
-        if (typeof props.successCallback === 'function')
-          props.successCallback(response.data);
-
-        if (editMode === "new") {
-          history.push("/autoinvoice/edit/" + response.data.data.hash);
-        }
+        showMySnackbar("logging you in...");
       })
-        .then(() => {
-          actions.setSubmitting(false);
-        })
-        .catch(function (error) {
-          showMySnackbar("something went wrong - " + error.message
-            , "error");
-          actions.setSubmitting(false);
-        });
+      .then(() => {
+        actions.setSubmitting(false);
+      })
+      .catch(function (error) {
+        showMySnackbar("something went wrong - " + error.message
+          , "error");
+        actions.setSubmitting(false);
+      });
     },
   });
 
   return <React.Fragment>
-    <Typography variant="h3">
+    <Typography variant="h5">
       LOGIN
     </Typography>
     <Grid container spacing={2}
@@ -82,19 +72,19 @@ export default function LoginSection(){
       onSubmit={formik.handleSubmit}>
       <Grid item xs={3}>
         <Stack spacing={2}>
-          <TextField label="Username" size="small" variant="standard"
-            error={formik.errors.username !== undefined}
-            helperText={formik.errors.username}
-            id="username" name="username" onChange={formik.handleChange} value={formik.values.username} />
+          <MySnackbar></MySnackbar>
+          <TextField label="Email" size="small" variant="standard"
+            error={formik.errors.email !== undefined}
+            helperText={formik.errors.email}
+            id="email" name="email" onChange={formik.handleChange} value={formik.values.email} />
 
           <TextField label="Password" size="small" variant="standard"
             error={formik.errors.password !== undefined} type="password"
             helperText={formik.errors.password}
             id="password" name="password" onChange={formik.handleChange} value={formik.values.password} />
 
-          <Button type="button" color="primary">
-            Log in
-          </Button>
+          <Button startIcon={formik.isSubmitting ? <CircularProgress size={16} /> : <LoginIcon />}
+            variant="outlined" type="submit" size="large" disabled={formik.isSubmitting}>Login</Button>
         </Stack>
       </Grid>
     </Grid>

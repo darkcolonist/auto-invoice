@@ -32,6 +32,8 @@ Route::get('/login', ["as"=>"login", "uses" => function(){
   return redirect("/"); // let the front-end do its magic
 }]);
 
+Route::post('login', [App\Http\Controllers\UsersController::class, 'login']);
+
 Route::middleware(['auth'])->group(function () {
   Route::get('/secure', function(){
     return response("you are logged in")
