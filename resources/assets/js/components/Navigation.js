@@ -15,6 +15,7 @@ export default {
   top: [
     {
       label: "Home",
+      scope: ["all"],
       icon: <HomeIcon />,
       url: "/",
       section: loadable(() => import("../sections/WelcomeSection"), loadableParams),
@@ -22,6 +23,7 @@ export default {
     },
     {
       label: "Automatic Invoices",
+      scope: ["loggedIn"],
       icon: <BookmarkIcon />,
       url: "/autoinvoice",
       section: loadable(() => import("../sections/AutoInvoiceListSection"), loadableParams),
@@ -32,6 +34,7 @@ export default {
   bottom: [
     {
       label: "Settings",
+      scope: ["loggedIn"],
       icon: <SettingsIcon />,
       url: "/settings",
       section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
@@ -39,6 +42,7 @@ export default {
     },
     {
       label: "Login",
+      scope: [],
       icon: <LoginIcon />,
       url: "/login",
       section: loadable(() => import("../sections/LoginSection"), loadableParams),
@@ -46,6 +50,7 @@ export default {
     },    
     {
       label: "Logout",
+      scope: ["loggedIn"],
       icon: <LogoutIcon />,
       url: "/logout",
       section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
