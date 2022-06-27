@@ -10631,7 +10631,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 var FormValidationSchema = yup__WEBPACK_IMPORTED_MODULE_2__.object().shape({
-  email: yup__WEBPACK_IMPORTED_MODULE_2__.string().min(3).required('required'),
+  email: yup__WEBPACK_IMPORTED_MODULE_2__.string().min(3).email().required('required'),
   password: yup__WEBPACK_IMPORTED_MODULE_2__.string().min(3).required('required')
 });
 var FormInitialValues = {
@@ -10644,13 +10644,10 @@ function LoginSection() {
       formValues = _React$useState2[0],
       setFormValues = _React$useState2[1];
 
-  var _React$useState3 = react__WEBPACK_IMPORTED_MODULE_0___default().useState(false),
-      _React$useState4 = _slicedToArray(_React$useState3, 2),
-      submitting = _React$useState4[0],
-      setSubmitting = _React$useState4[1]; // const { loggedIn, email } = useAuthStore();
-  // console.log("loggedIn", loggedIn);
+  var _useAuthStore = (0,_components_MyZustandStateStore__WEBPACK_IMPORTED_MODULE_5__.useAuthStore)(),
+      loggedIn = _useAuthStore.loggedIn;
 
-
+  if (loggedIn) window.location = appBaseURL;
   var formik = (0,formik__WEBPACK_IMPORTED_MODULE_1__.useFormik)({
     initialValues: formValues,
     validationSchema: FormValidationSchema,
@@ -10658,14 +10655,18 @@ function LoginSection() {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: function onSubmit(values, actions) {
+      actions.setSubmitting(true);
       _components_Axios__WEBPACK_IMPORTED_MODULE_4__["default"].post('login', values).then(function (response) {
         if (response.data.code !== 200) {
-          (0,_components_MySnackbar__WEBPACK_IMPORTED_MODULE_3__.showMySnackbar)("something went wrong - " + response.data.message, "error");
+          (0,_components_MySnackbar__WEBPACK_IMPORTED_MODULE_3__.showMySnackbar)(response.data.message, "error");
           return;
         }
 
         ;
-        (0,_components_MySnackbar__WEBPACK_IMPORTED_MODULE_3__.showMySnackbar)("logging you in...");
+        (0,_components_MySnackbar__WEBPACK_IMPORTED_MODULE_3__.showMySnackbar)("logging you in, please wait.");
+        setTimeout(function () {
+          window.location = appBaseURL;
+        }, 2000);
       }).then(function () {
         actions.setSubmitting(false);
       })["catch"](function (error) {

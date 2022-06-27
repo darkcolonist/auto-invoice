@@ -12,6 +12,7 @@ import { useAuthStore } from "../components/MyZustandStateStore";
 const FormValidationSchema = Yup.object().shape({
   email: Yup.string()
     .min(3)
+    .email()
     .required('required'),
   password: Yup.string()
     .min(3)
@@ -24,11 +25,12 @@ const FormInitialValues = {
 };
 
 export default function LoginSection(){
-  const [ formValues, setFormValues ] = React.useState(FormInitialValues);
-  const [submitting,setSubmitting] = React.useState(false);
-  // const { loggedIn, email } = useAuthStore();
+  const [formValues,setFormValues] = React.useState(FormInitialValues);
 
-  // console.log("loggedIn", loggedIn);
+  const { loggedIn } = useAuthStore();
+
+  if (loggedIn) window.location = appBaseURL;
+
 
   const formik = useFormik({
     initialValues: formValues,
@@ -37,24 +39,28 @@ export default function LoginSection(){
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: (values, actions) => {
+      actions.setSubmitting(true);
+
       axios.post('login', values)
         .then((response) => {
-        if (response.data.code !== 200) {
-          showMySnackbar("something went wrong - " + response.data.message
-            , "error");
-          return;
-        };
+          if (response.data.code !== 200) {
+            showMySnackbar(response.data.message, "error");
+            return;
+          };
 
-        showMySnackbar("logging you in...");
-      })
-      .then(() => {
-        actions.setSubmitting(false);
-      })
-      .catch(function (error) {
-        showMySnackbar("something went wrong - " + error.message
-          , "error");
-        actions.setSubmitting(false);
-      });
+          showMySnackbar("logging you in, please wait.");
+          setTimeout(() => {
+            window.location = appBaseURL;
+          }, 2000);
+        })
+        .then(() => {
+          actions.setSubmitting(false);
+        })
+        .catch(function (error) {
+          showMySnackbar("something went wrong - " + error.message
+            , "error");
+          actions.setSubmitting(false);
+        });
     },
   });
 
