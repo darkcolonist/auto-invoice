@@ -18,7 +18,7 @@ Route::get('/', function(){
   return view("react");
 });
 
-Route::get('/status', function(){
+Route::post('/status', function(){
   return [
     "loggedIn" => Auth::check(),
     "email" => Auth::check() ? Auth::user()->email : false,

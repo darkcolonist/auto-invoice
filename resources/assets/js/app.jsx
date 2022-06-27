@@ -19,7 +19,7 @@ export default function App(){
   const [statusDataLoaded,setStatusDataLoaded] = React.useState(false);
 
   React.useEffect(() => {
-    axios.get('status')
+    axios.post('status')
       .then((data) => {
         // setTimeout(() => { // for delayed checking
           let response = data.data;
@@ -27,7 +27,7 @@ export default function App(){
           useAuthStore.setState(response);
   
           setStatusDataLoaded(true);
-        // }, 2000);
+        // }, 12000);
       });
   },[]);
 

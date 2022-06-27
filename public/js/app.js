@@ -9408,11 +9408,11 @@ function App() {
       setStatusDataLoaded = _React$useState2[1];
 
   react__WEBPACK_IMPORTED_MODULE_0___default().useEffect(function () {
-    _components_Axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('status').then(function (data) {
+    _components_Axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('status').then(function (data) {
       // setTimeout(() => { // for delayed checking
       var response = data.data;
       _components_MyZustandStateStore__WEBPACK_IMPORTED_MODULE_4__.useAuthStore.setState(response);
-      setStatusDataLoaded(true); // }, 2000);
+      setStatusDataLoaded(true); // }, 12000);
     });
   }, []);
   var render;
