@@ -41,7 +41,7 @@ export default {
       label: "Login",
       icon: <LoginIcon />,
       url: "/login",
-      section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
+      section: loadable(() => import("../sections/LoginSection"), loadableParams),
       exact: false
     },    
     {

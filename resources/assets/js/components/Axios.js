@@ -25,11 +25,13 @@ instance.interceptors.response.use(
     return response;
   }
   ,
-  error => {    
+  error => {
+    // expired csrf token
     if (error.response && 419 === error.response.status) {
       fallbackAndReload(error.statusText);
     }
 
+    // not logged in
     if (error.response && 401 === error.response.status) {
       fallbackAndReload(error.statusText, appBaseURL);
     }

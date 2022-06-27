@@ -16992,7 +16992,7 @@ var kwa = {
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Login__WEBPACK_IMPORTED_MODULE_6__["default"], {}),
     url: "/login",
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
-      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
+      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_LoginSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/LoginSection */ "./resources/assets/js/sections/LoginSection.jsx"));
     }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
     exact: false
   }, {
@@ -58562,7 +58562,7 @@ function combine (array, callback) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_assets_js_sections_AutoInvoiceEditSection_jsx":1,"resources_assets_js_sections_WelcomeSection_jsx":1,"resources_assets_js_sections_AutoInvoiceListSection_jsx":1,"resources_assets_js_sections_UnderConstructionSection_jsx":1}[chunkId]) return "js/app/" + chunkId + ".js";
+/******/ 			if ({"resources_assets_js_sections_AutoInvoiceEditSection_jsx":1,"resources_assets_js_sections_WelcomeSection_jsx":1,"resources_assets_js_sections_AutoInvoiceListSection_jsx":1,"resources_assets_js_sections_UnderConstructionSection_jsx":1,"resources_assets_js_sections_LoginSection_jsx":1}[chunkId]) return "js/app/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};
