@@ -70,7 +70,7 @@ export default function LoginSection(){
 
   return <React.Fragment>
     <Typography variant="h3">
-      please login
+      LOGIN
     </Typography>
     <Grid container spacing={2}
       component="form"
