@@ -51,7 +51,7 @@ export default {
       scope: ["loggedIn"],
       icon: <LogoutIcon />,
       url: "/logout",
-      section: loadable(() => import("../sections/UnderConstructionSection"), loadableParams),
+      section: loadable(() => import("../sections/LogoutSection"), loadableParams),
       exact: false
     },
   ]

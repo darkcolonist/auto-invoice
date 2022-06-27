@@ -50374,7 +50374,7 @@ function combine (array, callback) {
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_assets_js_components_PrimaryLayout_jsx":1,"resources_assets_js_components_AppLoading_jsx":1,"resources_assets_js_sections_AutoInvoiceEditSection_jsx":1,"resources_assets_js_sections_WelcomeSection_jsx":1,"resources_assets_js_sections_AutoInvoiceListSection_jsx":1,"resources_assets_js_sections_UnderConstructionSection_jsx":1,"resources_assets_js_sections_LoginSection_jsx":1}[chunkId]) return "js/app/" + chunkId + ".js";
+/******/ 			if ({"resources_assets_js_components_PrimaryLayout_jsx":1,"resources_assets_js_components_AppLoading_jsx":1,"resources_assets_js_sections_AutoInvoiceEditSection_jsx":1,"resources_assets_js_sections_WelcomeSection_jsx":1,"resources_assets_js_sections_AutoInvoiceListSection_jsx":1,"resources_assets_js_sections_UnderConstructionSection_jsx":1,"resources_assets_js_sections_LoginSection_jsx":1,"resources_assets_js_sections_LogoutSection_jsx":1}[chunkId]) return "js/app/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

@@ -9214,7 +9214,7 @@ __webpack_require__.r(__webpack_exports__);
     icon: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_mui_icons_material_Logout__WEBPACK_IMPORTED_MODULE_7__["default"], {}),
     url: "/logout",
     section: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
-      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_UnderConstructionSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/UnderConstructionSection */ "./resources/assets/js/sections/UnderConstructionSection.jsx"));
+      return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_LogoutSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/LogoutSection */ "./resources/assets/js/sections/LogoutSection.jsx"));
     }, _MyLoadable__WEBPACK_IMPORTED_MODULE_1__.loadableParams),
     exact: false
   }]
