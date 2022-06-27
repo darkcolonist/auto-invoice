@@ -9531,14 +9531,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ SectionsWrapper)
 /* harmony export */ });
-/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
+/* harmony import */ var react_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 /* harmony import */ var _loadable_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @loadable/component */ "./node_modules/@loadable/component/dist/loadable.esm.js");
 /* harmony import */ var _components_Navigation__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/Navigation */ "./resources/assets/js/components/Navigation.js");
 /* harmony import */ var _sections_NotFoundSection__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../sections/NotFoundSection */ "./resources/assets/js/sections/NotFoundSection.jsx");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _MyLoadable__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MyLoadable */ "./resources/assets/js/components/MyLoadable.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _components_MyZustandStateStore__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/MyZustandStateStore */ "./resources/assets/js/components/MyZustandStateStore.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+var _excluded = ["comp", "children"];
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); enumerableOnly && (symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; })), keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = null != arguments[i] ? arguments[i] : {}; i % 2 ? ownKeys(Object(source), !0).forEach(function (key) { _defineProperty(target, key, source[key]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)) : ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
 
 
 
@@ -9546,31 +9558,62 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+function PrivateRoute(_ref) {
+  var PrivateComponent = _ref.comp,
+      children = _ref.children,
+      rest = _objectWithoutProperties(_ref, _excluded);
+
+  var _useAuthStore = (0,_components_MyZustandStateStore__WEBPACK_IMPORTED_MODULE_5__.useAuthStore)(),
+      loggedIn = _useAuthStore.loggedIn;
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_7__.Route, _objectSpread(_objectSpread({}, rest), {}, {
+    render: function render(props) {
+      return loggedIn ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(PrivateComponent, _objectSpread({}, props)) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_7__.Redirect, {
+        to: {
+          pathname: "/login",
+          state: {
+            from: props.location
+          }
+        }
+      });
+    }
+  }));
+}
 
 function SectionsWrapper() {
   var myMapper = function myMapper(routeItem, sectionIndex) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    var route;
+    if (routeItem.scope.includes("loggedIn")) route = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(PrivateRoute, {
+      path: routeItem.url,
+      exact: true,
+      comp: routeItem.section
+    }, sectionIndex);else route = /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_7__.Route, {
       path: routeItem.url,
       exact: true,
       component: routeItem.section
     }, sectionIndex);
+    return route;
   };
 
   var topSections = _components_Navigation__WEBPACK_IMPORTED_MODULE_1__["default"].top.map(myMapper);
   var bottomSections = _components_Navigation__WEBPACK_IMPORTED_MODULE_1__["default"].bottom.map(myMapper);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_router__WEBPACK_IMPORTED_MODULE_6__.Switch, {
-    children: [topSections, bottomSections, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsxs)(react_router__WEBPACK_IMPORTED_MODULE_7__.Switch, {
+    children: [topSections, bottomSections, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(PrivateRoute, {
       path: "/autoinvoice/edit/:hash",
-      component: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
+      comp: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
         return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_AutoInvoiceEditSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/AutoInvoiceEditSection */ "./resources/assets/js/sections/AutoInvoiceEditSection.jsx"));
       }, _MyLoadable__WEBPACK_IMPORTED_MODULE_4__.loadableParams)
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(PrivateRoute, {
       path: "/autoinvoice/new",
-      component: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
+      comp: (0,_loadable_component__WEBPACK_IMPORTED_MODULE_0__["default"])(function () {
         return __webpack_require__.e(/*! import() */ "resources_assets_js_sections_AutoInvoiceEditSection_jsx").then(__webpack_require__.bind(__webpack_require__, /*! ../sections/AutoInvoiceEditSection */ "./resources/assets/js/sections/AutoInvoiceEditSection.jsx"));
       }, _MyLoadable__WEBPACK_IMPORTED_MODULE_4__.loadableParams)
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_6__.Route, {
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_sections_NotFoundSection__WEBPACK_IMPORTED_MODULE_2__["default"], {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_router__WEBPACK_IMPORTED_MODULE_7__.Route, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_sections_NotFoundSection__WEBPACK_IMPORTED_MODULE_2__["default"], {})
     })]
   });
 }
