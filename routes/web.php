@@ -18,6 +18,13 @@ Route::get('/', function(){
   return view("react");
 });
 
+Route::get('/status', function(){
+  return [
+    "loggedIn" => Auth::check(),
+    "email" => Auth::check() ? Auth::user()->email : false,
+  ];
+});
+
 Route::get('/login', ["as"=>"login", "uses" => function(){
   // return response("login page go here")
   //   ->header("Content-type","text/plain");

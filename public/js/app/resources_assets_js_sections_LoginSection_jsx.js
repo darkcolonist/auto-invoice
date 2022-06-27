@@ -8824,7 +8824,8 @@ function LoginSection() {
 
   var _useAuthStore = (0,_components_MyZustandStateStore__WEBPACK_IMPORTED_MODULE_3__.useAuthStore)(),
       loggedIn = _useAuthStore.loggedIn,
-      email = _useAuthStore.email;
+      email = _useAuthStore.email; // console.log("loggedIn", loggedIn);
+
 
   var formik = (0,formik__WEBPACK_IMPORTED_MODULE_1__.useFormik)({
     initialValues: formValues,

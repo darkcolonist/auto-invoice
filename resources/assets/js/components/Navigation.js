@@ -9,8 +9,6 @@ import LoginIcon from '@mui/icons-material/Login';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { loadableParams } from './MyLoadable';
 
-const kwa = { something: "fornothing" };
-
 export default {
   top: [
     {

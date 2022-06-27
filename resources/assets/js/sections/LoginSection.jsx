@@ -24,6 +24,8 @@ export default function LoginSection(){
   const [ formValues, setFormValues ] = React.useState(FormInitialValues);
   const { loggedIn, email } = useAuthStore();
 
+  // console.log("loggedIn", loggedIn);
+
   const formik = useFormik({
     initialValues: formValues,
     validationSchema: FormValidationSchema,
