@@ -4,6 +4,8 @@ import { Button, Grid, Stack, TextField } from "@mui/material";
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
+import { useAuthStore } from "../components/MyZustandStateStore";
+
 const FormValidationSchema = Yup.object().shape({
   username: Yup.string()
     .min(3)
@@ -19,7 +21,8 @@ const FormInitialValues = {
 };
 
 export default function LoginSection(){
-  const [formValues, setFormValues] = React.useState(FormInitialValues);
+  const [ formValues, setFormValues ] = React.useState(FormInitialValues);
+  const { loggedIn, email } = useAuthStore();
 
   const formik = useFormik({
     initialValues: formValues,
